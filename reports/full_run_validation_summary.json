@@ -1,0 +1,317 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "Campaign primary-key uniqueness",
+      "passed": true,
+      "details": "rows=500; duplicate_keys=0"
+    },
+    {
+      "check": "Channel primary-key uniqueness",
+      "passed": true,
+      "details": "rows=8; duplicate_keys=0"
+    },
+    {
+      "check": "Creative primary-key uniqueness",
+      "passed": true,
+      "details": "rows=500; duplicate_keys=0"
+    },
+    {
+      "check": "Audience primary-key uniqueness",
+      "passed": true,
+      "details": "rows=25; duplicate_keys=0"
+    },
+    {
+      "check": "Contact primary-key uniqueness",
+      "passed": true,
+      "details": "rows=50000; duplicate_keys=0"
+    },
+    {
+      "check": "Touchpoint primary-key uniqueness",
+      "passed": true,
+      "details": "rows=200001; duplicate_keys=0"
+    },
+    {
+      "check": "WebSession primary-key uniqueness",
+      "passed": true,
+      "details": "rows=100000; duplicate_keys=0"
+    },
+    {
+      "check": "Lead primary-key uniqueness",
+      "passed": true,
+      "details": "rows=15001; duplicate_keys=0"
+    },
+    {
+      "check": "Opportunity primary-key uniqueness",
+      "passed": true,
+      "details": "rows=10000; duplicate_keys=0"
+    },
+    {
+      "check": "OpportunityEvent primary-key uniqueness",
+      "passed": true,
+      "details": "rows=27000; duplicate_keys=0"
+    },
+    {
+      "check": "Order primary-key uniqueness",
+      "passed": true,
+      "details": "rows=6220; duplicate_keys=0"
+    },
+    {
+      "check": "CostRecord primary-key uniqueness",
+      "passed": true,
+      "details": "rows=500; duplicate_keys=0"
+    },
+    {
+      "check": "AttributionResult primary-key uniqueness",
+      "passed": true,
+      "details": "rows=33852; duplicate_keys=0"
+    },
+    {
+      "check": "Campaign.channel_id -> Channel.channel_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Campaign.creative_id -> Creative.creative_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Campaign.audience_id -> Audience.audience_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Touchpoint.contact_id -> Contact.contact_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Touchpoint.campaign_id -> Campaign.campaign_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Touchpoint.channel_id -> Channel.channel_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "WebSession.contact_id -> Contact.contact_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Lead.contact_id -> Contact.contact_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Lead.session_id -> WebSession.session_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Opportunity.contact_id -> Contact.contact_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Opportunity.lead_id -> Lead.lead_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "OpportunityEvent.opportunity_id -> Opportunity.opportunity_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Order.opportunity_id -> Opportunity.opportunity_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "CostRecord.campaign_id -> Campaign.campaign_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "AttributionResult.opportunity_id -> Opportunity.opportunity_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "AttributionResult.campaign_id -> Campaign.campaign_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "CampaignAudience.campaign_id -> Campaign.campaign_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "CampaignAudience.audience_id -> Audience.audience_id",
+      "passed": true,
+      "details": "invalid references=0"
+    },
+    {
+      "check": "Allowed channel values",
+      "passed": true,
+      "details": "Channel enum"
+    },
+    {
+      "check": "Opportunity amount non-negative",
+      "passed": true,
+      "details": "amount >= 0"
+    },
+    {
+      "check": "Campaign budget non-negative",
+      "passed": true,
+      "details": "budget >= 0"
+    },
+    {
+      "check": "CampaignAudience composite-key uniqueness",
+      "passed": true,
+      "details": "campaign/audience/effective_from unique"
+    },
+    {
+      "check": "CampaignAudience effective dates",
+      "passed": true,
+      "details": "effective_to >= effective_from"
+    },
+    {
+      "check": "Campaign date order",
+      "passed": true,
+      "details": "end_at >= start_at"
+    },
+    {
+      "check": "Lead/session identity consistency",
+      "passed": true,
+      "details": "unlabelled mismatches=0"
+    },
+    {
+      "check": "No unsupported anonymous identity joins",
+      "passed": true,
+      "details": "unlabelled anonymous joins=0"
+    },
+    {
+      "check": "Opportunity/lead contact consistency",
+      "passed": true,
+      "details": "mismatches=0"
+    },
+    {
+      "check": "Opportunity created after lead",
+      "passed": true,
+      "details": "opportunity.created_at >= lead.created_at"
+    },
+    {
+      "check": "Opportunity close after creation",
+      "passed": true,
+      "details": "closed_at >= created_at"
+    },
+    {
+      "check": "Open opportunities have no close date",
+      "passed": true,
+      "details": "open => closed_at null"
+    },
+    {
+      "check": "Touchpoint channel matches campaign",
+      "passed": true,
+      "details": "touch channel equals campaign channel"
+    },
+    {
+      "check": "Post-conversion touch is labelled",
+      "passed": true,
+      "details": "late touch has explicit issue_type"
+    },
+    {
+      "check": "Late-touch anomaly occurs after a conversion",
+      "passed": true,
+      "details": "labelled late touch is after associated conversion"
+    },
+    {
+      "check": "No unlabelled duplicate invoices",
+      "passed": true,
+      "details": "unlabelled duplicate invoice rows=0"
+    },
+    {
+      "check": "Valid orders belong to closed-won opportunities",
+      "passed": true,
+      "details": "valid order stage=closed_won"
+    },
+    {
+      "check": "Order amount reconciles to opportunity",
+      "passed": true,
+      "details": "order revenue equals opportunity amount"
+    },
+    {
+      "check": "Order currency matches opportunity",
+      "passed": true,
+      "details": "order currency equals opportunity currency"
+    },
+    {
+      "check": "Attribution has non-negative revenue",
+      "passed": true,
+      "details": "credited_revenue >= 0"
+    },
+    {
+      "check": "Attribution currencies match order",
+      "passed": true,
+      "details": "attribution currency equals order currency"
+    },
+    {
+      "check": "first_touch opportunity revenue reconciliation",
+      "passed": true,
+      "details": "reconciled opportunities=5927"
+    },
+    {
+      "check": "last_touch opportunity revenue reconciliation",
+      "passed": true,
+      "details": "reconciled opportunities=5927"
+    },
+    {
+      "check": "linear_multi_touch opportunity revenue reconciliation",
+      "passed": true,
+      "details": "reconciled opportunities=5927"
+    },
+    {
+      "check": "Opportunity event chronology",
+      "passed": true,
+      "details": "events are ordered by occurred_at"
+    },
+    {
+      "check": "Lifecycle history matches current opportunity stage",
+      "passed": true,
+      "details": "latest event matches final state (open remains new)"
+    },
+    {
+      "check": "All five required anomaly classes",
+      "passed": true,
+      "details": "missing=[]"
+    },
+    {
+      "check": "Ground truth remains separate",
+      "passed": true,
+      "details": "labelled exceptions=5"
+    }
+  ],
+  "row_counts": {
+    "Channel": 8,
+    "Campaign": 500,
+    "Creative": 500,
+    "Audience": 25,
+    "Contact": 50000,
+    "WebSession": 100000,
+    "Lead": 15001,
+    "Opportunity": 10000,
+    "OpportunityEvent": 27000,
+    "Touchpoint": 200001,
+    "Order": 6220,
+    "CostRecord": 500,
+    "CampaignAudience": 500,
+    "AttributionResult": 33852,
+    "GroundTruth": 5
+  }
+}

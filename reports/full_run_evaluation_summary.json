@@ -1,0 +1,17 @@
+{
+  "opportunities_total": 10000,
+  "closed_won": 6219,
+  "attribution_rows": 33852,
+  "model_attributed_revenue": {
+    "first_touch": 182469558.17,
+    "last_touch": 182469558.17,
+    "linear_multi_touch": 182469558.17
+  },
+  "model_campaign_allocation_rows": 3523,
+  "chronological_split": {
+    "train_before_cutoff": 2836,
+    "evaluation_on_or_after_cutoff": 7164,
+    "cutoff": "2026-07-01"
+  },
+  "known_exception_count": 5
+}
