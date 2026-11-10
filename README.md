@@ -4,7 +4,7 @@ A reproducible synthetic-data and campaign-attribution project for comparing fir
 
 **No real personal or confidential data is used.** The generator creates synthetic IDs and synthetic records only.
 
-## Features
+## Feature
 
 - Generates the requested full baseline scale: 500 campaigns, 50,000 contacts, 200,000 touchpoints and 10,000 opportunities.
 - Generates the related Channel, Creative, Audience, Contact, WebSession, Lead, Opportunity, Order and CostRecord entities.
