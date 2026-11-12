@@ -1,0 +1,28 @@
+# docker compose up --build        -> API on :8000 (/docs), dashboard on :8501
+# DATA_SCALE=full docker compose up --build    -> full 500/50k/200k/10k dataset (takes a few minutes on first start)
+services:
+  api:
+    build: .
+    image: marketing-attribution-engine:latest
+    command: ["api"]
+    environment:
+      DATA_SCALE: ${DATA_SCALE:-starter}
+      DATA_SEED: ${DATA_SEED:-20261022}
+    ports:
+      - "8000:8000"
+    volumes:
+      - attribution-data:/app/data
+  dashboard:
+    image: marketing-attribution-engine:latest
+    command: ["dashboard"]
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "8501:8501"
+    volumes:
+      - attribution-data:/app/data
+    healthcheck:
+      disable: true
+volumes:
+  attribution-data:
