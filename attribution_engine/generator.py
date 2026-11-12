@@ -161,7 +161,9 @@ def _campaigns(rng, cfg: DatasetConfig, start, end, fx):
     ends = pd.DatetimeIndex(np.where(evergreen, pd.Timestamp(f"{end.year}-12-31T23:59:59").value,
                                      (starts + pd.to_timedelta(durations, unit="D") - pd.Timedelta(seconds=1)).asi8))
     objective = rng.choice(["awareness", "lead_generation", "conversion"], n, p=[.25, .45, .30])
-    budget_usd = np.where(evergreen, rng.uniform(250_000, 900_000, n), rng.uniform(15_000, 350_000, n))
+    # Budgets scale with expected deal flow per campaign so starter and full runs have comparable ROI.
+    spend_scale = 0.35 * (cfg.opportunities / max(n, 1)) / 20
+    budget_usd = spend_scale * np.where(evergreen, rng.uniform(250_000, 900_000, n), rng.uniform(15_000, 350_000, n))
     currency = np.array([MARKET_CURRENCY[MARKETS[m]] for m in market])
     budget_local = np.round(budget_usd / np.array([BASE_FX_TO_USD[c] for c in currency]), 2)
     ids = _seq_ids("CMP", n)
