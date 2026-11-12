@@ -1,0 +1,126 @@
+{
+  "scale": "full",
+  "seed": 20261022,
+  "reproducible": true,
+  "tables_compared": 23,
+  "row_counts": {
+    "Channel": 8,
+    "FxRate": 108,
+    "Campaign": 500,
+    "Creative": 877,
+    "Audience": 25,
+    "CampaignAudience": 1028,
+    "Contact": 50000,
+    "WebSession": 100000,
+    "Lead": 15030,
+    "Opportunity": 10000,
+    "OpportunityEvent": 35331,
+    "Touchpoint": 200019,
+    "Order": 5192,
+    "CostRecord": 2536,
+    "ExceptionLog": 105,
+    "AttributionRun": 1,
+    "AttributionResult": 118795,
+    "UnattributedRevenue": 99,
+    "TouchEligibilityAudit": 5171,
+    "CampaignROI": 2500,
+    "ChannelROI": 40,
+    "ground_truth.ground_truth": 105,
+    "ground_truth.channel_contribution": 8
+  },
+  "mismatched_tables": [],
+  "checksums": {
+    "AttributionResult": {
+      "run_1": "2cf13b1d1c2899e2b4d06485bad52e4126ab78a1529e10d8447e5f403eca87c6",
+      "run_2": "2cf13b1d1c2899e2b4d06485bad52e4126ab78a1529e10d8447e5f403eca87c6"
+    },
+    "AttributionRun": {
+      "run_1": "0b7d02f81c1c85116991fd6bf735b378df216775b38450fa19375fd01c2c515b",
+      "run_2": "0b7d02f81c1c85116991fd6bf735b378df216775b38450fa19375fd01c2c515b"
+    },
+    "Audience": {
+      "run_1": "4937b35f3fa2c1729d82adffafa6a86776069c19df19fb057ec3be8e1551ae7f",
+      "run_2": "4937b35f3fa2c1729d82adffafa6a86776069c19df19fb057ec3be8e1551ae7f"
+    },
+    "Campaign": {
+      "run_1": "6ae5c1b689264b177c23f9fdd279b48b5d5d9643dee7c9a6ef2f8ba309473819",
+      "run_2": "6ae5c1b689264b177c23f9fdd279b48b5d5d9643dee7c9a6ef2f8ba309473819"
+    },
+    "CampaignAudience": {
+      "run_1": "729245915164cc530be35994a4df1c612960fd915fde1f92ee7ec84855e44448",
+      "run_2": "729245915164cc530be35994a4df1c612960fd915fde1f92ee7ec84855e44448"
+    },
+    "CampaignROI": {
+      "run_1": "cd50c8742b20a941106e229aba9cf9ca56bf7d36bd5cdc3fd51df5827389b79d",
+      "run_2": "cd50c8742b20a941106e229aba9cf9ca56bf7d36bd5cdc3fd51df5827389b79d"
+    },
+    "Channel": {
+      "run_1": "6b3aac7980a10477229a462e8bf52ead69be21e93f643908d8c9144bf3462d96",
+      "run_2": "6b3aac7980a10477229a462e8bf52ead69be21e93f643908d8c9144bf3462d96"
+    },
+    "ChannelROI": {
+      "run_1": "b72423428e8c804490e3031c515018b1801fd46fb1764fcbac3901bc658d9c8e",
+      "run_2": "b72423428e8c804490e3031c515018b1801fd46fb1764fcbac3901bc658d9c8e"
+    },
+    "Contact": {
+      "run_1": "9ea9fcc270ab095bdb3038e920f5512b6940a4f247a840079e35dde0a22034e8",
+      "run_2": "9ea9fcc270ab095bdb3038e920f5512b6940a4f247a840079e35dde0a22034e8"
+    },
+    "CostRecord": {
+      "run_1": "0c786d69555b1b2dc1bf9681cf896eb626d60b4cbdbbae5fd78563d277db1958",
+      "run_2": "0c786d69555b1b2dc1bf9681cf896eb626d60b4cbdbbae5fd78563d277db1958"
+    },
+    "Creative": {
+      "run_1": "b2ad57804aae6ab5fc098fde8a04f365db318079baff5945edd1b443773ee2b7",
+      "run_2": "b2ad57804aae6ab5fc098fde8a04f365db318079baff5945edd1b443773ee2b7"
+    },
+    "ExceptionLog": {
+      "run_1": "a1981d673cdcdc4fb35114baea57e3cbeb17f6d72095bcaff34084031b82fce5",
+      "run_2": "a1981d673cdcdc4fb35114baea57e3cbeb17f6d72095bcaff34084031b82fce5"
+    },
+    "FxRate": {
+      "run_1": "37c0ae8e1c291c3f963ab4f266c82c9ea7945ac69c8ee5d52e3de49e51d3a708",
+      "run_2": "37c0ae8e1c291c3f963ab4f266c82c9ea7945ac69c8ee5d52e3de49e51d3a708"
+    },
+    "Lead": {
+      "run_1": "f71bbfd0adea747699bfb700bb0f9b3b179535fbe1da846db0adcfbb8247ecca",
+      "run_2": "f71bbfd0adea747699bfb700bb0f9b3b179535fbe1da846db0adcfbb8247ecca"
+    },
+    "Opportunity": {
+      "run_1": "c7111f46bdaea7c20a2f61f2168ecac8ac4db3b8f7577f45dba7efc5777847bf",
+      "run_2": "c7111f46bdaea7c20a2f61f2168ecac8ac4db3b8f7577f45dba7efc5777847bf"
+    },
+    "OpportunityEvent": {
+      "run_1": "ef2af168b0ba1ffec490d1a5df8022a8a5102c4f893063b6402b824929ba3980",
+      "run_2": "ef2af168b0ba1ffec490d1a5df8022a8a5102c4f893063b6402b824929ba3980"
+    },
+    "Order": {
+      "run_1": "088442a0ee53bdc49258a97e548f56871dec6581bb73c4d3c9bf0403dd4ba5ec",
+      "run_2": "088442a0ee53bdc49258a97e548f56871dec6581bb73c4d3c9bf0403dd4ba5ec"
+    },
+    "TouchEligibilityAudit": {
+      "run_1": "89a82148fe1a0b7dfb7091a609aa48ce888d524871531ce78c6c98c05eeb90c7",
+      "run_2": "89a82148fe1a0b7dfb7091a609aa48ce888d524871531ce78c6c98c05eeb90c7"
+    },
+    "Touchpoint": {
+      "run_1": "b180554dd51bf72aeab779e9e36e0463837d6c3d5187be4a39d2db150ebe411e",
+      "run_2": "b180554dd51bf72aeab779e9e36e0463837d6c3d5187be4a39d2db150ebe411e"
+    },
+    "UnattributedRevenue": {
+      "run_1": "4432065376f1877cee9ad4fd709c9f9dffc8f476ce12a98a564b6ecfd5d605e2",
+      "run_2": "4432065376f1877cee9ad4fd709c9f9dffc8f476ce12a98a564b6ecfd5d605e2"
+    },
+    "WebSession": {
+      "run_1": "c8d2105767a9c10be564de536ae59fe45c15d5e7efd3135c90c6baf21692ccf3",
+      "run_2": "c8d2105767a9c10be564de536ae59fe45c15d5e7efd3135c90c6baf21692ccf3"
+    },
+    "ground_truth.channel_contribution": {
+      "run_1": "14eefcd6f666569cabfd7e486cc817159006efbfd2e5af6302faae7cbf3a10bd",
+      "run_2": "14eefcd6f666569cabfd7e486cc817159006efbfd2e5af6302faae7cbf3a10bd"
+    },
+    "ground_truth.ground_truth": {
+      "run_1": "222c991b9548ac2af517be383e0dcc9e1d3d3a03fdfd294843473231c811510b",
+      "run_2": "222c991b9548ac2af517be383e0dcc9e1d3d3a03fdfd294843473231c811510b"
+    }
+  }
+}

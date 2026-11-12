@@ -1,0 +1,288 @@
+{
+  "generator": "attribution_engine",
+  "version": "2.0.0",
+  "seed": 20261022,
+  "config": {
+    "seed": 20261022,
+    "campaigns": 500,
+    "contacts": 50000,
+    "touchpoints": 200000,
+    "opportunities": 10000,
+    "sessions": 100000,
+    "leads": 15000,
+    "start_date": "2025-01-01",
+    "end_date": "2026-10-31",
+    "evaluation_train_cutoff": "2026-07-01",
+    "lookback_days": 365,
+    "time_decay_half_life_days": 14.0,
+    "position_first_weight": 0.4,
+    "position_last_weight": 0.4,
+    "reporting_currency": "USD",
+    "anomaly_rates": {
+      "duplicate_revenue": 0.004,
+      "post_conversion_touch": 0.004,
+      "currency_mismatch": 0.01,
+      "campaign_cost_omitted": 0.02,
+      "anonymous_session_without_evidence": 0.002
+    },
+    "min_anomalies_per_type": 2
+  },
+  "command": "python -m attribution_engine.cli generate --scale full --seed 20261022",
+  "provenance": {
+    "type": "fully synthetic",
+    "external_data": "none",
+    "personal_data": "none",
+    "license": "MIT (generated data may be redistributed freely)",
+    "reference": "Schema inspired by common CRM / marketing-automation concepts; no third-party dataset used."
+  },
+  "row_counts": {
+    "Channel": 8,
+    "FxRate": 108,
+    "Campaign": 500,
+    "Creative": 877,
+    "Audience": 25,
+    "CampaignAudience": 1028,
+    "Contact": 50000,
+    "WebSession": 100000,
+    "Lead": 15030,
+    "Opportunity": 10000,
+    "OpportunityEvent": 35331,
+    "Touchpoint": 200019,
+    "Order": 5192,
+    "CostRecord": 2536,
+    "ExceptionLog": 105,
+    "AttributionRun": 1,
+    "AttributionResult": 118795,
+    "UnattributedRevenue": 99,
+    "TouchEligibilityAudit": 5171,
+    "CampaignROI": 2500,
+    "ChannelROI": 40
+  },
+  "table_content_digests": {
+    "Channel": "6b3aac7980a10477229a462e8bf52ead69be21e93f643908d8c9144bf3462d96",
+    "FxRate": "37c0ae8e1c291c3f963ab4f266c82c9ea7945ac69c8ee5d52e3de49e51d3a708",
+    "Campaign": "6ae5c1b689264b177c23f9fdd279b48b5d5d9643dee7c9a6ef2f8ba309473819",
+    "Creative": "b2ad57804aae6ab5fc098fde8a04f365db318079baff5945edd1b443773ee2b7",
+    "Audience": "4937b35f3fa2c1729d82adffafa6a86776069c19df19fb057ec3be8e1551ae7f",
+    "CampaignAudience": "729245915164cc530be35994a4df1c612960fd915fde1f92ee7ec84855e44448",
+    "Contact": "9ea9fcc270ab095bdb3038e920f5512b6940a4f247a840079e35dde0a22034e8",
+    "WebSession": "c8d2105767a9c10be564de536ae59fe45c15d5e7efd3135c90c6baf21692ccf3",
+    "Lead": "f71bbfd0adea747699bfb700bb0f9b3b179535fbe1da846db0adcfbb8247ecca",
+    "Opportunity": "c7111f46bdaea7c20a2f61f2168ecac8ac4db3b8f7577f45dba7efc5777847bf",
+    "OpportunityEvent": "ef2af168b0ba1ffec490d1a5df8022a8a5102c4f893063b6402b824929ba3980",
+    "Touchpoint": "b180554dd51bf72aeab779e9e36e0463837d6c3d5187be4a39d2db150ebe411e",
+    "Order": "088442a0ee53bdc49258a97e548f56871dec6581bb73c4d3c9bf0403dd4ba5ec",
+    "CostRecord": "0c786d69555b1b2dc1bf9681cf896eb626d60b4cbdbbae5fd78563d277db1958",
+    "ExceptionLog": "a1981d673cdcdc4fb35114baea57e3cbeb17f6d72095bcaff34084031b82fce5",
+    "AttributionRun": "0b7d02f81c1c85116991fd6bf735b378df216775b38450fa19375fd01c2c515b",
+    "AttributionResult": "2cf13b1d1c2899e2b4d06485bad52e4126ab78a1529e10d8447e5f403eca87c6",
+    "UnattributedRevenue": "4432065376f1877cee9ad4fd709c9f9dffc8f476ce12a98a564b6ecfd5d605e2",
+    "TouchEligibilityAudit": "89a82148fe1a0b7dfb7091a609aa48ce888d524871531ce78c6c98c05eeb90c7",
+    "CampaignROI": "cd50c8742b20a941106e229aba9cf9ca56bf7d36bd5cdc3fd51df5827389b79d",
+    "ChannelROI": "b72423428e8c804490e3031c515018b1801fd46fb1764fcbac3901bc658d9c8e"
+  },
+  "ground_truth_digests": {
+    "ground_truth": "222c991b9548ac2af517be383e0dcc9e1d3d3a03fdfd294843473231c811510b",
+    "channel_contribution": "14eefcd6f666569cabfd7e486cc817159006efbfd2e5af6302faae7cbf3a10bd"
+  },
+  "files": {
+    "attributionresult.csv": {
+      "sha256": "5f0f205c57d83d453fc2d69f0bb61da378f4ba9a04bbfadd295fe5a0948d9122",
+      "bytes": 20667720
+    },
+    "attributionresult.json": {
+      "sha256": "f84eb8572cd27075ce92adf6a2813724e5b0450aabd0e91fad4bccc8cd31251e",
+      "bytes": 56700776
+    },
+    "attributionrun.csv": {
+      "sha256": "171ac75028b7572705b35c8dd608176eccf037592b37a99f4c80ac993dc05e58",
+      "bytes": 375
+    },
+    "attributionrun.json": {
+      "sha256": "431244662b969bd26338bc11d68fefd9f0587bb4d49d4fac78f43b515595743e",
+      "bytes": 478
+    },
+    "audience.csv": {
+      "sha256": "ddeae110d117f54359d219d136c90edaf7ee7878f65e35682a6b07ce41c7e4b5",
+      "bytes": 1517
+    },
+    "audience.json": {
+      "sha256": "3d81f0352daab15ef199c641e24ce6988de77d3f491ac5bb2ccd72411b956195",
+      "bytes": 4378
+    },
+    "campaign.csv": {
+      "sha256": "1c6945d6957a1ff921fc5562e550e5387987d66d2590949a662f215e863be761",
+      "bytes": 70883
+    },
+    "campaign.json": {
+      "sha256": "c2d3ebf19558b8b8f4e4eedd26c6be5f13e5be18928435499c1df654cdb91132",
+      "bytes": 175083
+    },
+    "campaignaudience.csv": {
+      "sha256": "c8762328c8de13cea913c8a963f667790a4c7c7139f9c750737388e6e224c001",
+      "bytes": 91565
+    },
+    "campaignaudience.json": {
+      "sha256": "2447bd41f41d76d54b6bf5055c5ad7f75c5cd1047404d855b74a05be54ba5612",
+      "bytes": 215883
+    },
+    "campaignroi.csv": {
+      "sha256": "4fe4473ef56e00f453fa3370f04117f74f2d1894b4b44ee8d3fa8620738ba040",
+      "bytes": 478007
+    },
+    "campaignroi.json": {
+      "sha256": "a7f3b20e2c263787101d81d22d1d549b014919ec6bf80a4c8750fc1e66fddc8b",
+      "bytes": 1659777
+    },
+    "channel.csv": {
+      "sha256": "0c4ddaff038d69c1ab34528a9fbf1174a998ade47b367c9302b31be1d3700205",
+      "bytes": 395
+    },
+    "channel.json": {
+      "sha256": "07c979af6d34087dc90ff5c56e2c6b115daf811dd36f588b528158e97ee28090",
+      "bytes": 1242
+    },
+    "channelroi.csv": {
+      "sha256": "060c300557d3a177f2319c97b586b7b04a3a085c5117e8456b57babfa6b36de0",
+      "bytes": 4373
+    },
+    "channelroi.json": {
+      "sha256": "0235af9bcfd3ff06b691241170399a80c88f859f35c200ada5558537709f5aff",
+      "bytes": 16973
+    },
+    "contact.csv": {
+      "sha256": "0a0f096de1dc2e64b0e38ed32795ba6c9ab6db2018db108cf9c4d9e2e45da2c0",
+      "bytes": 3270060
+    },
+    "contact.json": {
+      "sha256": "5a5e36a676177986b39eba72be9da25d26189073e9d8257d5840a944e33a9707",
+      "bytes": 10519982
+    },
+    "costrecord.csv": {
+      "sha256": "b248ee8d89df0a1c6177fadaa4e10ef317c7f308aac5b8678f3a7e3fa0b70cf9",
+      "bytes": 258464
+    },
+    "costrecord.json": {
+      "sha256": "a41fd4372bebdd06e39665746e700e60f3b4e21a5b840617f1cc72d56a246ca2",
+      "bytes": 672280
+    },
+    "creative.csv": {
+      "sha256": "0259203f30a96dd9683eff46380c6ee6c8571254f81f0fd4c814cc8a806bdcd3",
+      "bytes": 77964
+    },
+    "creative.json": {
+      "sha256": "2dc87e51450af4a979175093a7ec31268ba26cb9ad23db80b07cf724348b83fe",
+      "bytes": 184019
+    },
+    "evaluation_summary.json": {
+      "sha256": "f0b248c545b92d96eeea4f25281226acc37f8507650654e814797fdf60e54101",
+      "bytes": 13087
+    },
+    "exceptionlog.csv": {
+      "sha256": "a8a4465b74276cc9312f8f73379f3ac47689ccc88a6be443bf25cfa5a5877a9a",
+      "bytes": 17980
+    },
+    "exceptionlog.json": {
+      "sha256": "ffa3347bd096d22fe4f02d3ca9fdd740031439137945ea3cfa72374a0fee648a",
+      "bytes": 33857
+    },
+    "fxrate.csv": {
+      "sha256": "8cbd333e2533eaa7f1b8ec16095304cb98effc186cd62cc8dc8008042702fe55",
+      "bytes": 6446
+    },
+    "fxrate.json": {
+      "sha256": "7685c5fed3d5674834b53d3aa21c7007a8215cbdda75382a7e0ed870b2fbb536",
+      "bytes": 16767
+    },
+    "lead.csv": {
+      "sha256": "8a08a1f060452b0be21d0225bdc575f30508fc37aabe0546be0b634c46bf36b7",
+      "bytes": 1532919
+    },
+    "lead.json": {
+      "sha256": "6e7d3485219cb0cf53092c560d0e63eff82c4a88ed30a7d943a1c27b56fb1874",
+      "bytes": 3752651
+    },
+    "opportunity.csv": {
+      "sha256": "2d9650a24f420e15d1188e488048bcd60bbed256219b30fe4bcdf342d455eb91",
+      "bytes": 1176262
+    },
+    "opportunity.json": {
+      "sha256": "ecce82c8218434577ec582bd8cc002da1d47ef2d580d980cb09180ab1db55bc8",
+      "bytes": 2875289
+    },
+    "opportunityevent.csv": {
+      "sha256": "2c65773b1e8f4d95ee1224fde65bc29ba4ad5519e834eb3b368eac48db3900a6",
+      "bytes": 3608197
+    },
+    "opportunityevent.json": {
+      "sha256": "8d6a84eb5d1aeeffbc82809f3bcf4dfe7bb419be6f0911e90b0c50f72dcf959e",
+      "bytes": 8998430
+    },
+    "order.csv": {
+      "sha256": "3a8c004d01305fbb1259c7d08a9edcd1ec2da8310455317b5415fe75e78fe6d6",
+      "bytes": 465204
+    },
+    "order.json": {
+      "sha256": "bd46bb9e91cb575f65f45808a8798759916ba8ad72135eb1b3f81717acd2e212",
+      "bytes": 1293819
+    },
+    "seed_data.sql": {
+      "sha256": "e5af4894ad1d9e3d77e1ab603e8c8d0af96d1b771e90e0f831be6eca2c441f1a",
+      "bytes": 97903127
+    },
+    "toucheligibilityaudit.csv": {
+      "sha256": "8d25a90d8c596fc64484f1819fbd88010696d3ba0dd8f1c13d3bb5a586910293",
+      "bytes": 275825
+    },
+    "toucheligibilityaudit.json": {
+      "sha256": "75ea8849545abdce52f53559a3a1633898d08a47025b826484e74f8d20534771",
+      "bytes": 1242678
+    },
+    "touchpoint.csv": {
+      "sha256": "02b7b6992d8bd0df32cc8616490e6cdfa67ceb2656ecce587914122c154d6f46",
+      "bytes": 26157735
+    },
+    "touchpoint.json": {
+      "sha256": "ba31b898d9812b003833ac893cb1472d83f44aa6b524f952f8a5468a5eec9e3d",
+      "bytes": 70029212
+    },
+    "unattributedrevenue.csv": {
+      "sha256": "3f8bc92e0d26522cc8a501ec220ae8dfeac29ff9e38de536d6cd4f8eb77ccdec",
+      "bytes": 12941
+    },
+    "unattributedrevenue.json": {
+      "sha256": "76388872e727f1d2b16113d4aa53404b00395ff035594bd50dd6975d412d62ae",
+      "bytes": 27956
+    },
+    "validation_summary.json": {
+      "sha256": "92e70e5f6f0254129417b1cd29e02726fc94a679246ca32878d02705b99aba7b",
+      "bytes": 19946
+    },
+    "websession.csv": {
+      "sha256": "a0a625474414bab19f186e689c1cee78067c5f50b1911250841402cf63c32ee7",
+      "bytes": 11414237
+    },
+    "websession.json": {
+      "sha256": "ad5dac5b97650655da61db215a9a33c634bbcb9d9f76377234e817e25d160dc3",
+      "bytes": 30226130
+    }
+  },
+  "ground_truth_files": {
+    "channel_contribution.csv": {
+      "sha256": "d47c8493be4206d226a60f1f20bf652c2077f60e02a2d725ac3bd4b78dcb27dd",
+      "bytes": 526
+    },
+    "channel_contribution.json": {
+      "sha256": "ed00603d57871de92ad54191dcd4cbafbe3a8aabebd936d3f3a054820118326c",
+      "bytes": 1747
+    },
+    "ground_truth.csv": {
+      "sha256": "1968f701dc5a32d27fe6e106f953cbca86ffb30abd9d23c7d28e47ab8b302e6f",
+      "bytes": 17334
+    },
+    "ground_truth.json": {
+      "sha256": "6ef9be0f764e0f17d0e30035fc9d3588f22c1690ec7477ad47f76a6c17cd379b",
+      "bytes": 33749
+    }
+  }
+}

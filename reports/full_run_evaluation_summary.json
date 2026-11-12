@@ -1,17 +1,469 @@
 {
-  "opportunities_total": 10000,
-  "closed_won": 6219,
-  "attribution_rows": 33852,
-  "model_attributed_revenue": {
-    "first_touch": 182469558.17,
-    "last_touch": 182469558.17,
-    "linear_multi_touch": 182469558.17
+  "volumes": {
+    "Channel": 8,
+    "FxRate": 108,
+    "Campaign": 500,
+    "Creative": 877,
+    "Audience": 25,
+    "CampaignAudience": 1028,
+    "Contact": 50000,
+    "WebSession": 100000,
+    "Lead": 15030,
+    "Opportunity": 10000,
+    "OpportunityEvent": 35331,
+    "Touchpoint": 200019,
+    "Order": 5192,
+    "CostRecord": 2536
   },
-  "model_campaign_allocation_rows": 3523,
-  "chronological_split": {
-    "train_before_cutoff": 2836,
-    "evaluation_on_or_after_cutoff": 7164,
-    "cutoff": "2026-07-01"
+  "opportunity_stages": {
+    "closed_won": 5171,
+    "closed_lost": 3280,
+    "qualified": 670,
+    "proposal": 480,
+    "prospecting": 399
   },
-  "known_exception_count": 5
+  "win_rate_closed": 0.6119,
+  "attribution_rows": 118795,
+  "exceptions_detected": {
+    "anonymous_session_without_evidence": 30,
+    "currency_mismatch": 25,
+    "duplicate_revenue": 21,
+    "post_conversion_touch": 19,
+    "campaign_cost_omitted": 10
+  },
+  "detection_vs_ground_truth": {
+    "overall": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "true_positive": 105,
+      "false_positive": 0,
+      "false_negative": 0
+    },
+    "by_issue_type": {
+      "duplicate_revenue": {
+        "labelled": 21,
+        "detected": 21,
+        "true_positive": 21,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "post_conversion_touch": {
+        "labelled": 19,
+        "detected": 19,
+        "true_positive": 19,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "currency_mismatch": {
+        "labelled": 25,
+        "detected": 25,
+        "true_positive": 25,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "campaign_cost_omitted": {
+        "labelled": 10,
+        "detected": 10,
+        "true_positive": 10,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "anonymous_session_without_evidence": {
+        "labelled": 30,
+        "detected": 30,
+        "true_positive": 30,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      }
+    }
+  },
+  "reconciliation": {
+    "passed": true,
+    "by_currency": {
+      "EUR": {
+        "gross_order_revenue": 16062204.8,
+        "duplicate_revenue_excluded": 6283.18,
+        "recognised_revenue": 16055921.62,
+        "unattributed_revenue": 344407.0,
+        "models": {
+          "first_touch": {
+            "attributed": 15711514.62,
+            "difference": 0.0
+          },
+          "last_touch": {
+            "attributed": 15711514.62,
+            "difference": 0.0
+          },
+          "linear_multi_touch": {
+            "attributed": 15711514.62,
+            "difference": 0.0
+          },
+          "position_based": {
+            "attributed": 15711514.62,
+            "difference": 0.0
+          },
+          "time_decay": {
+            "attributed": 15711514.62,
+            "difference": 0.0
+          }
+        }
+      },
+      "INR": {
+        "gross_order_revenue": 5255648587.88,
+        "duplicate_revenue_excluded": 31264874.52,
+        "recognised_revenue": 5224383713.36,
+        "unattributed_revenue": 114985054.59,
+        "models": {
+          "first_touch": {
+            "attributed": 5109398658.77,
+            "difference": -0.0
+          },
+          "last_touch": {
+            "attributed": 5109398658.77,
+            "difference": -0.0
+          },
+          "linear_multi_touch": {
+            "attributed": 5109398658.77,
+            "difference": -0.0
+          },
+          "position_based": {
+            "attributed": 5109398658.77,
+            "difference": -0.0
+          },
+          "time_decay": {
+            "attributed": 5109398658.77,
+            "difference": -0.0
+          }
+        }
+      },
+      "USD": {
+        "gross_order_revenue": 23192631.15,
+        "duplicate_revenue_excluded": 105778.78,
+        "recognised_revenue": 23086852.37,
+        "unattributed_revenue": 300401.38,
+        "models": {
+          "first_touch": {
+            "attributed": 22786450.99,
+            "difference": 0.0
+          },
+          "last_touch": {
+            "attributed": 22786450.99,
+            "difference": 0.0
+          },
+          "linear_multi_touch": {
+            "attributed": 22786450.99,
+            "difference": 0.0
+          },
+          "position_based": {
+            "attributed": 22786450.99,
+            "difference": 0.0
+          },
+          "time_decay": {
+            "attributed": 22786450.99,
+            "difference": 0.0
+          }
+        }
+      }
+    },
+    "spend": {
+      "ledger_total_usd": 33314985.95,
+      "valid_spend_usd": 31326226.13,
+      "quarantined_spend_usd": 1988759.82,
+      "campaigns_missing_cost": 10
+    },
+    "recognised_opportunities": 5171,
+    "unattributed_opportunities": 99,
+    "attributed_revenue_usd_by_model": {
+      "first_touch": 101098843.44,
+      "last_touch": 101098843.44,
+      "linear_multi_touch": 101098842.77,
+      "position_based": 101098843.23,
+      "time_decay": 101098843.05
+    },
+    "unattributed_revenue_usd": 2048431.81
+  },
+  "model_comparison": {
+    "channel_revenue_share": {
+      "CH-001": {
+        "first_touch": 0.1516,
+        "last_touch": 0.153,
+        "linear_multi_touch": 0.1486,
+        "position_based": 0.1508,
+        "time_decay": 0.1543
+      },
+      "CH-002": {
+        "first_touch": 0.1544,
+        "last_touch": 0.1389,
+        "linear_multi_touch": 0.146,
+        "position_based": 0.1465,
+        "time_decay": 0.1418
+      },
+      "CH-003": {
+        "first_touch": 0.1118,
+        "last_touch": 0.1108,
+        "linear_multi_touch": 0.1147,
+        "position_based": 0.1122,
+        "time_decay": 0.1127
+      },
+      "CH-004": {
+        "first_touch": 0.0968,
+        "last_touch": 0.128,
+        "linear_multi_touch": 0.1097,
+        "position_based": 0.1116,
+        "time_decay": 0.118
+      },
+      "CH-005": {
+        "first_touch": 0.0992,
+        "last_touch": 0.0903,
+        "linear_multi_touch": 0.0915,
+        "position_based": 0.0942,
+        "time_decay": 0.0876
+      },
+      "CH-006": {
+        "first_touch": 0.1112,
+        "last_touch": 0.1202,
+        "linear_multi_touch": 0.1179,
+        "position_based": 0.1166,
+        "time_decay": 0.1164
+      },
+      "CH-007": {
+        "first_touch": 0.1548,
+        "last_touch": 0.1415,
+        "linear_multi_touch": 0.1514,
+        "position_based": 0.149,
+        "time_decay": 0.1502
+      },
+      "CH-008": {
+        "first_touch": 0.1201,
+        "last_touch": 0.1172,
+        "linear_multi_touch": 0.1202,
+        "position_based": 0.119,
+        "time_decay": 0.119
+      }
+    },
+    "channel_true_share": {
+      "CH-001": 0.2021,
+      "CH-002": 0.0763,
+      "CH-003": 0.0888,
+      "CH-004": 0.1132,
+      "CH-005": 0.0259,
+      "CH-006": 0.0199,
+      "CH-007": 0.2788,
+      "CH-008": 0.1949
+    },
+    "distance_to_ground_truth": {
+      "first_touch": {
+        "total_variation_distance": 0.2657,
+        "mean_absolute_error": 0.0664
+      },
+      "last_touch": {
+        "total_variation_distance": 0.2642,
+        "mean_absolute_error": 0.066
+      },
+      "linear_multi_touch": {
+        "total_variation_distance": 0.2592,
+        "mean_absolute_error": 0.0648
+      },
+      "position_based": {
+        "total_variation_distance": 0.2586,
+        "mean_absolute_error": 0.0646
+      },
+      "time_decay": {
+        "total_variation_distance": 0.2524,
+        "mean_absolute_error": 0.0631
+      }
+    },
+    "best_model_vs_ground_truth": "time_decay",
+    "campaign_rank_correlation_spearman": {
+      "first_touch": {
+        "first_touch": 1.0,
+        "last_touch": 0.4383,
+        "linear_multi_touch": 0.7569,
+        "position_based": 0.8384,
+        "time_decay": 0.5641
+      },
+      "last_touch": {
+        "first_touch": 0.4383,
+        "last_touch": 1.0,
+        "linear_multi_touch": 0.7391,
+        "position_based": 0.8213,
+        "time_decay": 0.8877
+      },
+      "linear_multi_touch": {
+        "first_touch": 0.7569,
+        "last_touch": 0.7391,
+        "linear_multi_touch": 1.0,
+        "position_based": 0.931,
+        "time_decay": 0.9024
+      },
+      "position_based": {
+        "first_touch": 0.8384,
+        "last_touch": 0.8213,
+        "linear_multi_touch": 0.931,
+        "position_based": 1.0,
+        "time_decay": 0.8797
+      },
+      "time_decay": {
+        "first_touch": 0.5641,
+        "last_touch": 0.8877,
+        "linear_multi_touch": 0.9024,
+        "position_based": 0.8797,
+        "time_decay": 1.0
+      }
+    },
+    "credit_shift_vs_linear": {
+      "first_touch": 0.1878,
+      "last_touch": 0.1915,
+      "linear_multi_touch": 0.0,
+      "position_based": 0.0806,
+      "time_decay": 0.0945
+    }
+  },
+  "chronological_evaluation": {
+    "cutoff": "2026-07-01",
+    "opportunities_created": {
+      "train": 7448,
+      "evaluation": 2552
+    },
+    "conversions": {
+      "train": 3801,
+      "evaluation": 1271
+    },
+    "spend_usd": {
+      "train": 25387790.46,
+      "evaluation": 5938435.67
+    },
+    "models": {
+      "first_touch": {
+        "segments_compared": 24,
+        "roas_rank_stability_spearman": 0.0478,
+        "channel_share_shift_tvd": 0.0996,
+        "train_attributed_usd": 77598038.64,
+        "evaluation_attributed_usd": 23500804.8
+      },
+      "last_touch": {
+        "segments_compared": 24,
+        "roas_rank_stability_spearman": 0.3965,
+        "channel_share_shift_tvd": 0.1478,
+        "train_attributed_usd": 77598038.64,
+        "evaluation_attributed_usd": 23500804.8
+      },
+      "linear_multi_touch": {
+        "segments_compared": 24,
+        "roas_rank_stability_spearman": 0.2983,
+        "channel_share_shift_tvd": 0.0975,
+        "train_attributed_usd": 77598038.22,
+        "evaluation_attributed_usd": 23500804.55
+      },
+      "position_based": {
+        "segments_compared": 24,
+        "roas_rank_stability_spearman": 0.24,
+        "channel_share_shift_tvd": 0.104,
+        "train_attributed_usd": 77598038.4,
+        "evaluation_attributed_usd": 23500804.83
+      },
+      "time_decay": {
+        "segments_compared": 24,
+        "roas_rank_stability_spearman": 0.3261,
+        "channel_share_shift_tvd": 0.1264,
+        "train_attributed_usd": 77598038.29,
+        "evaluation_attributed_usd": 23500804.76
+      }
+    }
+  },
+  "identity_gaps": {
+    "sessions_total": 100000,
+    "anonymous_sessions": 6000,
+    "anonymous_session_share": 0.06,
+    "sessions_by_identity_evidence": {
+      "login": 33669,
+      "email_click_id": 29515,
+      "cookie_match": 21017,
+      "form_submit": 9799,
+      "none": 6000
+    },
+    "leads_total": 15030,
+    "leads_without_session": 5201,
+    "leads_without_session_by_source": {
+      "crm_import": 2969,
+      "event_scan": 2232
+    },
+    "rejected_identity_links": 30,
+    "rejected_identity_link_ids": [
+      "LEAD-2026-015001",
+      "LEAD-2026-015002",
+      "LEAD-2026-015003",
+      "LEAD-2026-015004",
+      "LEAD-2026-015005",
+      "LEAD-2026-015006",
+      "LEAD-2026-015007",
+      "LEAD-2026-015008",
+      "LEAD-2026-015009",
+      "LEAD-2026-015010",
+      "LEAD-2026-015011",
+      "LEAD-2026-015012",
+      "LEAD-2026-015013",
+      "LEAD-2026-015014",
+      "LEAD-2026-015015",
+      "LEAD-2026-015016",
+      "LEAD-2026-015017",
+      "LEAD-2026-015018",
+      "LEAD-2026-015019",
+      "LEAD-2026-015020",
+      "LEAD-2026-015021",
+      "LEAD-2026-015022",
+      "LEAD-2026-015023",
+      "LEAD-2026-015024",
+      "LEAD-2026-015025",
+      "LEAD-2026-015026",
+      "LEAD-2026-015027",
+      "LEAD-2026-015028",
+      "LEAD-2026-015029",
+      "LEAD-2026-015030"
+    ],
+    "offline_touches": 37219,
+    "touches_without_creative": 37219,
+    "won_opportunities": 5171,
+    "won_opportunities_unattributed": 99,
+    "unattributed_revenue_usd": 2048431.81,
+    "unattributed_by_reason": {
+      "only_post_conversion_or_ineligible_touches": 95,
+      "all_touches_outside_lookback_or_ineligible": 3,
+      "no_touchpoints_for_contact": 1
+    }
+  },
+  "touch_eligibility": {
+    "after_conversion": 10414,
+    "before_previous_conversion": 4943,
+    "eligible": 39178,
+    "flagged_exception": 1,
+    "outside_lookback": 193,
+    "offline_excluded": 0
+  }
 }

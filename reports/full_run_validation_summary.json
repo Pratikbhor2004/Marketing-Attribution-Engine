@@ -1,317 +1,742 @@
 {
   "passed": true,
+  "total_checks": 111,
+  "failed_checks": [],
+  "by_category": {
+    "primary_key": {
+      "passed": 17,
+      "failed": 0
+    },
+    "foreign_key": {
+      "passed": 21,
+      "failed": 0
+    },
+    "id_format": {
+      "passed": 9,
+      "failed": 0
+    },
+    "enum": {
+      "passed": 19,
+      "failed": 0
+    },
+    "temporal": {
+      "passed": 14,
+      "failed": 0
+    },
+    "lifecycle": {
+      "passed": 5,
+      "failed": 0
+    },
+    "derived": {
+      "passed": 3,
+      "failed": 0
+    },
+    "arithmetic": {
+      "passed": 15,
+      "failed": 0
+    },
+    "duplicate": {
+      "passed": 2,
+      "failed": 0
+    },
+    "identity": {
+      "passed": 2,
+      "failed": 0
+    },
+    "ground_truth": {
+      "passed": 4,
+      "failed": 0
+    }
+  },
   "checks": [
     {
-      "check": "Campaign primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Channel.channel_id unique & not null",
       "passed": true,
-      "details": "rows=500; duplicate_keys=0"
+      "details": "rows=8 duplicates=0"
     },
     {
-      "check": "Channel primary-key uniqueness",
+      "category": "primary_key",
+      "check": "FxRate.fx_rate_id unique & not null",
       "passed": true,
-      "details": "rows=8; duplicate_keys=0"
+      "details": "rows=108 duplicates=0"
     },
     {
-      "check": "Creative primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Campaign.campaign_id unique & not null",
       "passed": true,
-      "details": "rows=500; duplicate_keys=0"
+      "details": "rows=500 duplicates=0"
     },
     {
-      "check": "Audience primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Creative.creative_id unique & not null",
       "passed": true,
-      "details": "rows=25; duplicate_keys=0"
+      "details": "rows=877 duplicates=0"
     },
     {
-      "check": "Contact primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Audience.audience_id unique & not null",
       "passed": true,
-      "details": "rows=50000; duplicate_keys=0"
+      "details": "rows=25 duplicates=0"
     },
     {
-      "check": "Touchpoint primary-key uniqueness",
+      "category": "primary_key",
+      "check": "CampaignAudience.campaign_audience_id unique & not null",
       "passed": true,
-      "details": "rows=200001; duplicate_keys=0"
+      "details": "rows=1028 duplicates=0"
     },
     {
-      "check": "WebSession primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Contact.contact_id unique & not null",
       "passed": true,
-      "details": "rows=100000; duplicate_keys=0"
+      "details": "rows=50000 duplicates=0"
     },
     {
-      "check": "Lead primary-key uniqueness",
+      "category": "primary_key",
+      "check": "WebSession.session_id unique & not null",
       "passed": true,
-      "details": "rows=15001; duplicate_keys=0"
+      "details": "rows=100000 duplicates=0"
     },
     {
-      "check": "Opportunity primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Lead.lead_id unique & not null",
       "passed": true,
-      "details": "rows=10000; duplicate_keys=0"
+      "details": "rows=15030 duplicates=0"
     },
     {
-      "check": "OpportunityEvent primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Opportunity.opportunity_id unique & not null",
       "passed": true,
-      "details": "rows=27000; duplicate_keys=0"
+      "details": "rows=10000 duplicates=0"
     },
     {
-      "check": "Order primary-key uniqueness",
+      "category": "primary_key",
+      "check": "OpportunityEvent.event_id unique & not null",
       "passed": true,
-      "details": "rows=6220; duplicate_keys=0"
+      "details": "rows=35331 duplicates=0"
     },
     {
-      "check": "CostRecord primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Touchpoint.touchpoint_id unique & not null",
       "passed": true,
-      "details": "rows=500; duplicate_keys=0"
+      "details": "rows=200019 duplicates=0"
     },
     {
-      "check": "AttributionResult primary-key uniqueness",
+      "category": "primary_key",
+      "check": "Order.order_id unique & not null",
       "passed": true,
-      "details": "rows=33852; duplicate_keys=0"
+      "details": "rows=5192 duplicates=0"
     },
     {
+      "category": "primary_key",
+      "check": "CostRecord.cost_record_id unique & not null",
+      "passed": true,
+      "details": "rows=2536 duplicates=0"
+    },
+    {
+      "category": "primary_key",
+      "check": "AttributionResult.attribution_id unique & not null",
+      "passed": true,
+      "details": "rows=118795 duplicates=0"
+    },
+    {
+      "category": "primary_key",
+      "check": "ExceptionLog.exception_id unique & not null",
+      "passed": true,
+      "details": "rows=105 duplicates=0"
+    },
+    {
+      "category": "primary_key",
+      "check": "CampaignAudience (campaign_id, audience_id) unique",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "foreign_key",
       "check": "Campaign.channel_id -> Channel.channel_id",
       "passed": true,
-      "details": "invalid references=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Campaign.creative_id -> Creative.creative_id",
+      "category": "foreign_key",
+      "check": "Creative.campaign_id -> Campaign.campaign_id",
       "passed": true,
-      "details": "invalid references=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Campaign.audience_id -> Audience.audience_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Touchpoint.contact_id -> Contact.contact_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Touchpoint.campaign_id -> Campaign.campaign_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Touchpoint.channel_id -> Channel.channel_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "WebSession.contact_id -> Contact.contact_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Lead.contact_id -> Contact.contact_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Lead.session_id -> WebSession.session_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Opportunity.contact_id -> Contact.contact_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Opportunity.lead_id -> Lead.lead_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "OpportunityEvent.opportunity_id -> Opportunity.opportunity_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "Order.opportunity_id -> Opportunity.opportunity_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "CostRecord.campaign_id -> Campaign.campaign_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "AttributionResult.opportunity_id -> Opportunity.opportunity_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
-      "check": "AttributionResult.campaign_id -> Campaign.campaign_id",
-      "passed": true,
-      "details": "invalid references=0"
-    },
-    {
+      "category": "foreign_key",
       "check": "CampaignAudience.campaign_id -> Campaign.campaign_id",
       "passed": true,
-      "details": "invalid references=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
+      "category": "foreign_key",
       "check": "CampaignAudience.audience_id -> Audience.audience_id",
       "passed": true,
-      "details": "invalid references=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Allowed channel values",
+      "category": "foreign_key",
+      "check": "WebSession.contact_id -> Contact.contact_id",
       "passed": true,
-      "details": "Channel enum"
+      "details": "orphans=0 nulls=6000 nullable=True"
     },
     {
-      "check": "Opportunity amount non-negative",
+      "category": "foreign_key",
+      "check": "WebSession.traffic_channel_id -> Channel.channel_id",
       "passed": true,
-      "details": "amount >= 0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Campaign budget non-negative",
+      "category": "foreign_key",
+      "check": "Lead.contact_id -> Contact.contact_id",
       "passed": true,
-      "details": "budget >= 0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "CampaignAudience composite-key uniqueness",
+      "category": "foreign_key",
+      "check": "Lead.session_id -> WebSession.session_id",
       "passed": true,
-      "details": "campaign/audience/effective_from unique"
+      "details": "orphans=0 nulls=5201 nullable=True"
     },
     {
-      "check": "CampaignAudience effective dates",
+      "category": "foreign_key",
+      "check": "Opportunity.contact_id -> Contact.contact_id",
       "passed": true,
-      "details": "effective_to >= effective_from"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Campaign date order",
+      "category": "foreign_key",
+      "check": "Opportunity.lead_id -> Lead.lead_id",
       "passed": true,
-      "details": "end_at >= start_at"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Lead/session identity consistency",
+      "category": "foreign_key",
+      "check": "OpportunityEvent.opportunity_id -> Opportunity.opportunity_id",
       "passed": true,
-      "details": "unlabelled mismatches=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "No unsupported anonymous identity joins",
+      "category": "foreign_key",
+      "check": "Touchpoint.contact_id -> Contact.contact_id",
       "passed": true,
-      "details": "unlabelled anonymous joins=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
-      "check": "Opportunity/lead contact consistency",
+      "category": "foreign_key",
+      "check": "Touchpoint.campaign_id -> Campaign.campaign_id",
       "passed": true,
-      "details": "mismatches=0"
+      "details": "orphans=0 nulls=0 nullable=False"
     },
     {
+      "category": "foreign_key",
+      "check": "Touchpoint.channel_id -> Channel.channel_id",
+      "passed": true,
+      "details": "orphans=0 nulls=0 nullable=False"
+    },
+    {
+      "category": "foreign_key",
+      "check": "Touchpoint.creative_id -> Creative.creative_id",
+      "passed": true,
+      "details": "orphans=0 nulls=37219 nullable=True"
+    },
+    {
+      "category": "foreign_key",
+      "check": "Touchpoint.reported_conversion_id -> Opportunity.opportunity_id",
+      "passed": true,
+      "details": "orphans=0 nulls=196522 nullable=True"
+    },
+    {
+      "category": "foreign_key",
+      "check": "Order.opportunity_id -> Opportunity.opportunity_id",
+      "passed": true,
+      "details": "orphans=0 nulls=0 nullable=False"
+    },
+    {
+      "category": "foreign_key",
+      "check": "CostRecord.campaign_id -> Campaign.campaign_id",
+      "passed": true,
+      "details": "orphans=0 nulls=0 nullable=False"
+    },
+    {
+      "category": "foreign_key",
+      "check": "AttributionResult.opportunity_id -> Opportunity.opportunity_id",
+      "passed": true,
+      "details": "orphans=0 nulls=0 nullable=False"
+    },
+    {
+      "category": "foreign_key",
+      "check": "AttributionResult.campaign_id -> Campaign.campaign_id",
+      "passed": true,
+      "details": "orphans=0 nulls=0 nullable=False"
+    },
+    {
+      "category": "foreign_key",
+      "check": "AttributionResult.contact_id -> Contact.contact_id",
+      "passed": true,
+      "details": "orphans=0 nulls=0 nullable=False"
+    },
+    {
+      "category": "id_format",
+      "check": "Campaign.campaign_id matches ^CMP-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "Contact.contact_id matches ^CON-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "WebSession.session_id matches ^SES-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "Lead.lead_id matches ^LEAD-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "Opportunity.opportunity_id matches ^OPP-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "Order.order_id matches ^ORD-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "CostRecord.cost_record_id matches ^COST-2026-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "Touchpoint.touchpoint_id matches ^TOUCH-CON-2026-\\d{6}-\\d{6}$",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "id_format",
+      "check": "Touchpoint id embeds its contact_id",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "enum",
+      "check": "Channel.channel_name in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Campaign.currency in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Campaign.market in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Campaign.status in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Campaign.objective in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Contact.consent_status in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Contact.company_size in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Contact.lifecycle_state in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "WebSession.identity_evidence in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "WebSession.device in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Lead.status in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Lead.source_system in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Opportunity.stage in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Opportunity.currency in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Touchpoint.touch_type in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Order.currency in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "CostRecord.currency in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "AttributionResult.model in allowed values",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "enum",
+      "check": "Monetary amounts non-negative",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Campaign end_at >= start_at",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Touchpoint inside its campaign flight",
+      "passed": true,
+      "details": "violations=0"
+    },
+    {
+      "category": "temporal",
+      "check": "Touchpoint after contact creation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Touchpoint channel equals campaign channel",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Session ended_at >= started_at",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Identified session after contact creation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Lead after contact creation",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Lead created after its session started",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
       "check": "Opportunity created after lead",
       "passed": true,
-      "details": "opportunity.created_at >= lead.created_at"
+      "details": ""
     },
     {
-      "check": "Opportunity close after creation",
+      "category": "temporal",
+      "check": "Opportunity closed_at >= created_at",
       "passed": true,
-      "details": "closed_at >= created_at"
+      "details": ""
     },
     {
-      "check": "Open opportunities have no close date",
+      "category": "temporal",
+      "check": "Open stages have null closed_at, closed stages have closed_at",
       "passed": true,
-      "details": "open => closed_at null"
+      "details": ""
     },
     {
-      "check": "Touchpoint channel matches campaign",
+      "category": "temporal",
+      "check": "Order recognised on/after opportunity close",
       "passed": true,
-      "details": "touch channel equals campaign channel"
+      "details": ""
     },
     {
-      "check": "Post-conversion touch is labelled",
+      "category": "temporal",
+      "check": "Cost incurred inside campaign flight",
       "passed": true,
-      "details": "late touch has explicit issue_type"
+      "details": "violations=0"
     },
     {
-      "check": "Late-touch anomaly occurs after a conversion",
+      "category": "lifecycle",
+      "check": "Every stage transition is allowed",
       "passed": true,
-      "details": "labelled late touch is after associated conversion"
+      "details": "invalid=[]"
     },
     {
-      "check": "No unlabelled duplicate invoices",
+      "category": "lifecycle",
+      "check": "History starts with a created event",
       "passed": true,
-      "details": "unlabelled duplicate invoice rows=0"
+      "details": ""
     },
     {
-      "check": "Valid orders belong to closed-won opportunities",
+      "category": "lifecycle",
+      "check": "Event sequence is chronological",
       "passed": true,
-      "details": "valid order stage=closed_won"
+      "details": ""
     },
     {
-      "check": "Order amount reconciles to opportunity",
+      "category": "lifecycle",
+      "check": "Latest event equals current opportunity stage",
       "passed": true,
-      "details": "order revenue equals opportunity amount"
+      "details": ""
     },
     {
-      "check": "Order currency matches opportunity",
+      "category": "lifecycle",
+      "check": "Every opportunity has history",
       "passed": true,
-      "details": "order currency equals opportunity currency"
+      "details": ""
     },
     {
-      "check": "Attribution has non-negative revenue",
+      "category": "derived",
+      "check": "Lead status 'converted' iff it has an opportunity",
       "passed": true,
-      "details": "credited_revenue >= 0"
+      "details": ""
     },
     {
-      "check": "Attribution currencies match order",
+      "category": "derived",
+      "check": "Contact 'customer' iff it has a won opportunity",
       "passed": true,
-      "details": "attribution currency equals order currency"
+      "details": ""
     },
     {
-      "check": "first_touch opportunity revenue reconciliation",
+      "category": "derived",
+      "check": "Touch is_offline derived from touch type",
       "passed": true,
-      "details": "reconciled opportunities=5927"
+      "details": ""
     },
     {
-      "check": "last_touch opportunity revenue reconciliation",
+      "category": "arithmetic",
+      "check": "Valid order revenue equals opportunity amount",
       "passed": true,
-      "details": "reconciled opportunities=5927"
+      "details": ""
     },
     {
-      "check": "linear_multi_touch opportunity revenue reconciliation",
+      "category": "arithmetic",
+      "check": "Valid order currency equals opportunity currency",
       "passed": true,
-      "details": "reconciled opportunities=5927"
+      "details": ""
     },
     {
-      "check": "Opportunity event chronology",
+      "category": "arithmetic",
+      "check": "Orders only for closed-won opportunities",
       "passed": true,
-      "details": "events are ordered by occurred_at"
+      "details": ""
     },
     {
-      "check": "Lifecycle history matches current opportunity stage",
+      "category": "arithmetic",
+      "check": "One valid order per won opportunity",
       "passed": true,
-      "details": "latest event matches final state (open remains new)"
+      "details": ""
     },
     {
-      "check": "All five required anomaly classes",
+      "category": "arithmetic",
+      "check": "first_touch: credited revenue == recognised revenue per opportunity",
+      "passed": true,
+      "details": "max_diff=0.0000 opps=5072"
+    },
+    {
+      "category": "arithmetic",
+      "check": "first_touch: credit shares sum to 1",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "arithmetic",
+      "check": "last_touch: credited revenue == recognised revenue per opportunity",
+      "passed": true,
+      "details": "max_diff=0.0000 opps=5072"
+    },
+    {
+      "category": "arithmetic",
+      "check": "last_touch: credit shares sum to 1",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "arithmetic",
+      "check": "linear_multi_touch: credited revenue == recognised revenue per opportunity",
+      "passed": true,
+      "details": "max_diff=0.0000 opps=5072"
+    },
+    {
+      "category": "arithmetic",
+      "check": "linear_multi_touch: credit shares sum to 1",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "arithmetic",
+      "check": "position_based: credited revenue == recognised revenue per opportunity",
+      "passed": true,
+      "details": "max_diff=0.0000 opps=5072"
+    },
+    {
+      "category": "arithmetic",
+      "check": "position_based: credit shares sum to 1",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "arithmetic",
+      "check": "time_decay: credited revenue == recognised revenue per opportunity",
+      "passed": true,
+      "details": "max_diff=0.0000 opps=5072"
+    },
+    {
+      "category": "arithmetic",
+      "check": "time_decay: credit shares sum to 1",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "arithmetic",
+      "check": "Attribution currency equals order currency",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "temporal",
+      "check": "Attribution only for converted opportunities",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "duplicate",
+      "check": "No duplicate touch events",
+      "passed": true,
+      "details": "duplicates=0"
+    },
+    {
+      "category": "duplicate",
+      "check": "No unflagged duplicate invoices",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "identity",
+      "check": "Session-linked leads match the session contact",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "identity",
+      "check": "Session-linked leads have identity evidence",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "ground_truth",
+      "check": "No anomaly labels in input (source) tables",
+      "passed": true,
+      "details": "leaked=[]"
+    },
+    {
+      "category": "ground_truth",
+      "check": "All five exception classes detected",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "category": "ground_truth",
+      "check": "Every ground-truth record id exists in the input tables",
       "passed": true,
       "details": "missing=[]"
     },
     {
-      "check": "Ground truth remains separate",
+      "category": "ground_truth",
+      "check": "All five anomaly classes labelled",
       "passed": true,
-      "details": "labelled exceptions=5"
+      "details": ""
     }
   ],
   "row_counts": {
     "Channel": 8,
+    "FxRate": 108,
     "Campaign": 500,
-    "Creative": 500,
+    "Creative": 877,
     "Audience": 25,
+    "CampaignAudience": 1028,
     "Contact": 50000,
     "WebSession": 100000,
-    "Lead": 15001,
+    "Lead": 15030,
     "Opportunity": 10000,
-    "OpportunityEvent": 27000,
-    "Touchpoint": 200001,
-    "Order": 6220,
-    "CostRecord": 500,
-    "CampaignAudience": 500,
-    "AttributionResult": 33852,
-    "GroundTruth": 5
+    "OpportunityEvent": 35331,
+    "Touchpoint": 200019,
+    "Order": 5192,
+    "CostRecord": 2536,
+    "ExceptionLog": 105,
+    "AttributionRun": 1,
+    "AttributionResult": 118795,
+    "UnattributedRevenue": 99,
+    "TouchEligibilityAudit": 5171,
+    "CampaignROI": 2500,
+    "ChannelROI": 40
   }
 }
