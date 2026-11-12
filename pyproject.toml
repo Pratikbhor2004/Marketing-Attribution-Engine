@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "marketing-attribution-engine"
-version = "1.0.0"
+version = "2.0.0"
 description = "Reproducible synthetic marketing attribution and campaign ROI analytics"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -14,7 +14,8 @@ dependencies = [
   "fastapi>=0.110",
   "uvicorn[standard]>=0.27",
   "streamlit>=1.32",
-  "plotly>=5.19"
+  "plotly>=5.19",
+  "pydantic>=2.0"
 ]
 
 [project.optional-dependencies]
@@ -29,3 +30,4 @@ include = ["attribution_engine*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+filterwarnings = ["ignore::DeprecationWarning:fastapi.testclient", "ignore:Using `httpx`:DeprecationWarning"]

@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import json
 import os
-import sqlite3
 import threading
 import uuid
 from datetime import datetime, timezone
@@ -36,7 +35,7 @@ from .attribution import MODELS, AttributionOutput, run_attribution
 from .config import AttributionParams, DatasetConfig, DEFAULT_SEED
 from .detection import RULES, detect_exceptions, evaluate_detection
 from .generator import OPP_TRANSITIONS
-from .pipeline import (DERIVED_TABLES, SOURCE_TABLES, attribution_run_record, insert_rows, load_tables)
+from .pipeline import (DERIVED_TABLES, SOURCE_TABLES, attribution_run_record, connect, insert_rows)
 
 TAGS = [
     {"name": "System", "description": "Health, manifest, configuration and schema."},
@@ -80,7 +79,7 @@ def _require_db() -> Path:
 
 
 def query(sql: str, params: tuple = ()) -> pd.DataFrame:
-    with sqlite3.connect(_require_db()) as conn:
+    with connect(_require_db()) as conn:
         return pd.read_sql_query(sql, conn, params=params)
 
 
@@ -170,7 +169,7 @@ def config():
 @app.get("/api/v1/meta/schema", tags=["System"], summary="Live schema: tables, columns, types, PK/FK, row counts")
 def schema():
     out = {}
-    with sqlite3.connect(_require_db()) as conn:
+    with connect(_require_db()) as conn:
         names = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")]
         for n in names:
             cols = [{"name": c[1], "type": c[2], "primary_key": bool(c[5])} for c in conn.execute(f'PRAGMA table_info("{n}")')]
@@ -432,7 +431,10 @@ def _current_stage(opportunity_id: str) -> dict | None:
 @app.get("/api/v1/opportunities", tags=["Funnel"], summary="List opportunities")
 def opportunities(stage: Optional[str] = None, currency: Optional[str] = None, contact_id: Optional[str] = None,
                   created_from: Optional[str] = None, created_to: Optional[str] = None, limit: int = Limit, offset: int = Offset):
-    df = _filter(table("Opportunity"), stage=stage, currency=currency, contact_id=contact_id)
+    """`stage` filters on the live stage derived from the event history (current_stage)."""
+    cur = query("SELECT opportunity_id, current_stage, stage_since FROM opportunity_current_stage")
+    df = table("Opportunity").rename(columns={"stage": "stage_snapshot"}).merge(cur, on="opportunity_id", how="left")
+    df = _filter(df, current_stage=stage, currency=currency, contact_id=contact_id)
     if created_from:
         df = df[df["created_at"] >= created_from]
     if created_to:
@@ -488,8 +490,7 @@ def append_opportunity_event(opportunity_id: str, change: StageChange):
                              "event_type": "closed" if change.to_stage.startswith("closed") else "stage_changed",
                              "from_stage": cur["current_stage"], "to_stage": change.to_stage,
                              "occurred_at": ts.strftime("%Y-%m-%dT%H:%M:%S"), "actor": change.actor}])
-        with sqlite3.connect(_require_db()) as conn:
-            conn.execute("PRAGMA foreign_keys = ON")
+        with connect(_require_db()) as conn:
             insert_rows(conn, "OpportunityEvent", row)
     return {"appended": records(row)[0], "current": _current_stage(opportunity_id),
             "note": "Revenue is only recognised from Order records (billing); a closed_won event alone credits nothing."}
@@ -576,8 +577,7 @@ def create_run(req: RunRequest):
         run = attribution_run_record(run_id, out.params, out, req.triggered_by)
         un = out.unattributed.copy(); un.insert(0, "run_id", run_id)
         audit = out.touch_audit.copy(); audit.insert(0, "run_id", run_id)
-        with sqlite3.connect(_require_db()) as conn:
-            conn.execute("PRAGMA foreign_keys = ON")
+        with connect(_require_db()) as conn:
             insert_rows(conn, "AttributionRun", run)
             insert_rows(conn, "AttributionResult", out.results)
             insert_rows(conn, "UnattributedRevenue", un)

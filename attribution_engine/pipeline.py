@@ -5,6 +5,7 @@ constraints) and the reproducibility digest used by scripts/verify_reproducibili
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -74,6 +75,19 @@ def run_pipeline(cfg: DatasetConfig) -> PipelineResult:
 
 
 # ------------------------------------------------------------------------------ SQLite
+@contextmanager
+def connect(path):
+    """Open, commit on success, and always close (sqlite3's own context manager never closes,
+    which keeps the file locked on Windows)."""
+    conn = sqlite3.connect(path)
+    try:
+        conn.execute("PRAGMA foreign_keys = ON")
+        yield conn
+        conn.commit()
+    finally:
+        conn.close()
+
+
 def _sql_type(series: pd.Series) -> str:
     if pd.api.types.is_bool_dtype(series):
         return "INTEGER"
@@ -116,8 +130,7 @@ def insert_rows(conn: sqlite3.Connection, name: str, df: pd.DataFrame) -> None:
 def write_sqlite(tables: dict[str, pd.DataFrame], db_path: Path) -> None:
     if db_path.exists():
         db_path.unlink()
-    with sqlite3.connect(db_path) as conn:
-        conn.execute("PRAGMA foreign_keys = ON")
+    with connect(db_path) as conn:
         for name in SOURCE_TABLES + DERIVED_TABLES:
             create_table(conn, name, tables[name])
             insert_rows(conn, name, tables[name])
@@ -144,7 +157,7 @@ def write_sqlite(tables: dict[str, pd.DataFrame], db_path: Path) -> None:
 
 
 def load_tables(db_path: Path, names: list[str] | None = None) -> dict[str, pd.DataFrame]:
-    with sqlite3.connect(db_path) as conn:
+    with connect(db_path) as conn:
         return {n: pd.read_sql_query(f'SELECT * FROM "{n.lower()}"', conn) for n in (names or SOURCE_TABLES)}
 
 
@@ -177,7 +190,7 @@ def export(result: PipelineResult, cfg: DatasetConfig, output_dir: str | Path, f
     if "sqlite" in formats or "sql" in formats:
         write_sqlite(result.tables, out / "attribution.db")
     if "sql" in formats:
-        with sqlite3.connect(out / "attribution.db") as conn, open(out / "seed_data.sql", "w", encoding="utf-8", newline="\n") as fh:
+        with connect(out / "attribution.db") as conn, open(out / "seed_data.sql", "w", encoding="utf-8", newline="\n") as fh:
             for line in conn.iterdump():
                 fh.write(line + "\n")
     (out / "validation_summary.json").write_text(json.dumps(result.validation, indent=2, default=str), encoding="utf-8")
