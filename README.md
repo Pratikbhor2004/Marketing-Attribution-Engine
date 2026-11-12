@@ -13,7 +13,7 @@ The engine joins **campaign touches, web sessions, leads, opportunities and reve
 | Reconciliation | every model credits exactly the recognised revenue (USD 101.1 M credited + USD 2.0 M unattributed) |
 | Reproducibility | two regenerations match on all 23 tables (row counts + SHA-256) |
 
-**Documentation:** [Feature guide (problem statement + why/how for every feature)](docs/feature_guide.md) · [Architecture, use-case, ER and sequence diagrams](docs/architecture.md) · [Attribution and ROI rules](docs/attribution_rules.md) · [Data dictionary](docs/data_dictionary.md) · [API reference / Swagger](docs/api_reference.md)
+**Documentation:** [Developer guide (setup, run, test, extend, troubleshoot)](DEVELOPER.md) · [Feature guide (problem statement + why/how for every feature)](docs/feature_guide.md) · [Architecture, use-case, ER and sequence diagrams](docs/architecture.md) · [Attribution and ROI rules](docs/attribution_rules.md) · [Data dictionary](docs/data_dictionary.md) · [API reference / Swagger](docs/api_reference.md)
 
 ---
 
