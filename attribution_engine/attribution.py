@@ -80,7 +80,7 @@ def run_attribution(tables: dict[str, pd.DataFrame], exceptions: pd.DataFrame,
     tp["ts"] = pd.to_datetime(tp["occurred_at"])
     flagged = excluded_ids(exceptions, "post_conversion_touch")
     tp["flagged"] = tp["touchpoint_id"].isin(flagged)
-    tp["is_offline"] = tp["is_offline"].astype(str).str.lower().eq("true")
+    tp["is_offline"] = tp["is_offline"].astype(str).str.lower().isin(["true", "1"])
 
     # Previous conversion per contact (E4): touches before it were already credited.
     conv = rev[["opportunity_id", "contact_id", "conversion_ts"]].sort_values(["contact_id", "conversion_ts", "opportunity_id"])

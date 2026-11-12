@@ -187,7 +187,7 @@ def identity_gaps(tables, exceptions, unattributed) -> dict:
         "leads_without_session_by_source": l.loc[l["session_id"].isna(), "source_system"].value_counts().to_dict(),
         "rejected_identity_links": int(len(rejected)),
         "rejected_identity_link_ids": sorted(rejected)[:50],
-        "offline_touches": int(tp["is_offline"].astype(str).str.lower().eq("true").sum()),
+        "offline_touches": int(tp["is_offline"].astype(str).str.lower().isin(["true", "1"]).sum()),
         "touches_without_creative": int(tp["creative_id"].isna().sum()),
         "won_opportunities": int(len(won)),
         "won_opportunities_unattributed": int(len(unattributed)),

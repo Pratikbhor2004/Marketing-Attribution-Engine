@@ -1,2 +1,2 @@
-"""Marketing attribution engine."""
-__version__ = "1.0.0"
+"""Marketing Attribution Engine: synthetic data, exception detection, attribution and ROI."""
+__version__ = "2.0.0"
