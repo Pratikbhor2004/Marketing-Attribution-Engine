@@ -227,37 +227,37 @@
                   "key": "channel_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Channel Id"
+                  "description": "Channel: `CH-001` Paid Search, `CH-002` Paid Social, `CH-003` Email, `CH-004` Organic Search, `CH-005` Affiliate, `CH-006` Display, `CH-007` Events, `CH-008` Partner."
                 },
                 {
                   "key": "market",
                   "value": "",
                   "disabled": true,
-                  "description": "Market"
+                  "description": "Market: `IN` (INR), `US` (USD) or `EU` (EUR)."
                 },
                 {
                   "key": "status",
                   "value": "",
                   "disabled": true,
-                  "description": "Status"
+                  "description": "Status filter. Campaigns: `active` | `completed`. Leads: `new` | `qualified` | `converted` | `disqualified`."
                 },
                 {
                   "key": "currency",
                   "value": "",
                   "disabled": true,
-                  "description": "Currency"
+                  "description": "ISO currency: `INR`, `USD` or `EUR`."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -382,13 +382,13 @@
                   "key": "limit",
                   "value": "100",
                   "disabled": true,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -432,25 +432,25 @@
                   "key": "campaign_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Campaign Id"
+                  "description": "Campaign ID, format `CMP-2026-000001`."
                 },
                 {
                   "key": "format",
                   "value": "",
                   "disabled": true,
-                  "description": "Format"
+                  "description": "Creative format: `image`, `video`, `text`, `landing_page`, `event_kit`."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -572,13 +572,13 @@
                   "key": "currency",
                   "value": "INR",
                   "disabled": false,
-                  "description": "Currency"
+                  "description": "ISO currency: `INR`, `USD` or `EUR`."
                 },
                 {
                   "key": "month",
                   "value": "",
                   "disabled": true,
-                  "description": "Month"
+                  "description": "FX month, `YYYY-MM`."
                 }
               ]
             },
@@ -622,31 +622,31 @@
                   "key": "market",
                   "value": "",
                   "disabled": true,
-                  "description": "Market"
+                  "description": "Market: `IN` (INR), `US` (USD) or `EU` (EUR)."
                 },
                 {
                   "key": "lifecycle_state",
                   "value": "",
                   "disabled": true,
-                  "description": "Lifecycle State"
+                  "description": "Contact lifecycle (rule-derived): `prospect`, `lead`, `opportunity`, `customer`, `inactive`."
                 },
                 {
                   "key": "company_size",
                   "value": "",
                   "disabled": true,
-                  "description": "Company Size"
+                  "description": "Company size: `smb`, `mid_market`, `enterprise`."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -775,31 +775,31 @@
                   "key": "contact_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Contact Id"
+                  "description": "Contact ID, format `CON-2026-000001`."
                 },
                 {
                   "key": "identity_evidence",
                   "value": "",
                   "disabled": true,
-                  "description": "Identity Evidence"
+                  "description": "How the session was tied to a person: `form_submit`, `login`, `email_click_id`, `cookie_match`, `none`."
                 },
                 {
                   "key": "anonymous",
                   "value": "true",
                   "disabled": false,
-                  "description": "Anonymous"
+                  "description": "`true` = only sessions with no resolved contact; `false` = only identified sessions."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -883,37 +883,37 @@
                   "key": "status",
                   "value": "",
                   "disabled": true,
-                  "description": "Status"
+                  "description": "Status filter. Campaigns: `active` | `completed`. Leads: `new` | `qualified` | `converted` | `disqualified`."
                 },
                 {
                   "key": "source_system",
                   "value": "",
                   "disabled": true,
-                  "description": "Source System"
+                  "description": "Lead source: `web_form`, `event_scan` (offline), `crm_import` (offline)."
                 },
                 {
                   "key": "contact_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Contact Id"
+                  "description": "Contact ID, format `CON-2026-000001`."
                 },
                 {
                   "key": "has_session",
                   "value": "false",
                   "disabled": false,
-                  "description": "Has Session"
+                  "description": "`false` = leads with no web session ID (offline / CRM sources); `true` = leads captured in a session."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -997,43 +997,43 @@
                   "key": "stage",
                   "value": "closed_won",
                   "disabled": false,
-                  "description": "Stage"
+                  "description": "Live stage from the append-only event history: `prospecting`, `qualified`, `proposal`, `closed_won`, `closed_lost`."
                 },
                 {
                   "key": "currency",
                   "value": "",
                   "disabled": true,
-                  "description": "Currency"
+                  "description": "ISO currency: `INR`, `USD` or `EUR`."
                 },
                 {
                   "key": "contact_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Contact Id"
+                  "description": "Contact ID, format `CON-2026-000001`."
                 },
                 {
                   "key": "created_from",
                   "value": "",
                   "disabled": true,
-                  "description": "Created From"
+                  "description": "Created on or after (ISO date)."
                 },
                 {
                   "key": "created_to",
                   "value": "",
                   "disabled": true,
-                  "description": "Created To"
+                  "description": "Created before (ISO date, exclusive)."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -1251,43 +1251,43 @@
                   "key": "contact_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Contact Id"
+                  "description": "Contact ID, format `CON-2026-000001`."
                 },
                 {
                   "key": "campaign_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Campaign Id"
+                  "description": "Campaign ID, format `CMP-2026-000001`."
                 },
                 {
                   "key": "channel_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Channel Id"
+                  "description": "Channel: `CH-001` Paid Search, `CH-002` Paid Social, `CH-003` Email, `CH-004` Organic Search, `CH-005` Affiliate, `CH-006` Display, `CH-007` Events, `CH-008` Partner."
                 },
                 {
                   "key": "is_offline",
                   "value": "",
                   "disabled": true,
-                  "description": "Is Offline"
+                  "description": "`true` = offline touches only (event attendance, booth scan, sales call)."
                 },
                 {
                   "key": "has_conversion_claim",
                   "value": "true",
                   "disabled": false,
-                  "description": "Has Conversion Claim"
+                  "description": "`true` = touches where an ad platform reported a conversion (`reported_conversion_id`)."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -1371,25 +1371,25 @@
                   "key": "opportunity_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Opportunity Id"
+                  "description": "Opportunity ID, format `OPP-2026-000001`."
                 },
                 {
                   "key": "currency",
                   "value": "",
                   "disabled": true,
-                  "description": "Currency"
+                  "description": "ISO currency: `INR`, `USD` or `EUR`."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -1433,31 +1433,31 @@
                   "key": "campaign_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Campaign Id"
+                  "description": "Campaign ID, format `CMP-2026-000001`."
                 },
                 {
                   "key": "currency",
                   "value": "",
                   "disabled": true,
-                  "description": "Currency"
+                  "description": "ISO currency: `INR`, `USD` or `EUR`."
                 },
                 {
                   "key": "period_month",
                   "value": "",
                   "disabled": true,
-                  "description": "Period Month"
+                  "description": "Cost month, `YYYY-MM`."
                 },
                 {
                   "key": "limit",
                   "value": "20",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -1508,7 +1508,7 @@
                   "key": "run_id",
                   "value": "{{runId}}",
                   "disabled": false,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -1592,7 +1592,7 @@
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -1637,43 +1637,43 @@
                   "key": "run_id",
                   "value": "{{runId}}",
                   "disabled": false,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 },
                 {
                   "key": "model",
                   "value": "linear_multi_touch",
                   "disabled": false,
-                  "description": "Model"
+                  "description": "Attribution model: `first_touch`, `last_touch`, `linear_multi_touch`, `position_based`, `time_decay`."
                 },
                 {
                   "key": "campaign_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Campaign Id"
+                  "description": "Campaign ID, format `CMP-2026-000001`."
                 },
                 {
                   "key": "opportunity_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Opportunity Id"
+                  "description": "Opportunity ID, format `OPP-2026-000001`."
                 },
                 {
                   "key": "channel_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Channel Id"
+                  "description": "Channel: `CH-001` Paid Search, `CH-002` Paid Social, `CH-003` Email, `CH-004` Organic Search, `CH-005` Affiliate, `CH-006` Display, `CH-007` Events, `CH-008` Partner."
                 },
                 {
                   "key": "limit",
                   "value": "50",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -1888,19 +1888,19 @@
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 },
                 {
                   "key": "limit",
                   "value": "100",
                   "disabled": true,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -1951,55 +1951,55 @@
                   "key": "model",
                   "value": "linear_multi_touch",
                   "disabled": false,
-                  "description": "Model"
+                  "description": "Attribution model: `first_touch`, `last_touch`, `linear_multi_touch`, `position_based`, `time_decay`."
                 },
                 {
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 },
                 {
                   "key": "roi_status",
                   "value": "",
                   "disabled": true,
-                  "description": "Roi Status"
+                  "description": "`calculated`, `calculated_excluding_quarantined_cost` or `unavailable_missing_cost`."
                 },
                 {
                   "key": "channel_id",
                   "value": "",
                   "disabled": true,
-                  "description": "Channel Id"
+                  "description": "Channel: `CH-001` Paid Search, `CH-002` Paid Social, `CH-003` Email, `CH-004` Organic Search, `CH-005` Affiliate, `CH-006` Display, `CH-007` Events, `CH-008` Partner."
                 },
                 {
                   "key": "market",
                   "value": "",
                   "disabled": true,
-                  "description": "Market"
+                  "description": "Market: `IN` (INR), `US` (USD) or `EU` (EUR)."
                 },
                 {
                   "key": "sort_by",
                   "value": "roi_pct",
                   "disabled": false,
-                  "description": "Sort By"
+                  "description": "Sort column."
                 },
                 {
                   "key": "descending",
                   "value": "true",
                   "disabled": true,
-                  "description": "Descending"
+                  "description": "Sort descending (nulls always last)."
                 },
                 {
                   "key": "limit",
                   "value": "25",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -2045,7 +2045,7 @@
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -2090,13 +2090,13 @@
                   "key": "model",
                   "value": "linear_multi_touch",
                   "disabled": false,
-                  "description": "Model"
+                  "description": "Attribution model: `first_touch`, `last_touch`, `linear_multi_touch`, `position_based`, `time_decay`."
                 },
                 {
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -2141,7 +2141,7 @@
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -2191,25 +2191,25 @@
                   "key": "issue_type",
                   "value": "",
                   "disabled": true,
-                  "description": "Issue Type"
+                  "description": "Exception type: `duplicate_revenue`, `post_conversion_touch`, `currency_mismatch`, `campaign_cost_omitted`, `anonymous_session_without_evidence`."
                 },
                 {
                   "key": "record_type",
                   "value": "",
                   "disabled": true,
-                  "description": "Record Type"
+                  "description": "Type of the offending record: `Order`, `Touchpoint`, `CostRecord`, `Campaign`, `Lead`."
                 },
                 {
                   "key": "limit",
                   "value": "100",
                   "disabled": false,
-                  "description": "Limit"
+                  "description": "Page size (1-5000). Paged responses return `total`, `limit`, `offset`, `items`."
                 },
                 {
                   "key": "offset",
                   "value": "0",
                   "disabled": true,
-                  "description": "Offset"
+                  "description": "Number of rows to skip (for paging)."
                 }
               ]
             },
@@ -2376,7 +2376,7 @@
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -2465,13 +2465,13 @@
                   "key": "cutoff",
                   "value": "2026-07-01",
                   "disabled": false,
-                  "description": "Cutoff"
+                  "description": "Train / evaluation boundary (ISO date). Conversions and spend before it are *train*, after it *evaluation*."
                 },
                 {
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -2554,7 +2554,7 @@
                   "key": "run_id",
                   "value": "RUN-BASELINE",
                   "disabled": true,
-                  "description": "Run Id"
+                  "description": "Attribution run. `RUN-BASELINE` is the run produced at generation time; custom runs are `RUN-2026-000001`, ... (see POST /api/v1/attribution/runs)."
                 }
               ]
             },
@@ -2636,7 +2636,7 @@
                   "key": "issue_type",
                   "value": "",
                   "disabled": true,
-                  "description": "Issue Type"
+                  "description": "Exception type: `duplicate_revenue`, `post_conversion_touch`, `currency_mismatch`, `campaign_cost_omitted`, `anonymous_session_without_evidence`."
                 }
               ]
             },
@@ -3171,7 +3171,7 @@
                   "key": "only_failed",
                   "value": "true",
                   "disabled": false,
-                  "description": "Only Failed"
+                  "description": "`true` = drop the per-check list and return only the totals and failed checks."
                 }
               ]
             },

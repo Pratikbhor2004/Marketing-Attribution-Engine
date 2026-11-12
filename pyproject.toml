@@ -27,6 +27,9 @@ attribution-engine = "attribution_engine.cli:main"
 [tool.setuptools.packages.find]
 include = ["attribution_engine*"]
 
+[tool.setuptools.package-data]
+attribution_engine = ["openapi_examples.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]

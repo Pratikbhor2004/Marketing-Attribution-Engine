@@ -13,7 +13,7 @@ The engine joins **campaign touches, web sessions, leads, opportunities and reve
 | Reconciliation | every model credits exactly the recognised revenue (USD 101.1 M credited + USD 2.0 M unattributed) |
 | Reproducibility | two regenerations match on all 23 tables (row counts + SHA-256) |
 
-**Documentation:** [Feature guide (problem statement + why/how for every feature)](docs/feature_guide.md) · [Architecture, use-case, ER and sequence diagrams](docs/architecture.md) · [Attribution and ROI rules](docs/attribution_rules.md) · [Data dictionary](docs/data_dictionary.md)
+**Documentation:** [Feature guide (problem statement + why/how for every feature)](docs/feature_guide.md) · [Architecture, use-case, ER and sequence diagrams](docs/architecture.md) · [Attribution and ROI rules](docs/attribution_rules.md) · [Data dictionary](docs/data_dictionary.md) · [API reference / Swagger](docs/api_reference.md)
 
 ---
 
@@ -118,7 +118,27 @@ See the [feature guide](docs/feature_guide.md) for why, how to use and how it wa
 
 ## 3. API and Postman
 
-Swagger UI: http://localhost:8000/docs · ReDoc: http://localhost:8000/redoc
+### Swagger / OpenAPI documentation
+
+Every one of the 58 operations is documented: purpose and actor, every parameter (meaning and example value), request-body
+examples, the error codes it can return (404 / 409 / 422, with example bodies) and a **real example response** captured from the starter dataset.
+
+| Where | What |
+|---|---|
+| http://localhost:8000/docs | Live **Swagger UI**: read the docs and run each request ("Try it out") |
+| http://localhost:8000/redoc | Live ReDoc (read-only, three-panel layout) |
+| http://localhost:8000/openapi.json | Live OpenAPI 3.1 spec |
+| [docs/swagger.html](docs/swagger.html) | Standalone Swagger UI. Open the file in a browser, no server needed to read it |
+| [docs/api_reference.md](docs/api_reference.md) | Markdown reference: endpoint index, parameters, bodies, responses, example JSON and `curl` for every endpoint |
+| [docs/openapi.json](docs/openapi.json) · [docs/openapi.yaml](docs/openapi.yaml) | Spec files to import into Postman, Insomnia, Swagger Editor or a client generator |
+
+The docs come from the code: FastAPI builds the base spec, [attribution_engine/openapi_docs.py](attribution_engine/openapi_docs.py) adds the
+descriptions and examples, and a test fails if any operation lacks a description, parameter docs, an example or a documented 404.
+After changing the API, regenerate:
+
+```bash
+python -m scripts.export_openapi        # regenerates the starter dataset in a temp dir, calls every endpoint, writes docs/openapi.* + swagger.html + api_reference.md
+```
 
 **Postman:** import both files from [`postman/`](postman/):
 
@@ -264,12 +284,13 @@ attribution_engine/
   pipeline.py      orchestration, SQLite schema/export, manifest, reproducibility digests
   schema.py        machine-readable data dictionary → docs/data_dictionary.md|json
   api.py           FastAPI application (58 operations)
+  openapi_docs.py  Swagger descriptions, parameter docs, examples, error responses
   cli.py           generate · validate · verify-reproducibility
 dashboard/app.py   Streamlit dashboard
 postman/           Postman collection + environment
-scripts/           build/run Postman collection, reproducibility wrapper
+scripts/           build/run Postman collection, export OpenAPI/Swagger docs, reproducibility wrapper
 tests/             pytest suite (generator, rules, API, Postman coverage)
-docs/              feature guide, architecture & diagrams, rules, data dictionary
+docs/              feature guide, architecture & diagrams, rules, data dictionary, API reference, openapi.json|yaml, swagger.html
 docker/            container entrypoint
 Dockerfile, docker-compose.yml
 ```

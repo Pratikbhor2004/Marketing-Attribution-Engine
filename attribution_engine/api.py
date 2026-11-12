@@ -50,7 +50,9 @@ TAGS = [
 ]
 app = FastAPI(title="Marketing Attribution Engine API", version=__version__, openapi_tags=TAGS,
               description="Join campaign touches, web sessions, leads, opportunities and revenue to compare attribution "
-                          "approaches and ROI, with explicit rules, exceptions and traceability.")
+                          "approaches and ROI, with explicit rules, exceptions and traceability.",
+              swagger_ui_parameters={"docExpansion": "list", "filter": True, "displayRequestDuration": True,
+                                     "tryItOutEnabled": True, "defaultModelsExpandDepth": 0})
 
 
 # ----------------------------------------------------------------------------- storage
@@ -781,3 +783,9 @@ def ground_truth(issue_type: Optional[str] = None):
 @app.get("/api/v1/ground-truth/channel-contribution", tags=["Evaluation"], summary="True channel contribution from the generating rule")
 def ground_truth_channels():
     return records(_ground_truth("channel_contribution"))
+
+
+# ------------------------------------------------------------------------ Swagger docs
+from .openapi_docs import install as _install_docs  # noqa: E402  (needs every route registered first)
+
+_install_docs(app)

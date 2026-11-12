@@ -1,0 +1,2642 @@
+{
+  "GET /api/v1/attribution/compare": {
+    "channel_revenue_share": {
+      "CH-001": {
+        "first_touch": 0.1968,
+        "last_touch": 0.1058,
+        "linear_multi_touch": 0.1319,
+        "position_based": 0.144,
+        "time_decay": 0.1168
+      },
+      "CH-002": {
+        "first_touch": 0.0709,
+        "last_touch": 0.0707,
+        "linear_multi_touch": 0.1437,
+        "position_based": 0.0936,
+        "time_decay": 0.1384
+      },
+      "CH-003": {
+        "first_touch": 0.1291,
+        "last_touch": 0.084,
+        "linear_multi_touch": 0.1545,
+        "position_based": 0.1186,
+        "time_decay": 0.1284
+      },
+      "CH-004": {
+        "first_touch": 0.2053,
+        "last_touch": 0.1765,
+        "linear_multi_touch": 0.1287,
+        "position_based": 0.1732,
+        "time_decay": 0.1469
+      },
+      "CH-005": {
+        "first_touch": 0.1406,
+        "last_touch": 0.1229,
+        "linear_multi_touch": 0.1207,
+        "position_based": 0.1281,
+        "time_decay": 0.1271
+      },
+      "CH-006": {
+        "first_touch": 0.0946,
+        "last_touch": 0.1281,
+        "linear_multi_touch": 0.086,
+        "position_based": 0.1051,
+        "time_decay": 0.0925
+      },
+      "CH-007": {
+        "first_touch": 0.1032,
+        "last_touch": 0.2332,
+        "linear_multi_touch": 0.1398,
+        "position_based": 0.1605,
+        "time_decay": 0.15
+      },
+      "CH-008": {
+        "first_touch": 0.0594,
+        "last_touch": 0.0787,
+        "linear_multi_touch": 0.0948,
+        "position_based": 0.077,
+        "time_decay": 0.0999
+      }
+    },
+    "channel_true_share": {
+      "CH-001": 0.1934,
+      "CH-002": 0.0766,
+      "CH-003": 0.1186,
+      "CH-004": 0.1503,
+      "CH-005": 0.0341,
+      "CH-006": 0.0121,
+      "CH-007": 0.253,
+      "CH-008": 0.1619
+    },
+    "distance_to_ground_truth": {
+      "first_touch": {
+        "total_variation_distance": 0.258,
+        "mean_absolute_error": 0.0645
+      },
+      "last_touch": {
+        "total_variation_distance": 0.2311,
+        "mean_absolute_error": 0.0578
+      },
+      "linear_multi_touch": {
+        "total_variation_distance": 0.2635,
+        "mean_absolute_error": 0.0659
+      },
+      "position_based": {
+        "total_variation_distance": 0.227,
+        "mean_absolute_error": 0.0567
+      },
+      "time_decay": {
+        "total_variation_distance": 0.245,
+        "mean_absolute_error": 0.0613
+      }
+    },
+    "best_model_vs_ground_truth": "position_based",
+    "campaign_rank_correlation_spearman": {
+      "first_touch": {
+        "first_touch": 1.0,
+        "last_touch": 0.3254,
+        "linear_multi_touch": 0.6713,
+        "position_based": 0.7842,
+        "time_decay": 0.5093
+      },
+      "last_touch": {
+        "first_touch": 0.3254,
+        "last_touch": 1.0,
+        "linear_multi_touch": 0.6944,
+        "position_based": 0.764,
+        "time_decay": 0.8187
+      },
+      "linear_multi_touch": {
+        "first_touch": 0.6713,
+        "last_touch": 0.6944,
+        "linear_multi_touch": 1.0,
+        "position_based": 0.9191,
+        "time_decay": 0.9462
+      },
+      "position_based": {
+        "first_touch": 0.7842,
+        "last_touch": 0.764,
+        "linear_multi_touch": 0.9191,
+        "position_based": 1.0,
+        "time_decay": 0.8805
+      },
+      "time_decay": {
+        "first_touch": 0.5093,
+        "last_touch": 0.8187,
+        "linear_multi_touch": 0.9462,
+        "position_based": 0.8805,
+        "time_decay": 1.0
+      }
+    },
+    "credit_shift_vs_linear": {
+      "first_touch": 0.3166,
+      "last_touch": 0.3452,
+      "linear_multi_touch": 0.0,
+      "position_based": 0.1859,
+      "time_decay": 0.1116
+    }
+  },
+  "GET /api/v1/attribution/models": {
+    "models": {
+      "first_touch": "100% credit to the campaign of the earliest eligible touch.",
+      "last_touch": "100% credit to the campaign of the latest eligible touch before conversion.",
+      "linear_multi_touch": "Equal credit to every eligible touch, summed per campaign.",
+      "position_based": "U-shaped: 40% first, 40% last, 20% spread over middle touches (2 touches: 50/50).",
+      "time_decay": "Weight 0.5^(days_before_conversion / half_life); half-life 14 days by default."
+    },
+    "eligibility_rules": [
+      "E1 same contact as the opportunity",
+      "E2 occurred_at <= conversion (opportunity closed_at)"
+    ],
+    "defaults": {
+      "lookback_days": 365,
+      "time_decay_half_life_days": 14.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "include_offline": true,
+      "reporting_currency": "USD"
+    },
+    "revenue_source": "Order rows not detected as duplicate revenue; credit allocated in integer cents (largest remainder)."
+  },
+  "GET /api/v1/attribution/opportunities/{opportunity_id}": {
+    "opportunity": {
+      "opportunity_id": "OPP-2026-000001",
+      "contact_id": "CON-2026-000852",
+      "lead_id": "LEAD-2026-000001",
+      "created_at": "2025-01-27T19:56:45",
+      "closed_at": "2025-05-22T16:05:53",
+      "stage": "closed_won",
+      "amount": 590761.51,
+      "currency": "INR",
+      "company_size": "smb"
+    },
+    "run_id": "RUN-BASELINE",
+    "conversion_at": "2025-05-22T16:05:53",
+    "touches": [
+      {
+        "touchpoint_id": "TOUCH-CON-2026-000852-000001",
+        "contact_id": "CON-2026-000852",
+        "campaign_id": "CMP-2026-000004",
+        "channel_id": "CH-004",
+        "creative_id": "CRV-2026-000008",
+        "occurred_at": "2025-01-11T18:53:29",
+        "touch_type": "organic_visit",
+        "is_offline": 0,
+        "source_system": "web_analytics",
+        "reported_conversion_id": null,
+        "eligibility": "eligible",
+        "days_before_conversion": 130.88
+      },
+      {
+        "touchpoint_id": "TOUCH-CON-2026-000852-000002",
+        "contact_id": "CON-2026-000852",
+        "campaign_id": "CMP-2026-000001",
+        "channel_id": "CH-001",
+        "creative_id": "CRV-2026-000001",
+        "occurred_at": "2025-01-18T17:35:38",
+        "touch_type": "ad_click",
+        "is_offline": 0,
+        "source_system": "ad_platform",
+        "reported_conversion_id": null,
+        "eligibility": "eligible",
+        "days_before_conversion": 123.94
+      }
+    ],
+    "credit_by_campaign": [
+      {
+        "campaign_id": "CMP-2026-000001",
+        "first_touch": null,
+        "last_touch": null,
+        "linear_multi_touch": 73845.19,
+        "position_based": 19692.05,
+        "time_decay": 911.46
+      },
+      {
+        "campaign_id": "CMP-2026-000004",
+        "first_touch": 590761.51,
+        "last_touch": null,
+        "linear_multi_touch": 73845.19,
+        "position_based": 236304.61,
+        "time_decay": 646.23
+      }
+    ],
+    "unattributed": []
+  },
+  "GET /api/v1/attribution/results": {
+    "total": 520,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "attribution_id": "ATR-OPP-2026-000001-LIN-CMP-2026-000001",
+        "run_id": "RUN-BASELINE",
+        "model": "linear_multi_touch",
+        "opportunity_id": "OPP-2026-000001",
+        "contact_id": "CON-2026-000852",
+        "campaign_id": "CMP-2026-000001",
+        "channel_id": "CH-001",
+        "conversion_at": "2025-05-22T16:05:53",
+        "credit_share": 0.125,
+        "credited_revenue": 73845.19,
+        "currency": "INR",
+        "credited_revenue_usd": 881.27,
+        "eligible_touch_count": 8,
+        "campaign_touch_count": 1
+      },
+      {
+        "attribution_id": "ATR-OPP-2026-000007-LIN-CMP-2026-000001",
+        "run_id": "RUN-BASELINE",
+        "model": "linear_multi_touch",
+        "opportunity_id": "OPP-2026-000007",
+        "contact_id": "CON-2026-000699",
+        "campaign_id": "CMP-2026-000001",
+        "channel_id": "CH-001",
+        "conversion_at": "2025-03-27T11:27:57",
+        "credit_share": 0.25,
+        "credited_revenue": 182207.99,
+        "currency": "INR",
+        "credited_revenue_usd": 2172.47,
+        "eligible_touch_count": 4,
+        "campaign_touch_count": 1
+      }
+    ]
+  },
+  "GET /api/v1/attribution/runs": [
+    {
+      "run_id": "RUN-BASELINE",
+      "created_at": "baseline",
+      "triggered_by": "pipeline",
+      "models": "first_touch,last_touch,linear_multi_touch,position_based,time_decay",
+      "lookback_days": 365,
+      "time_decay_half_life_days": 14.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "include_offline": 1,
+      "result_rows": 1752,
+      "attributed_opportunities": 96,
+      "unattributed_opportunities": 3,
+      "attributed_revenue_usd": 1606300.15
+    }
+  ],
+  "GET /api/v1/attribution/runs/{run_id}": {
+    "run_id": "RUN-2026-000001",
+    "created_at": "2026-11-12T16:42:02",
+    "triggered_by": "analyst",
+    "models": "first_touch,last_touch,linear_multi_touch,position_based,time_decay",
+    "lookback_days": 90,
+    "time_decay_half_life_days": 7.0,
+    "position_first_weight": 0.4,
+    "position_last_weight": 0.4,
+    "include_offline": 0,
+    "result_rows": 1269,
+    "attributed_opportunities": 96,
+    "unattributed_opportunities": 3,
+    "attributed_revenue_usd": 1606300.15,
+    "totals_by_model": [
+      {
+        "model": "first_touch",
+        "rows": 96,
+        "opportunities": 96,
+        "credited_revenue_usd": 1606300.15
+      },
+      {
+        "model": "last_touch",
+        "rows": 96,
+        "opportunities": 96,
+        "credited_revenue_usd": 1606300.15
+      }
+    ]
+  },
+  "GET /api/v1/attribution/unattributed": {
+    "total": 3,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "run_id": "RUN-BASELINE",
+        "opportunity_id": "OPP-2026-000039",
+        "contact_id": "CON-2026-000228",
+        "conversion_at": "2025-07-28T14:24:58",
+        "revenue": 822234.84,
+        "currency": "INR",
+        "revenue_usd": 9927.66,
+        "reason": "only_post_conversion_or_ineligible_touches"
+      },
+      {
+        "run_id": "RUN-BASELINE",
+        "opportunity_id": "OPP-2026-000115",
+        "contact_id": "CON-2026-000255",
+        "conversion_at": "2026-03-11T14:08:39",
+        "revenue": 9486.22,
+        "currency": "USD",
+        "revenue_usd": 9486.22,
+        "reason": "only_post_conversion_or_ineligible_touches"
+      }
+    ]
+  },
+  "GET /api/v1/audiences": [
+    {
+      "audience_id": "AUD-2026-000001",
+      "audience_name": "Audience Segment 01",
+      "segment_type": "prospect",
+      "effective_from": "2025-01-01",
+      "effective_to": null
+    },
+    {
+      "audience_id": "AUD-2026-000002",
+      "audience_name": "Audience Segment 02",
+      "segment_type": "prospect",
+      "effective_from": "2025-01-01",
+      "effective_to": null
+    }
+  ],
+  "GET /api/v1/audiences/{audience_id}/campaigns": [
+    {
+      "campaign_audience_id": "CAUD-2026-000045",
+      "campaign_id": "CMP-2026-000021",
+      "audience_id": "AUD-2026-000001",
+      "effective_from": "2026-02-03T22:53:18",
+      "effective_to": "2026-03-28T23:59:59",
+      "campaign_name": "IN Display - Lead Generation 0021",
+      "channel_id": "CH-006",
+      "market": "IN"
+    },
+    {
+      "campaign_audience_id": "CAUD-2026-000046",
+      "campaign_id": "CMP-2026-000022",
+      "audience_id": "AUD-2026-000001",
+      "effective_from": "2025-08-08T00:00:00",
+      "effective_to": "2025-09-06T23:59:59",
+      "campaign_name": "IN Display - Lead Generation 0022",
+      "channel_id": "CH-006",
+      "market": "IN"
+    }
+  ],
+  "GET /api/v1/campaigns": {
+    "total": 40,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "campaign_id": "CMP-2026-000001",
+        "campaign_name": "IN Paid Search - Always-On 0001",
+        "channel_id": "CH-001",
+        "market": "IN",
+        "currency": "INR",
+        "objective": "conversion",
+        "budget_amount": 5092171.38,
+        "start_at": "2025-01-01T00:00:00",
+        "end_at": "2026-12-31T23:59:59",
+        "is_evergreen": 1,
+        "status": "active"
+      },
+      {
+        "campaign_id": "CMP-2026-000002",
+        "campaign_name": "IN Paid Social - Always-On 0002",
+        "channel_id": "CH-002",
+        "market": "IN",
+        "currency": "INR",
+        "objective": "lead_generation",
+        "budget_amount": 4452590.84,
+        "start_at": "2025-01-01T00:00:00",
+        "end_at": "2026-12-31T23:59:59",
+        "is_evergreen": 1,
+        "status": "active"
+      }
+    ]
+  },
+  "GET /api/v1/campaigns/{campaign_id}": {
+    "campaign_id": "CMP-2026-000001",
+    "campaign_name": "IN Paid Search - Always-On 0001",
+    "channel_id": "CH-001",
+    "market": "IN",
+    "currency": "INR",
+    "objective": "conversion",
+    "budget_amount": 5092171.38,
+    "start_at": "2025-01-01T00:00:00",
+    "end_at": "2026-12-31T23:59:59",
+    "is_evergreen": 1,
+    "status": "active",
+    "creatives": [
+      {
+        "creative_id": "CRV-2026-000001",
+        "campaign_id": "CMP-2026-000001",
+        "creative_name": "CMP-2026-000001 text vA",
+        "format": "text",
+        "version": "A",
+        "launched_at": "2025-01-01T00:00:00"
+      }
+    ],
+    "audiences": [
+      {
+        "campaign_audience_id": "CAUD-2026-000001",
+        "campaign_id": "CMP-2026-000001",
+        "audience_id": "AUD-2026-000013",
+        "effective_from": "2025-01-01T00:00:00",
+        "effective_to": "2026-12-31T23:59:59",
+        "audience_name": "Audience Segment 13",
+        "segment_type": "retargeting",
+        "effective_from_audience": "2025-01-01",
+        "effective_to_audience": null
+      }
+    ],
+    "cost_records": 22,
+    "ledger_spend_native": 4015965.34,
+    "touchpoints": 199,
+    "exceptions": []
+  },
+  "GET /api/v1/campaigns/{campaign_id}/costs": [
+    {
+      "cost_record_id": "COST-2026-000001",
+      "campaign_id": "CMP-2026-000001",
+      "period_month": "2025-01",
+      "incurred_at": "2025-01-01T00:00:00",
+      "amount": 171992.12,
+      "currency": "INR",
+      "cost_type": "media_spend",
+      "source_system": "finance_ledger",
+      "quarantined": false
+    },
+    {
+      "cost_record_id": "COST-2026-000002",
+      "campaign_id": "CMP-2026-000001",
+      "period_month": "2025-02",
+      "incurred_at": "2025-02-01T00:00:00",
+      "amount": 164901.59,
+      "currency": "INR",
+      "cost_type": "media_spend",
+      "source_system": "finance_ledger",
+      "quarantined": false
+    }
+  ],
+  "GET /api/v1/campaigns/{campaign_id}/touchpoints": {
+    "total": 199,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "touchpoint_id": "TOUCH-CON-2026-000002-000007",
+        "contact_id": "CON-2026-000002",
+        "campaign_id": "CMP-2026-000001",
+        "channel_id": "CH-001",
+        "creative_id": "CRV-2026-000001",
+        "occurred_at": "2026-02-08T03:20:58",
+        "touch_type": "ad_click",
+        "is_offline": 0,
+        "source_system": "ad_platform",
+        "reported_conversion_id": null
+      },
+      {
+        "touchpoint_id": "TOUCH-CON-2026-000006-000001",
+        "contact_id": "CON-2026-000006",
+        "campaign_id": "CMP-2026-000001",
+        "channel_id": "CH-001",
+        "creative_id": "CRV-2026-000001",
+        "occurred_at": "2026-06-04T05:47:22",
+        "touch_type": "ad_click",
+        "is_offline": 0,
+        "source_system": "ad_platform",
+        "reported_conversion_id": null
+      }
+    ]
+  },
+  "GET /api/v1/channels": [
+    {
+      "channel_id": "CH-001",
+      "channel_name": "Paid Search",
+      "channel_group": "digital",
+      "is_paid": 1,
+      "default_source_system": "ad_platform"
+    },
+    {
+      "channel_id": "CH-002",
+      "channel_name": "Paid Social",
+      "channel_group": "digital",
+      "is_paid": 1,
+      "default_source_system": "ad_platform"
+    }
+  ],
+  "GET /api/v1/contacts": {
+    "total": 1000,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "contact_id": "CON-2026-000001",
+        "created_at": "2025-01-20T15:57:47",
+        "country": "US",
+        "market": "US",
+        "company_size": "smb",
+        "consent_status": "granted",
+        "lifecycle_state": "lead"
+      },
+      {
+        "contact_id": "CON-2026-000002",
+        "created_at": "2025-09-27T04:29:26",
+        "country": "US",
+        "market": "US",
+        "company_size": "smb",
+        "consent_status": "granted",
+        "lifecycle_state": "customer"
+      }
+    ]
+  },
+  "GET /api/v1/contacts/{contact_id}": {
+    "contact_id": "CON-2026-000852",
+    "created_at": "2025-01-08T18:19:33",
+    "country": "IN",
+    "market": "IN",
+    "company_size": "smb",
+    "consent_status": "granted",
+    "lifecycle_state": "customer",
+    "touchpoints": 9,
+    "sessions": 2,
+    "leads": 1,
+    "opportunities": 1
+  },
+  "GET /api/v1/contacts/{contact_id}/journey": {
+    "contact_id": "CON-2026-000852",
+    "events": [
+      {
+        "at": "2025-01-11T18:53:29",
+        "type": "touchpoint",
+        "id": "TOUCH-CON-2026-000852-000001",
+        "campaign_id": "CMP-2026-000004",
+        "channel_id": "CH-004",
+        "detail": "organic_visit"
+      },
+      {
+        "at": "2025-01-18T17:35:38",
+        "type": "touchpoint",
+        "id": "TOUCH-CON-2026-000852-000002",
+        "campaign_id": "CMP-2026-000001",
+        "channel_id": "CH-001",
+        "detail": "ad_click"
+      }
+    ],
+    "event_count": 17,
+    "campaigns_touched": [
+      "CMP-2026-000001",
+      "CMP-2026-000003"
+    ]
+  },
+  "GET /api/v1/cost-records": {
+    "total": 519,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "cost_record_id": "COST-2026-000001",
+        "campaign_id": "CMP-2026-000001",
+        "period_month": "2025-01",
+        "incurred_at": "2025-01-01T00:00:00",
+        "amount": 171992.12,
+        "currency": "INR",
+        "cost_type": "media_spend",
+        "source_system": "finance_ledger"
+      },
+      {
+        "cost_record_id": "COST-2026-000002",
+        "campaign_id": "CMP-2026-000001",
+        "period_month": "2025-02",
+        "incurred_at": "2025-02-01T00:00:00",
+        "amount": 164901.59,
+        "currency": "INR",
+        "cost_type": "media_spend",
+        "source_system": "finance_ledger"
+      }
+    ]
+  },
+  "GET /api/v1/creatives": {
+    "total": 63,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "creative_id": "CRV-2026-000001",
+        "campaign_id": "CMP-2026-000001",
+        "creative_name": "CMP-2026-000001 text vA",
+        "format": "text",
+        "version": "A",
+        "launched_at": "2025-01-01T00:00:00"
+      },
+      {
+        "creative_id": "CRV-2026-000002",
+        "campaign_id": "CMP-2026-000002",
+        "creative_name": "CMP-2026-000002 video vA",
+        "format": "video",
+        "version": "A",
+        "launched_at": "2025-01-01T00:00:00"
+      }
+    ]
+  },
+  "GET /api/v1/evaluation/chronological": {
+    "cutoff": "2026-07-01",
+    "opportunities_created": {
+      "train": 154,
+      "evaluation": 46
+    },
+    "conversions": {
+      "train": 73,
+      "evaluation": 23
+    },
+    "spend_usd": {
+      "train": 898861.75,
+      "evaluation": 206423.63
+    },
+    "models": {
+      "first_touch": {
+        "segments_compared": 11,
+        "roas_rank_stability_spearman": 0.2273,
+        "channel_share_shift_tvd": 0.4305,
+        "train_attributed_usd": 1246066.15,
+        "evaluation_attributed_usd": 360234.0
+      },
+      "last_touch": {
+        "segments_compared": 13,
+        "roas_rank_stability_spearman": 0.2692,
+        "channel_share_shift_tvd": 0.4723,
+        "train_attributed_usd": 1246066.15,
+        "evaluation_attributed_usd": 360234.0
+      },
+      "linear_multi_touch": {
+        "segments_compared": 20,
+        "roas_rank_stability_spearman": 0.2105,
+        "channel_share_shift_tvd": 0.1908,
+        "train_attributed_usd": 1246066.16,
+        "evaluation_attributed_usd": 360233.9
+      },
+      "position_based": {
+        "segments_compared": 20,
+        "roas_rank_stability_spearman": 0.0887,
+        "channel_share_shift_tvd": 0.2733,
+        "train_attributed_usd": 1246066.11,
+        "evaluation_attributed_usd": 360234.03
+      },
+      "time_decay": {
+        "segments_compared": 20,
+        "roas_rank_stability_spearman": 0.1699,
+        "channel_share_shift_tvd": 0.276,
+        "train_attributed_usd": 1246066.18,
+        "evaluation_attributed_usd": 360234.04
+      }
+    }
+  },
+  "GET /api/v1/evaluation/detection": {
+    "overall": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "true_positive": 13,
+      "false_positive": 0,
+      "false_negative": 0
+    },
+    "by_issue_type": {
+      "duplicate_revenue": {
+        "labelled": 2,
+        "detected": 2,
+        "true_positive": 2,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "post_conversion_touch": {
+        "labelled": 2,
+        "detected": 2,
+        "true_positive": 2,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "currency_mismatch": {
+        "labelled": 5,
+        "detected": 5,
+        "true_positive": 5,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "campaign_cost_omitted": {
+        "labelled": 2,
+        "detected": 2,
+        "true_positive": 2,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      },
+      "anonymous_session_without_evidence": {
+        "labelled": 2,
+        "detected": 2,
+        "true_positive": 2,
+        "false_positive": 0,
+        "false_negative": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_ids": [],
+        "missed_ids": []
+      }
+    }
+  },
+  "GET /api/v1/evaluation/model-accuracy": {
+    "channel_true_share": {
+      "CH-001": 0.1934,
+      "CH-002": 0.0766,
+      "CH-003": 0.1186,
+      "CH-004": 0.1503,
+      "CH-005": 0.0341,
+      "CH-006": 0.0121,
+      "CH-007": 0.253,
+      "CH-008": 0.1619
+    },
+    "distance_to_ground_truth": {
+      "first_touch": {
+        "total_variation_distance": 0.258,
+        "mean_absolute_error": 0.0645
+      },
+      "last_touch": {
+        "total_variation_distance": 0.2311,
+        "mean_absolute_error": 0.0578
+      },
+      "linear_multi_touch": {
+        "total_variation_distance": 0.2635,
+        "mean_absolute_error": 0.0659
+      },
+      "position_based": {
+        "total_variation_distance": 0.227,
+        "mean_absolute_error": 0.0567
+      },
+      "time_decay": {
+        "total_variation_distance": 0.245,
+        "mean_absolute_error": 0.0613
+      }
+    },
+    "best_model_vs_ground_truth": "position_based",
+    "channel_revenue_share": {
+      "CH-001": {
+        "first_touch": 0.1968,
+        "last_touch": 0.1058,
+        "linear_multi_touch": 0.1319,
+        "position_based": 0.144,
+        "time_decay": 0.1168
+      },
+      "CH-002": {
+        "first_touch": 0.0709,
+        "last_touch": 0.0707,
+        "linear_multi_touch": 0.1437,
+        "position_based": 0.0936,
+        "time_decay": 0.1384
+      },
+      "CH-003": {
+        "first_touch": 0.1291,
+        "last_touch": 0.084,
+        "linear_multi_touch": 0.1545,
+        "position_based": 0.1186,
+        "time_decay": 0.1284
+      },
+      "CH-004": {
+        "first_touch": 0.2053,
+        "last_touch": 0.1765,
+        "linear_multi_touch": 0.1287,
+        "position_based": 0.1732,
+        "time_decay": 0.1469
+      },
+      "CH-005": {
+        "first_touch": 0.1406,
+        "last_touch": 0.1229,
+        "linear_multi_touch": 0.1207,
+        "position_based": 0.1281,
+        "time_decay": 0.1271
+      },
+      "CH-006": {
+        "first_touch": 0.0946,
+        "last_touch": 0.1281,
+        "linear_multi_touch": 0.086,
+        "position_based": 0.1051,
+        "time_decay": 0.0925
+      },
+      "CH-007": {
+        "first_touch": 0.1032,
+        "last_touch": 0.2332,
+        "linear_multi_touch": 0.1398,
+        "position_based": 0.1605,
+        "time_decay": 0.15
+      },
+      "CH-008": {
+        "first_touch": 0.0594,
+        "last_touch": 0.0787,
+        "linear_multi_touch": 0.0948,
+        "position_based": 0.077,
+        "time_decay": 0.0999
+      }
+    }
+  },
+  "GET /api/v1/evaluation/summary": {
+    "volumes": {
+      "Channel": 8,
+      "FxRate": 108,
+      "Campaign": 40,
+      "Creative": 63,
+      "Audience": 25,
+      "CampaignAudience": 81,
+      "Contact": 1000,
+      "WebSession": 2000,
+      "Lead": 302,
+      "Opportunity": 200,
+      "OpportunityEvent": 701,
+      "Touchpoint": 4002,
+      "Order": 101,
+      "CostRecord": 519
+    },
+    "opportunity_stages": {
+      "closed_won": 99,
+      "closed_lost": 75,
+      "prospecting": 10,
+      "qualified": 9,
+      "proposal": 7
+    },
+    "win_rate_closed": 0.569,
+    "attribution_rows": 1752,
+    "exceptions_detected": {
+      "currency_mismatch": 5,
+      "duplicate_revenue": 2,
+      "post_conversion_touch": 2,
+      "campaign_cost_omitted": 2,
+      "anonymous_session_without_evidence": 2
+    },
+    "detection_vs_ground_truth": {
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "true_positive": 13,
+        "false_positive": 0,
+        "false_negative": 0
+      },
+      "by_issue_type": {
+        "duplicate_revenue": {
+          "labelled": 2,
+          "detected": 2,
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_ids": [],
+          "missed_ids": []
+        },
+        "post_conversion_touch": {
+          "labelled": 2,
+          "detected": 2,
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_ids": [],
+          "missed_ids": []
+        },
+        "currency_mismatch": {
+          "labelled": 5,
+          "detected": 5,
+          "true_positive": 5,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_ids": [],
+          "missed_ids": []
+        },
+        "campaign_cost_omitted": {
+          "labelled": 2,
+          "detected": 2,
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_ids": [],
+          "missed_ids": []
+        },
+        "anonymous_session_without_evidence": {
+          "labelled": 2,
+          "detected": 2,
+          "true_positive": 2,
+          "false_positive": 0,
+          "false_negative": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_ids": [],
+          "missed_ids": []
+        }
+      }
+    },
+    "reconciliation": {
+      "passed": true,
+      "by_currency": {
+        "EUR": {
+          "gross_order_revenue": 341552.66,
+          "duplicate_revenue_excluded": 0.0,
+          "recognised_revenue": 341552.66,
+          "unattributed_revenue": 0.0,
+          "models": {
+            "first_touch": {
+              "attributed": 341552.66,
+              "difference": 0.0
+            },
+            "last_touch": {
+              "attributed": 341552.66,
+              "difference": 0.0
+            },
+            "linear_multi_touch": {
+              "attributed": 341552.66,
+              "difference": 0.0
+            },
+            "position_based": {
+              "attributed": 341552.66,
+              "difference": 0.0
+            },
+            "time_decay": {
+              "attributed": 341552.66,
+              "difference": 0.0
+            }
+          }
+        },
+        "INR": {
+          "gross_order_revenue": 73249892.34,
+          "duplicate_revenue_excluded": 1716187.18,
+          "recognised_revenue": 71533705.16,
+          "unattributed_revenue": 1280159.74,
+          "models": {
+            "first_touch": {
+              "attributed": 70253545.42,
+              "difference": -0.0
+            },
+            "last_touch": {
+              "attributed": 70253545.42,
+              "difference": -0.0
+            },
+            "linear_multi_touch": {
+              "attributed": 70253545.42,
+              "difference": -0.0
+            },
+            "position_based": {
+              "attributed": 70253545.42,
+              "difference": -0.0
+            },
+            "time_decay": {
+              "attributed": 70253545.42,
+              "difference": -0.0
+            }
+          }
+        },
+        "USD": {
+          "gross_order_revenue": 414591.16,
+          "duplicate_revenue_excluded": 8616.07,
+          "recognised_revenue": 405975.09,
+          "unattributed_revenue": 9486.22,
+          "models": {
+            "first_touch": {
+              "attributed": 396488.87,
+              "difference": 0.0
+            },
+            "last_touch": {
+              "attributed": 396488.87,
+              "difference": 0.0
+            },
+            "linear_multi_touch": {
+              "attributed": 396488.87,
+              "difference": 0.0
+            },
+            "position_based": {
+              "attributed": 396488.87,
+              "difference": 0.0
+            },
+            "time_decay": {
+              "attributed": 396488.87,
+              "difference": 0.0
+            }
+          }
+        }
+      },
+      "spend": {
+        "ledger_total_usd": 1166474.95,
+        "valid_spend_usd": 1105285.38,
+        "quarantined_spend_usd": 61189.57,
+        "campaigns_missing_cost": 2
+      },
+      "recognised_opportunities": 99,
+      "unattributed_opportunities": 3,
+      "attributed_revenue_usd_by_model": {
+        "first_touch": 1606300.15,
+        "last_touch": 1606300.15,
+        "linear_multi_touch": 1606300.06,
+        "position_based": 1606300.14,
+        "time_decay": 1606300.22
+      },
+      "unattributed_revenue_usd": 24990.95
+    },
+    "model_comparison": {
+      "channel_revenue_share": {
+        "CH-001": {
+          "first_touch": 0.1968,
+          "last_touch": 0.1058,
+          "linear_multi_touch": 0.1319,
+          "position_based": 0.144,
+          "time_decay": 0.1168
+        },
+        "CH-002": {
+          "first_touch": 0.0709,
+          "last_touch": 0.0707,
+          "linear_multi_touch": 0.1437,
+          "position_based": 0.0936,
+          "time_decay": 0.1384
+        },
+        "CH-003": {
+          "first_touch": 0.1291,
+          "last_touch": 0.084,
+          "linear_multi_touch": 0.1545,
+          "position_based": 0.1186,
+          "time_decay": 0.1284
+        },
+        "CH-004": {
+          "first_touch": 0.2053,
+          "last_touch": 0.1765,
+          "linear_multi_touch": 0.1287,
+          "position_based": 0.1732,
+          "time_decay": 0.1469
+        },
+        "CH-005": {
+          "first_touch": 0.1406,
+          "last_touch": 0.1229,
+          "linear_multi_touch": 0.1207,
+          "position_based": 0.1281,
+          "time_decay": 0.1271
+        },
+        "CH-006": {
+          "first_touch": 0.0946,
+          "last_touch": 0.1281,
+          "linear_multi_touch": 0.086,
+          "position_based": 0.1051,
+          "time_decay": 0.0925
+        },
+        "CH-007": {
+          "first_touch": 0.1032,
+          "last_touch": 0.2332,
+          "linear_multi_touch": 0.1398,
+          "position_based": 0.1605,
+          "time_decay": 0.15
+        },
+        "CH-008": {
+          "first_touch": 0.0594,
+          "last_touch": 0.0787,
+          "linear_multi_touch": 0.0948,
+          "position_based": 0.077,
+          "time_decay": 0.0999
+        }
+      },
+      "channel_true_share": {
+        "CH-001": 0.1934,
+        "CH-002": 0.0766,
+        "CH-003": 0.1186,
+        "CH-004": 0.1503,
+        "CH-005": 0.0341,
+        "CH-006": 0.0121,
+        "CH-007": 0.253,
+        "CH-008": 0.1619
+      },
+      "distance_to_ground_truth": {
+        "first_touch": {
+          "total_variation_distance": 0.258,
+          "mean_absolute_error": 0.0645
+        },
+        "last_touch": {
+          "total_variation_distance": 0.2311,
+          "mean_absolute_error": 0.0578
+        },
+        "linear_multi_touch": {
+          "total_variation_distance": 0.2635,
+          "mean_absolute_error": 0.0659
+        },
+        "position_based": {
+          "total_variation_distance": 0.227,
+          "mean_absolute_error": 0.0567
+        },
+        "time_decay": {
+          "total_variation_distance": 0.245,
+          "mean_absolute_error": 0.0613
+        }
+      },
+      "best_model_vs_ground_truth": "position_based",
+      "campaign_rank_correlation_spearman": {
+        "first_touch": {
+          "first_touch": 1.0,
+          "last_touch": 0.3254,
+          "linear_multi_touch": 0.6713,
+          "position_based": 0.7842,
+          "time_decay": 0.5093
+        },
+        "last_touch": {
+          "first_touch": 0.3254,
+          "last_touch": 1.0,
+          "linear_multi_touch": 0.6944,
+          "position_based": 0.764,
+          "time_decay": 0.8187
+        },
+        "linear_multi_touch": {
+          "first_touch": 0.6713,
+          "last_touch": 0.6944,
+          "linear_multi_touch": 1.0,
+          "position_based": 0.9191,
+          "time_decay": 0.9462
+        },
+        "position_based": {
+          "first_touch": 0.7842,
+          "last_touch": 0.764,
+          "linear_multi_touch": 0.9191,
+          "position_based": 1.0,
+          "time_decay": 0.8805
+        },
+        "time_decay": {
+          "first_touch": 0.5093,
+          "last_touch": 0.8187,
+          "linear_multi_touch": 0.9462,
+          "position_based": 0.8805,
+          "time_decay": 1.0
+        }
+      },
+      "credit_shift_vs_linear": {
+        "first_touch": 0.3166,
+        "last_touch": 0.3452,
+        "linear_multi_touch": 0.0,
+        "position_based": 0.1859,
+        "time_decay": 0.1116
+      }
+    },
+    "chronological_evaluation": {
+      "cutoff": "2026-07-01",
+      "opportunities_created": {
+        "train": 154,
+        "evaluation": 46
+      },
+      "conversions": {
+        "train": 73,
+        "evaluation": 23
+      },
+      "spend_usd": {
+        "train": 898861.75,
+        "evaluation": 206423.63
+      },
+      "models": {
+        "first_touch": {
+          "segments_compared": 11,
+          "roas_rank_stability_spearman": 0.2273,
+          "channel_share_shift_tvd": 0.4305,
+          "train_attributed_usd": 1246066.15,
+          "evaluation_attributed_usd": 360234.0
+        },
+        "last_touch": {
+          "segments_compared": 13,
+          "roas_rank_stability_spearman": 0.2692,
+          "channel_share_shift_tvd": 0.4723,
+          "train_attributed_usd": 1246066.15,
+          "evaluation_attributed_usd": 360234.0
+        },
+        "linear_multi_touch": {
+          "segments_compared": 20,
+          "roas_rank_stability_spearman": 0.2105,
+          "channel_share_shift_tvd": 0.1908,
+          "train_attributed_usd": 1246066.16,
+          "evaluation_attributed_usd": 360233.9
+        },
+        "position_based": {
+          "segments_compared": 20,
+          "roas_rank_stability_spearman": 0.0887,
+          "channel_share_shift_tvd": 0.2733,
+          "train_attributed_usd": 1246066.11,
+          "evaluation_attributed_usd": 360234.03
+        },
+        "time_decay": {
+          "segments_compared": 20,
+          "roas_rank_stability_spearman": 0.1699,
+          "channel_share_shift_tvd": 0.276,
+          "train_attributed_usd": 1246066.18,
+          "evaluation_attributed_usd": 360234.04
+        }
+      }
+    },
+    "identity_gaps": {
+      "sessions_total": 2000,
+      "anonymous_sessions": 120,
+      "anonymous_session_share": 0.06,
+      "sessions_by_identity_evidence": {
+        "login": 694,
+        "email_click_id": 579,
+        "cookie_match": 421,
+        "form_submit": 186,
+        "none": 120
+      },
+      "leads_total": 302,
+      "leads_without_session": 114,
+      "leads_without_session_by_source": {
+        "crm_import": 62,
+        "event_scan": 52
+      },
+      "rejected_identity_links": 2,
+      "rejected_identity_link_ids": [
+        "LEAD-2026-000301",
+        "LEAD-2026-000302"
+      ],
+      "offline_touches": 731,
+      "touches_without_creative": 731,
+      "won_opportunities": 99,
+      "won_opportunities_unattributed": 3,
+      "unattributed_revenue_usd": 24990.95,
+      "unattributed_by_reason": {
+        "only_post_conversion_or_ineligible_touches": 3
+      }
+    },
+    "touch_eligibility": {
+      "after_conversion": 236,
+      "before_previous_conversion": 110,
+      "eligible": 771,
+      "outside_lookback": 0,
+      "flagged_exception": 0,
+      "offline_excluded": 0
+    }
+  },
+  "GET /api/v1/exceptions": {
+    "total": 2,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "exception_id": "EXC-2026-000001",
+        "issue_type": "duplicate_revenue",
+        "rule_id": "R-REV-01",
+        "record_type": "Order",
+        "record_id": "ORD-2026-000100",
+        "related_id": "ORD-2026-000050",
+        "detail": "invoice INV-2026-000050 already recognised on ORD-2026-000050",
+        "decision": "exclude_from_recognized_revenue"
+      },
+      {
+        "exception_id": "EXC-2026-000002",
+        "issue_type": "duplicate_revenue",
+        "rule_id": "R-REV-01",
+        "record_type": "Order",
+        "record_id": "ORD-2026-000101",
+        "related_id": "ORD-2026-000086",
+        "detail": "cumulative revenue 17232.14 exceeds opportunity amount 8616.07",
+        "decision": "exclude_from_recognized_revenue"
+      }
+    ]
+  },
+  "GET /api/v1/exceptions/summary": [
+    {
+      "issue_type": "duplicate_revenue",
+      "rule_id": "R-REV-01",
+      "rule": "Order shares an external_invoice_id with an earlier order, or pushes cumulative order revenue for its opportunity above the opportunity amount.",
+      "decision": "exclude_from_recognized_revenue",
+      "detected": 2
+    },
+    {
+      "issue_type": "post_conversion_touch",
+      "rule_id": "R-TCH-01",
+      "rule": "Touchpoint carries a platform conversion claim but occurred after the claimed opportunity closed (or the opportunity never closed won).",
+      "decision": "exclude_from_attribution",
+      "detected": 2
+    }
+  ],
+  "GET /api/v1/exceptions/{exception_id}": {
+    "exception_id": "EXC-2026-000001",
+    "issue_type": "duplicate_revenue",
+    "rule_id": "R-REV-01",
+    "record_type": "Order",
+    "record_id": "ORD-2026-000100",
+    "related_id": "ORD-2026-000050",
+    "detail": "invoice INV-2026-000050 already recognised on ORD-2026-000050",
+    "decision": "exclude_from_recognized_revenue",
+    "record": {
+      "order_id": "ORD-2026-000100",
+      "opportunity_id": "OPP-2026-000090",
+      "external_invoice_id": "INV-2026-000050",
+      "revenue_amount": 1716187.18,
+      "currency": "INR",
+      "recognized_at": "2026-01-16T03:47:40",
+      "source_system": "billing_reimport"
+    }
+  },
+  "GET /api/v1/fx-rates": [
+    {
+      "fx_rate_id": "FX-INR-2025-01",
+      "currency": "INR",
+      "rate_month": "2025-01",
+      "rate_to_usd": 0.011979,
+      "source": "synthetic_reference_rate"
+    },
+    {
+      "fx_rate_id": "FX-INR-2025-02",
+      "currency": "INR",
+      "rate_month": "2025-02",
+      "rate_to_usd": 0.011975,
+      "source": "synthetic_reference_rate"
+    }
+  ],
+  "GET /api/v1/ground-truth": [
+    {
+      "ground_truth_id": "GT-2026-000001",
+      "issue_type": "duplicate_revenue",
+      "record_type": "Order",
+      "record_id": "ORD-2026-000100",
+      "related_id": "ORD-2026-000050",
+      "expected_decision": "exclude_from_recognized_revenue",
+      "injection_note": "same external_invoice_id re-imported"
+    },
+    {
+      "ground_truth_id": "GT-2026-000002",
+      "issue_type": "duplicate_revenue",
+      "record_type": "Order",
+      "record_id": "ORD-2026-000101",
+      "related_id": "ORD-2026-000086",
+      "expected_decision": "exclude_from_recognized_revenue",
+      "injection_note": "second invoice booked for an already-invoiced opportunity"
+    }
+  ],
+  "GET /api/v1/ground-truth/channel-contribution": [
+    {
+      "channel_id": "CH-001",
+      "channel_name": "Paid Search",
+      "true_effect_logit": 0.3,
+      "true_credited_revenue_usd": 315511.37,
+      "true_share": 0.193412,
+      "unattributable_won_revenue_usd": 0.0
+    },
+    {
+      "channel_id": "CH-002",
+      "channel_name": "Paid Social",
+      "true_effect_logit": 0.1,
+      "true_credited_revenue_usd": 124943.16,
+      "true_share": 0.076592,
+      "unattributable_won_revenue_usd": 0.0
+    }
+  ],
+  "GET /api/v1/identity/gaps": {
+    "sessions_total": 2000,
+    "anonymous_sessions": 120,
+    "anonymous_session_share": 0.06,
+    "sessions_by_identity_evidence": {
+      "login": 694,
+      "email_click_id": 579,
+      "cookie_match": 421,
+      "form_submit": 186,
+      "none": 120
+    },
+    "leads_total": 302,
+    "leads_without_session": 114,
+    "leads_without_session_by_source": {
+      "crm_import": 62,
+      "event_scan": 52
+    },
+    "rejected_identity_links": 2,
+    "rejected_identity_link_ids": [
+      "LEAD-2026-000301",
+      "LEAD-2026-000302"
+    ],
+    "offline_touches": 731,
+    "touches_without_creative": 731,
+    "won_opportunities": 99,
+    "won_opportunities_unattributed": 3,
+    "unattributed_revenue_usd": 24990.95,
+    "unattributed_by_reason": {
+      "only_post_conversion_or_ineligible_touches": 3
+    }
+  },
+  "GET /api/v1/identity/rejected-links": [
+    {
+      "lead_id": "LEAD-2026-000301",
+      "contact_id": "CON-2026-000262",
+      "session_id": "SES-2026-000671",
+      "created_at": "2026-03-08T11:13:53",
+      "source_system": "web_form",
+      "identity_link_method": "probabilistic_device_match",
+      "status": "new",
+      "exception_id": "EXC-2026-000012",
+      "record_id": "LEAD-2026-000301",
+      "detail": "session evidence=none, session contact=nan",
+      "contact_id_session": null,
+      "anonymous_id": "ANON-2555210499",
+      "started_at": "2026-03-08T11:08:53",
+      "ended_at": "2026-03-08T11:16:24",
+      "page_views": 5,
+      "traffic_channel_id": "CH-002",
+      "device": "mobile",
+      "identity_evidence": "none"
+    },
+    {
+      "lead_id": "LEAD-2026-000302",
+      "contact_id": "CON-2026-000269",
+      "session_id": "SES-2026-000853",
+      "created_at": "2026-05-03T18:06:05",
+      "source_system": "web_form",
+      "identity_link_method": "probabilistic_device_match",
+      "status": "new",
+      "exception_id": "EXC-2026-000013",
+      "record_id": "LEAD-2026-000302",
+      "detail": "session evidence=none, session contact=nan",
+      "contact_id_session": null,
+      "anonymous_id": "ANON-0575276388",
+      "started_at": "2026-05-03T18:01:05",
+      "ended_at": "2026-05-03T18:02:25",
+      "page_views": 2,
+      "traffic_channel_id": "CH-004",
+      "device": "mobile",
+      "identity_evidence": "none"
+    }
+  ],
+  "GET /api/v1/leads": {
+    "total": 302,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "lead_id": "LEAD-2026-000001",
+        "contact_id": "CON-2026-000852",
+        "session_id": null,
+        "created_at": "2025-01-21T17:23:41",
+        "source_system": "crm_import",
+        "identity_link_method": "crm_import",
+        "status": "converted"
+      },
+      {
+        "lead_id": "LEAD-2026-000002",
+        "contact_id": "CON-2026-000415",
+        "session_id": null,
+        "created_at": "2025-01-23T05:24:40",
+        "source_system": "event_scan",
+        "identity_link_method": "event_badge_scan",
+        "status": "disqualified"
+      }
+    ]
+  },
+  "GET /api/v1/leads/{lead_id}": {
+    "lead_id": "LEAD-2026-000005",
+    "contact_id": "CON-2026-000001",
+    "session_id": "SES-2026-000005",
+    "created_at": "2025-01-25T15:04:50",
+    "source_system": "web_form",
+    "identity_link_method": "session_form_submit",
+    "status": "converted",
+    "session": {
+      "session_id": "SES-2026-000005",
+      "contact_id": "CON-2026-000001",
+      "anonymous_id": "ANON-3073273807",
+      "started_at": "2025-01-25T14:42:04",
+      "ended_at": "2025-01-25T14:52:16",
+      "page_views": 2,
+      "traffic_channel_id": "CH-001",
+      "device": "desktop",
+      "identity_evidence": "form_submit"
+    },
+    "opportunities": [
+      {
+        "opportunity_id": "OPP-2026-000003",
+        "contact_id": "CON-2026-000001",
+        "lead_id": "LEAD-2026-000005",
+        "created_at": "2025-02-03T11:28:54",
+        "closed_at": "2025-03-12T05:52:58",
+        "stage": "closed_lost",
+        "amount": 4578.77,
+        "currency": "USD",
+        "company_size": "smb"
+      }
+    ],
+    "identity_link": "verified"
+  },
+  "GET /api/v1/meta/config": {
+    "dataset_defaults": {
+      "seed": 20261022,
+      "campaigns": 500,
+      "contacts": 50000,
+      "touchpoints": 200000,
+      "opportunities": 10000,
+      "sessions": 100000,
+      "leads": 15000,
+      "start_date": "2025-01-01",
+      "end_date": "2026-10-31",
+      "evaluation_train_cutoff": "2026-07-01",
+      "lookback_days": 365,
+      "time_decay_half_life_days": 14.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "reporting_currency": "USD",
+      "anomaly_rates": {
+        "duplicate_revenue": 0.004,
+        "post_conversion_touch": 0.004,
+        "currency_mismatch": 0.01,
+        "campaign_cost_omitted": 0.02,
+        "anonymous_session_without_evidence": 0.002
+      },
+      "min_anomalies_per_type": 2
+    },
+    "starter_volumes": {
+      "seed": 20261022,
+      "campaigns": 40,
+      "contacts": 1000,
+      "touchpoints": 4000,
+      "opportunities": 200,
+      "sessions": 2000,
+      "leads": 300,
+      "start_date": "2025-01-01",
+      "end_date": "2026-10-31",
+      "evaluation_train_cutoff": "2026-07-01",
+      "lookback_days": 365,
+      "time_decay_half_life_days": 14.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "reporting_currency": "USD",
+      "anomaly_rates": {
+        "duplicate_revenue": 0.004,
+        "post_conversion_touch": 0.004,
+        "currency_mismatch": 0.01,
+        "campaign_cost_omitted": 0.02,
+        "anonymous_session_without_evidence": 0.002
+      },
+      "min_anomalies_per_type": 2
+    },
+    "attribution_defaults": {
+      "lookback_days": 365,
+      "time_decay_half_life_days": 14.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "include_offline": true,
+      "reporting_currency": "USD"
+    },
+    "models": [
+      "first_touch",
+      "last_touch"
+    ],
+    "opportunity_transitions": {
+      "None": [
+        "prospecting"
+      ],
+      "prospecting": [
+        "closed_lost",
+        "qualified"
+      ],
+      "qualified": [
+        "closed_lost",
+        "proposal"
+      ],
+      "proposal": [
+        "closed_lost",
+        "closed_won"
+      ],
+      "closed_won": [],
+      "closed_lost": []
+    }
+  },
+  "GET /api/v1/meta/manifest": {
+    "generator": "attribution_engine",
+    "version": "2.0.0",
+    "seed": 20261022,
+    "config": {
+      "seed": 20261022,
+      "campaigns": 40,
+      "contacts": 1000,
+      "touchpoints": 4000,
+      "opportunities": 200,
+      "sessions": 2000,
+      "leads": 300,
+      "start_date": "2025-01-01",
+      "end_date": "2026-10-31",
+      "evaluation_train_cutoff": "2026-07-01",
+      "lookback_days": 365,
+      "time_decay_half_life_days": 14.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "reporting_currency": "USD",
+      "anomaly_rates": {
+        "duplicate_revenue": 0.004,
+        "post_conversion_touch": 0.004,
+        "currency_mismatch": 0.01,
+        "campaign_cost_omitted": 0.02,
+        "anonymous_session_without_evidence": 0.002
+      },
+      "min_anomalies_per_type": 2
+    },
+    "command": "python -m attribution_engine.cli generate --scale starter --seed 20261022",
+    "provenance": {
+      "type": "fully synthetic",
+      "external_data": "none",
+      "personal_data": "none",
+      "license": "MIT (generated data may be redistributed freely)",
+      "reference": "Schema inspired by common CRM / marketing-automation concepts; no third-party dataset used."
+    },
+    "row_counts": {
+      "Channel": 8,
+      "FxRate": 108,
+      "Campaign": 40,
+      "Creative": 63,
+      "Audience": 25,
+      "CampaignAudience": 81,
+      "Contact": 1000,
+      "WebSession": 2000,
+      "Lead": 302,
+      "Opportunity": 200,
+      "OpportunityEvent": 701,
+      "Touchpoint": 4002,
+      "Order": 101,
+      "CostRecord": 519,
+      "ExceptionLog": 13,
+      "AttributionRun": 1,
+      "AttributionResult": 1752,
+      "UnattributedRevenue": 3,
+      "TouchEligibilityAudit": 99,
+      "CampaignROI": 200,
+      "ChannelROI": 40
+    },
+    "table_content_digests": {
+      "Channel": "6b3aac7980a10477229a462e8bf52ead69be21e93f643908d8c9144bf3462d96",
+      "FxRate": "37c0ae8e1c291c3f963ab4f266c82c9ea7945ac69c8ee5d52e3de49e51d3a708",
+      "Campaign": "041e3996187f6e56325f1296ef10a89f23d9b8d1c1ba6ba9c64f14adaf939d4e",
+      "Creative": "0dcc8c3b2aab1ddac1c90ab91a13709d7fa733db51d0c278d9b94e5c99e39c06",
+      "Audience": "27ede2c051e0002989cd8ccc8134b81fef298522c65e47749476fa2d657ddfdd",
+      "CampaignAudience": "23ca3fa529f557176f490f6206e72fc9c9af92aeb54b62ca0bad81bb52f60127",
+      "Contact": "0a7185ebc0a7eb8de05f5d10e075d2fa063180fef2913bc7040c41c83f7143d8",
+      "WebSession": "237ca87bd0ab3325ef36e46a9fea44e4dce49e4d69a836bc80dd242c01df5393",
+      "Lead": "dad0cc884c2f187ba0cbc069b539e686005013f0ad0c1f955ba03d9f50e5d419",
+      "Opportunity": "b398f6a1e99676fe114a18ced72262aeed3766c34323eac1a544ac73ec567337",
+      "OpportunityEvent": "70fde608ed871d04130d501a3013f16105f5f2f3ab74ebd7357b66c8ca9a9b6d",
+      "Touchpoint": "88fee9c3ab07b46548dd07b754c99b46d2b72c56afb7d6d42c2991c1a97fa63c",
+      "Order": "6579b2a39907e059bde774f8e1ec5e81cf1086af464ab1d14d7d602af37d0d2e",
+      "CostRecord": "95a129ebd6acbb58d4c9dba5ed488af3b6905c0ec6540f2c85df8b61e8d8ff46",
+      "ExceptionLog": "bdb30e46665525f63016c967dd718933bd5a716f00d6f07c5608ab68024b4074",
+      "AttributionRun": "3ee9d004e4787238c467ebeb891b6efe091fd546a0ff93028952fc045b113648",
+      "AttributionResult": "557ae3f8f2f66b672ecb1b2d41ea431651aaab3148ecee16f80ec767136f0fa5",
+      "UnattributedRevenue": "9d59796eb8a8a0ee13c8baf3569fb31dd142f15faeaf4a702aca450518776cae",
+      "TouchEligibilityAudit": "9bc23adbeb8a5b55a7441b0585c1f8a4739e12730efbeaf817eac75a1aff63a3",
+      "CampaignROI": "7e031cb8de71b1ab5ae1511506bae5e4258464b7a1c9e69811806bf77e50fff9",
+      "ChannelROI": "c9aa4f938ab7f9976ea6a5463b168791ee8a0fa6a753e1d4b8fb0554fb886f92"
+    },
+    "ground_truth_digests": {
+      "ground_truth": "dff94eec06e8d1f239d547a345c4521260b0aaf68efcafadcf34ad3878fb5b0f",
+      "channel_contribution": "98f0f336c94d64eee6cf90138f9f24882b05844d052b47e9df7ca8516986cfc3"
+    },
+    "files": {
+      "attributionresult.csv": {
+        "sha256": "7c1e5e1a5271c246491479f4684f4707b83acd2243166838630cf669e5297bde",
+        "bytes": 305090
+      },
+      "attributionresult.json": {
+        "sha256": "e0229f65abc9a225d089f986688014140a9c71702ee8b2ac03771e68f3973200",
+        "bytes": 836280
+      },
+      "attributionrun.csv": {
+        "sha256": "dd831358c4bb74d8621b0441c9fc19ae7f872068c71b4310ee36a8f6655a3ba8",
+        "bytes": 368
+      }
+    },
+    "ground_truth_files": {
+      "channel_contribution.csv": {
+        "sha256": "db3104067d052c56d8673d1e3657bb8e5ddbe93c037b83f8359deed00bf37f8f",
+        "bytes": 461
+      },
+      "channel_contribution.json": {
+        "sha256": "61f64ab24f420a4ac76e4115e4cd7043480d30a46c2d7fb8fe1ed108bbf207a6",
+        "bytes": 1618
+      },
+      "ground_truth.csv": {
+        "sha256": "3de34d0a4cafa8ff8645fef99e363167efa66616ffe14bdcce5fc00d3c36f795",
+        "bytes": 2176
+      },
+      "ground_truth.json": {
+        "sha256": "a3088c5645f231119d5a77c17447160444e45fd85ca79f55f499f123d3a5a428",
+        "bytes": 4131
+      }
+    }
+  },
+  "GET /api/v1/meta/schema": {
+    "attributionresult": {
+      "rows": 1752,
+      "columns": [
+        {
+          "name": "attribution_id",
+          "type": "TEXT",
+          "primary_key": true
+        },
+        {
+          "name": "run_id",
+          "type": "TEXT",
+          "primary_key": false
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "contact_id",
+          "references": "contact.contact_id"
+        },
+        {
+          "column": "campaign_id",
+          "references": "campaign.campaign_id"
+        }
+      ]
+    },
+    "attributionrun": {
+      "rows": 1,
+      "columns": [
+        {
+          "name": "run_id",
+          "type": "TEXT",
+          "primary_key": true
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "primary_key": false
+        }
+      ],
+      "foreign_keys": []
+    },
+    "audience": {
+      "rows": 25,
+      "columns": [
+        {
+          "name": "audience_id",
+          "type": "TEXT",
+          "primary_key": true
+        },
+        {
+          "name": "audience_name",
+          "type": "TEXT",
+          "primary_key": false
+        }
+      ],
+      "foreign_keys": []
+    }
+  },
+  "GET /api/v1/opportunities": {
+    "total": 99,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "opportunity_id": "OPP-2026-000001",
+        "contact_id": "CON-2026-000852",
+        "lead_id": "LEAD-2026-000001",
+        "created_at": "2025-01-27T19:56:45",
+        "closed_at": "2025-05-22T16:05:53",
+        "stage_snapshot": "closed_won",
+        "amount": 590761.51,
+        "currency": "INR",
+        "company_size": "smb",
+        "current_stage": "closed_won",
+        "stage_since": "2025-05-22T16:05:53"
+      },
+      {
+        "opportunity_id": "OPP-2026-000002",
+        "contact_id": "CON-2026-000760",
+        "lead_id": "LEAD-2026-000003",
+        "created_at": "2025-01-29T04:39:58",
+        "closed_at": "2025-08-02T17:03:05",
+        "stage_snapshot": "closed_won",
+        "amount": 11884.93,
+        "currency": "EUR",
+        "company_size": "smb",
+        "current_stage": "closed_won",
+        "stage_since": "2025-08-02T17:03:05"
+      }
+    ]
+  },
+  "GET /api/v1/opportunities/{opportunity_id}": {
+    "opportunity_id": "OPP-2026-000001",
+    "contact_id": "CON-2026-000852",
+    "lead_id": "LEAD-2026-000001",
+    "created_at": "2025-01-27T19:56:45",
+    "closed_at": "2025-05-22T16:05:53",
+    "amount": 590761.51,
+    "currency": "INR",
+    "company_size": "smb",
+    "stage_snapshot": "closed_won",
+    "current": {
+      "opportunity_id": "OPP-2026-000001",
+      "current_stage": "closed_won",
+      "stage_since": "2025-05-22T16:05:53",
+      "event_count": 4
+    },
+    "orders": [
+      {
+        "order_id": "ORD-2026-000001",
+        "opportunity_id": "OPP-2026-000001",
+        "external_invoice_id": "INV-2026-000001",
+        "revenue_amount": 590761.51,
+        "currency": "INR",
+        "recognized_at": "2025-05-24T17:41:31",
+        "source_system": "billing"
+      }
+    ],
+    "attribution": [
+      {
+        "model": "first_touch",
+        "campaign_id": "CMP-2026-000004",
+        "credit_share": 1.0,
+        "credited_revenue": 590761.51,
+        "currency": "INR"
+      },
+      {
+        "model": "last_touch",
+        "campaign_id": "CMP-2026-000017",
+        "credit_share": 1.0,
+        "credited_revenue": 590761.51,
+        "currency": "INR"
+      }
+    ]
+  },
+  "GET /api/v1/opportunities/{opportunity_id}/events": [
+    {
+      "event_id": "OPPEVT-OPP-2026-000001-01",
+      "opportunity_id": "OPP-2026-000001",
+      "sequence": 1,
+      "event_type": "created",
+      "from_stage": null,
+      "to_stage": "prospecting",
+      "occurred_at": "2025-01-27T19:56:45",
+      "actor": "crm_sync"
+    },
+    {
+      "event_id": "OPPEVT-OPP-2026-000001-02",
+      "opportunity_id": "OPP-2026-000001",
+      "sequence": 2,
+      "event_type": "stage_changed",
+      "from_stage": "prospecting",
+      "to_stage": "qualified",
+      "occurred_at": "2025-02-14T01:22:07",
+      "actor": "crm_sync"
+    }
+  ],
+  "GET /api/v1/orders": {
+    "total": 101,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "order_id": "ORD-2026-000001",
+        "opportunity_id": "OPP-2026-000001",
+        "external_invoice_id": "INV-2026-000001",
+        "revenue_amount": 590761.51,
+        "currency": "INR",
+        "recognized_at": "2025-05-24T17:41:31",
+        "source_system": "billing",
+        "recognised": true
+      },
+      {
+        "order_id": "ORD-2026-000002",
+        "opportunity_id": "OPP-2026-000002",
+        "external_invoice_id": "INV-2026-000002",
+        "revenue_amount": 11884.93,
+        "currency": "EUR",
+        "recognized_at": "2025-08-03T04:59:51",
+        "source_system": "billing",
+        "recognised": true
+      }
+    ]
+  },
+  "GET /api/v1/pipeline/jobs": [
+    {
+      "job_id": "JOB-5e0d5fccfde0",
+      "kind": "reproducibility",
+      "params": {
+        "scale": "starter",
+        "seed": 20261022
+      },
+      "status": "succeeded",
+      "created_at": "2026-11-12T16:41:56.911136+00:00",
+      "started_at": "2026-11-12T16:41:56.911665+00:00",
+      "result": {
+        "reproducible": true,
+        "tables_compared": 23,
+        "mismatched_tables": [],
+        "row_counts": {
+          "Channel": 8,
+          "FxRate": 108,
+          "Campaign": 40,
+          "Creative": 63,
+          "Audience": 25,
+          "CampaignAudience": 81,
+          "Contact": 1000,
+          "WebSession": 2000,
+          "Lead": 302,
+          "Opportunity": 200,
+          "OpportunityEvent": 701,
+          "Touchpoint": 4002,
+          "Order": 101,
+          "CostRecord": 519,
+          "ExceptionLog": 13,
+          "AttributionRun": 1,
+          "AttributionResult": 1752,
+          "UnattributedRevenue": 3,
+          "TouchEligibilityAudit": 99,
+          "CampaignROI": 200,
+          "ChannelROI": 40,
+          "ground_truth.ground_truth": 13,
+          "ground_truth.channel_contribution": 8
+        },
+        "checksums": {
+          "Channel": "6b3aac7980a10477229a462e8bf52ead69be21e93f643908d8c9144bf3462d96",
+          "FxRate": "37c0ae8e1c291c3f963ab4f266c82c9ea7945ac69c8ee5d52e3de49e51d3a708",
+          "Campaign": "041e3996187f6e56325f1296ef10a89f23d9b8d1c1ba6ba9c64f14adaf939d4e",
+          "Creative": "0dcc8c3b2aab1ddac1c90ab91a13709d7fa733db51d0c278d9b94e5c99e39c06",
+          "Audience": "27ede2c051e0002989cd8ccc8134b81fef298522c65e47749476fa2d657ddfdd",
+          "CampaignAudience": "23ca3fa529f557176f490f6206e72fc9c9af92aeb54b62ca0bad81bb52f60127",
+          "Contact": "0a7185ebc0a7eb8de05f5d10e075d2fa063180fef2913bc7040c41c83f7143d8",
+          "WebSession": "237ca87bd0ab3325ef36e46a9fea44e4dce49e4d69a836bc80dd242c01df5393",
+          "Lead": "dad0cc884c2f187ba0cbc069b539e686005013f0ad0c1f955ba03d9f50e5d419",
+          "Opportunity": "b398f6a1e99676fe114a18ced72262aeed3766c34323eac1a544ac73ec567337",
+          "OpportunityEvent": "70fde608ed871d04130d501a3013f16105f5f2f3ab74ebd7357b66c8ca9a9b6d",
+          "Touchpoint": "88fee9c3ab07b46548dd07b754c99b46d2b72c56afb7d6d42c2991c1a97fa63c",
+          "Order": "6579b2a39907e059bde774f8e1ec5e81cf1086af464ab1d14d7d602af37d0d2e",
+          "CostRecord": "95a129ebd6acbb58d4c9dba5ed488af3b6905c0ec6540f2c85df8b61e8d8ff46",
+          "ExceptionLog": "bdb30e46665525f63016c967dd718933bd5a716f00d6f07c5608ab68024b4074",
+          "AttributionRun": "3ee9d004e4787238c467ebeb891b6efe091fd546a0ff93028952fc045b113648",
+          "AttributionResult": "557ae3f8f2f66b672ecb1b2d41ea431651aaab3148ecee16f80ec767136f0fa5",
+          "UnattributedRevenue": "9d59796eb8a8a0ee13c8baf3569fb31dd142f15faeaf4a702aca450518776cae",
+          "TouchEligibilityAudit": "9bc23adbeb8a5b55a7441b0585c1f8a4739e12730efbeaf817eac75a1aff63a3",
+          "CampaignROI": "7e031cb8de71b1ab5ae1511506bae5e4258464b7a1c9e69811806bf77e50fff9",
+          "ChannelROI": "c9aa4f938ab7f9976ea6a5463b168791ee8a0fa6a753e1d4b8fb0554fb886f92",
+          "ground_truth.ground_truth": "dff94eec06e8d1f239d547a345c4521260b0aaf68efcafadcf34ad3878fb5b0f",
+          "ground_truth.channel_contribution": "98f0f336c94d64eee6cf90138f9f24882b05844d052b47e9df7ca8516986cfc3"
+        }
+      },
+      "finished_at": "2026-11-12T16:42:00.590445+00:00"
+    }
+  ],
+  "GET /api/v1/pipeline/jobs/{job_id}": {
+    "job_id": "JOB-5e0d5fccfde0",
+    "kind": "reproducibility",
+    "params": {
+      "scale": "starter",
+      "seed": 20261022
+    },
+    "status": "succeeded",
+    "created_at": "2026-11-12T16:41:56.911136+00:00",
+    "started_at": "2026-11-12T16:41:56.911665+00:00",
+    "result": {
+      "reproducible": true,
+      "tables_compared": 23,
+      "mismatched_tables": [],
+      "row_counts": {
+        "Channel": 8,
+        "FxRate": 108,
+        "Campaign": 40,
+        "Creative": 63,
+        "Audience": 25,
+        "CampaignAudience": 81,
+        "Contact": 1000,
+        "WebSession": 2000,
+        "Lead": 302,
+        "Opportunity": 200,
+        "OpportunityEvent": 701,
+        "Touchpoint": 4002,
+        "Order": 101,
+        "CostRecord": 519,
+        "ExceptionLog": 13,
+        "AttributionRun": 1,
+        "AttributionResult": 1752,
+        "UnattributedRevenue": 3,
+        "TouchEligibilityAudit": 99,
+        "CampaignROI": 200,
+        "ChannelROI": 40,
+        "ground_truth.ground_truth": 13,
+        "ground_truth.channel_contribution": 8
+      },
+      "checksums": {
+        "Channel": "6b3aac7980a10477229a462e8bf52ead69be21e93f643908d8c9144bf3462d96",
+        "FxRate": "37c0ae8e1c291c3f963ab4f266c82c9ea7945ac69c8ee5d52e3de49e51d3a708",
+        "Campaign": "041e3996187f6e56325f1296ef10a89f23d9b8d1c1ba6ba9c64f14adaf939d4e",
+        "Creative": "0dcc8c3b2aab1ddac1c90ab91a13709d7fa733db51d0c278d9b94e5c99e39c06",
+        "Audience": "27ede2c051e0002989cd8ccc8134b81fef298522c65e47749476fa2d657ddfdd",
+        "CampaignAudience": "23ca3fa529f557176f490f6206e72fc9c9af92aeb54b62ca0bad81bb52f60127",
+        "Contact": "0a7185ebc0a7eb8de05f5d10e075d2fa063180fef2913bc7040c41c83f7143d8",
+        "WebSession": "237ca87bd0ab3325ef36e46a9fea44e4dce49e4d69a836bc80dd242c01df5393",
+        "Lead": "dad0cc884c2f187ba0cbc069b539e686005013f0ad0c1f955ba03d9f50e5d419",
+        "Opportunity": "b398f6a1e99676fe114a18ced72262aeed3766c34323eac1a544ac73ec567337",
+        "OpportunityEvent": "70fde608ed871d04130d501a3013f16105f5f2f3ab74ebd7357b66c8ca9a9b6d",
+        "Touchpoint": "88fee9c3ab07b46548dd07b754c99b46d2b72c56afb7d6d42c2991c1a97fa63c",
+        "Order": "6579b2a39907e059bde774f8e1ec5e81cf1086af464ab1d14d7d602af37d0d2e",
+        "CostRecord": "95a129ebd6acbb58d4c9dba5ed488af3b6905c0ec6540f2c85df8b61e8d8ff46",
+        "ExceptionLog": "bdb30e46665525f63016c967dd718933bd5a716f00d6f07c5608ab68024b4074",
+        "AttributionRun": "3ee9d004e4787238c467ebeb891b6efe091fd546a0ff93028952fc045b113648",
+        "AttributionResult": "557ae3f8f2f66b672ecb1b2d41ea431651aaab3148ecee16f80ec767136f0fa5",
+        "UnattributedRevenue": "9d59796eb8a8a0ee13c8baf3569fb31dd142f15faeaf4a702aca450518776cae",
+        "TouchEligibilityAudit": "9bc23adbeb8a5b55a7441b0585c1f8a4739e12730efbeaf817eac75a1aff63a3",
+        "CampaignROI": "7e031cb8de71b1ab5ae1511506bae5e4258464b7a1c9e69811806bf77e50fff9",
+        "ChannelROI": "c9aa4f938ab7f9976ea6a5463b168791ee8a0fa6a753e1d4b8fb0554fb886f92",
+        "ground_truth.ground_truth": "dff94eec06e8d1f239d547a345c4521260b0aaf68efcafadcf34ad3878fb5b0f",
+        "ground_truth.channel_contribution": "98f0f336c94d64eee6cf90138f9f24882b05844d052b47e9df7ca8516986cfc3"
+      }
+    },
+    "finished_at": "2026-11-12T16:42:00.590445+00:00"
+  },
+  "GET /api/v1/pipeline/validation": {
+    "passed": true,
+    "total_checks": 111,
+    "by_category": {
+      "primary_key": {
+        "passed": 17,
+        "failed": 0
+      },
+      "foreign_key": {
+        "passed": 21,
+        "failed": 0
+      },
+      "id_format": {
+        "passed": 9,
+        "failed": 0
+      },
+      "enum": {
+        "passed": 19,
+        "failed": 0
+      },
+      "temporal": {
+        "passed": 14,
+        "failed": 0
+      },
+      "lifecycle": {
+        "passed": 5,
+        "failed": 0
+      },
+      "derived": {
+        "passed": 3,
+        "failed": 0
+      },
+      "arithmetic": {
+        "passed": 15,
+        "failed": 0
+      },
+      "duplicate": {
+        "passed": 2,
+        "failed": 0
+      },
+      "identity": {
+        "passed": 2,
+        "failed": 0
+      },
+      "ground_truth": {
+        "passed": 4,
+        "failed": 0
+      }
+    },
+    "failed_checks": []
+  },
+  "GET /api/v1/roi/campaigns": {
+    "total": 40,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "campaign_id": "CMP-2026-000014",
+        "campaign_name": "US Display - Always-On 0014",
+        "channel_id": "CH-006",
+        "market": "US",
+        "currency": "USD",
+        "budget_amount": 22161.9,
+        "status": "active",
+        "spend": 19519.98,
+        "spend_usd": 19519.98,
+        "cost_records": 23,
+        "quarantined_cost_usd": 0.0,
+        "quarantined_cost_records": 0.0,
+        "attributed_revenue_usd": 85512.42,
+        "attributed_conversions": 3.382,
+        "credited_opportunities": 18,
+        "attributed_revenue_native_same_currency": 83631.9,
+        "roas": 4.3808,
+        "roi_pct": 338.08,
+        "cost_per_conversion_usd": 5771.67,
+        "roi_status": "calculated",
+        "model": "time_decay"
+      },
+      {
+        "campaign_id": "CMP-2026-000018",
+        "campaign_name": "EU Paid Social - Always-On 0018",
+        "channel_id": "CH-002",
+        "market": "EU",
+        "currency": "EUR",
+        "budget_amount": 22922.49,
+        "status": "active",
+        "spend": 18652.03,
+        "spend_usd": 19889.38,
+        "cost_records": 22,
+        "quarantined_cost_usd": 0.0,
+        "quarantined_cost_records": 0.0,
+        "attributed_revenue_usd": 78332.7,
+        "attributed_conversions": 4.1762,
+        "credited_opportunities": 16,
+        "attributed_revenue_native_same_currency": 72306.12,
+        "roas": 3.9384,
+        "roi_pct": 293.84,
+        "cost_per_conversion_usd": 4762.6,
+        "roi_status": "calculated",
+        "model": "time_decay"
+      }
+    ]
+  },
+  "GET /api/v1/roi/campaigns/{campaign_id}": {
+    "campaign_id": "CMP-2026-000001",
+    "run_id": "RUN-BASELINE",
+    "by_model": [
+      {
+        "campaign_id": "CMP-2026-000001",
+        "campaign_name": "IN Paid Search - Always-On 0001",
+        "channel_id": "CH-001",
+        "market": "IN",
+        "currency": "INR",
+        "budget_amount": 5092171.38,
+        "status": "active",
+        "spend": 4015965.34,
+        "spend_usd": 48331.85,
+        "cost_records": 22,
+        "quarantined_cost_usd": 0.0,
+        "quarantined_cost_records": 0.0,
+        "attributed_revenue_usd": 32288.59,
+        "attributed_conversions": 4.0,
+        "credited_opportunities": 4.0,
+        "attributed_revenue_native_same_currency": 2683335.07,
+        "roas": 0.6681,
+        "roi_pct": -33.19,
+        "cost_per_conversion_usd": 12082.96,
+        "roi_status": "calculated",
+        "model": "first_touch"
+      },
+      {
+        "campaign_id": "CMP-2026-000001",
+        "campaign_name": "IN Paid Search - Always-On 0001",
+        "channel_id": "CH-001",
+        "market": "IN",
+        "currency": "INR",
+        "budget_amount": 5092171.38,
+        "status": "active",
+        "spend": 4015965.34,
+        "spend_usd": 48331.85,
+        "cost_records": 22,
+        "quarantined_cost_usd": 0.0,
+        "quarantined_cost_records": 0.0,
+        "attributed_revenue_usd": 33143.2,
+        "attributed_conversions": 5.0,
+        "credited_opportunities": 5.0,
+        "attributed_revenue_native_same_currency": 1581708.9,
+        "roas": 0.6857,
+        "roi_pct": -31.43,
+        "cost_per_conversion_usd": 9666.37,
+        "roi_status": "calculated",
+        "model": "last_touch"
+      }
+    ]
+  },
+  "GET /api/v1/roi/channels": [
+    {
+      "channel_id": "CH-001",
+      "channel_name": "Paid Search",
+      "channel_group": "digital",
+      "is_paid": 1,
+      "spend_usd": 232997.53,
+      "attributed_revenue_usd": 211825.73,
+      "attributed_conversions": 15.04,
+      "campaigns": 8,
+      "campaigns_missing_cost": 0.0,
+      "revenue_on_missing_cost_campaigns_usd": 0.0,
+      "roas": 0.91,
+      "roi_pct": -9.09,
+      "revenue_share": 0.13
+    },
+    {
+      "channel_id": "CH-002",
+      "channel_name": "Paid Social",
+      "channel_group": "digital",
+      "is_paid": 1,
+      "spend_usd": 97213.52,
+      "attributed_revenue_usd": 230792.38,
+      "attributed_conversions": 12.25,
+      "campaigns": 4,
+      "campaigns_missing_cost": 0.0,
+      "revenue_on_missing_cost_campaigns_usd": 0.0,
+      "roas": 2.37,
+      "roi_pct": 137.41,
+      "revenue_share": 0.14
+    }
+  ],
+  "GET /api/v1/roi/reconciliation": {
+    "passed": true,
+    "by_currency": {
+      "EUR": {
+        "gross_order_revenue": 341552.66,
+        "duplicate_revenue_excluded": 0.0,
+        "recognised_revenue": 341552.66,
+        "unattributed_revenue": 0.0,
+        "models": {
+          "first_touch": {
+            "attributed": 341552.66,
+            "difference": 0.0
+          },
+          "last_touch": {
+            "attributed": 341552.66,
+            "difference": 0.0
+          },
+          "linear_multi_touch": {
+            "attributed": 341552.66,
+            "difference": 0.0
+          },
+          "position_based": {
+            "attributed": 341552.66,
+            "difference": 0.0
+          },
+          "time_decay": {
+            "attributed": 341552.66,
+            "difference": 0.0
+          }
+        }
+      },
+      "INR": {
+        "gross_order_revenue": 73249892.34,
+        "duplicate_revenue_excluded": 1716187.18,
+        "recognised_revenue": 71533705.16,
+        "unattributed_revenue": 1280159.74,
+        "models": {
+          "first_touch": {
+            "attributed": 70253545.42,
+            "difference": -0.0
+          },
+          "last_touch": {
+            "attributed": 70253545.42,
+            "difference": -0.0
+          },
+          "linear_multi_touch": {
+            "attributed": 70253545.42,
+            "difference": -0.0
+          },
+          "position_based": {
+            "attributed": 70253545.42,
+            "difference": -0.0
+          },
+          "time_decay": {
+            "attributed": 70253545.42,
+            "difference": -0.0
+          }
+        }
+      },
+      "USD": {
+        "gross_order_revenue": 414591.16,
+        "duplicate_revenue_excluded": 8616.07,
+        "recognised_revenue": 405975.09,
+        "unattributed_revenue": 9486.22,
+        "models": {
+          "first_touch": {
+            "attributed": 396488.87,
+            "difference": 0.0
+          },
+          "last_touch": {
+            "attributed": 396488.87,
+            "difference": 0.0
+          },
+          "linear_multi_touch": {
+            "attributed": 396488.87,
+            "difference": 0.0
+          },
+          "position_based": {
+            "attributed": 396488.87,
+            "difference": 0.0
+          },
+          "time_decay": {
+            "attributed": 396488.87,
+            "difference": 0.0
+          }
+        }
+      }
+    },
+    "spend": {
+      "ledger_total_usd": 1166474.95,
+      "valid_spend_usd": 1105285.38,
+      "quarantined_spend_usd": 61189.57,
+      "campaigns_missing_cost": 2
+    },
+    "recognised_opportunities": 99,
+    "unattributed_opportunities": 3,
+    "attributed_revenue_usd_by_model": {
+      "first_touch": 1606300.15,
+      "last_touch": 1606300.15,
+      "linear_multi_touch": 1606300.06,
+      "position_based": 1606300.14,
+      "time_decay": 1606300.22
+    },
+    "unattributed_revenue_usd": 24990.95
+  },
+  "GET /api/v1/sessions": {
+    "total": 2000,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "session_id": "SES-2026-000001",
+        "contact_id": "CON-2026-000689",
+        "anonymous_id": "ANON-2615841074",
+        "started_at": "2025-01-11T12:45:44",
+        "ended_at": "2025-01-11T12:49:17",
+        "page_views": 4,
+        "traffic_channel_id": "CH-002",
+        "device": "desktop",
+        "identity_evidence": "cookie_match"
+      },
+      {
+        "session_id": "SES-2026-000002",
+        "contact_id": null,
+        "anonymous_id": "ANON-0770173969",
+        "started_at": "2025-01-13T12:40:32",
+        "ended_at": "2025-01-13T12:48:59",
+        "page_views": 2,
+        "traffic_channel_id": "CH-005",
+        "device": "mobile",
+        "identity_evidence": "none"
+      }
+    ]
+  },
+  "GET /api/v1/sessions/{session_id}": {
+    "session_id": "SES-2026-000005",
+    "contact_id": "CON-2026-000001",
+    "anonymous_id": "ANON-3073273807",
+    "started_at": "2025-01-25T14:42:04",
+    "ended_at": "2025-01-25T14:52:16",
+    "page_views": 2,
+    "traffic_channel_id": "CH-001",
+    "device": "desktop",
+    "identity_evidence": "form_submit",
+    "leads": [
+      {
+        "lead_id": "LEAD-2026-000005",
+        "contact_id": "CON-2026-000001",
+        "session_id": "SES-2026-000005",
+        "created_at": "2025-01-25T15:04:50",
+        "source_system": "web_form",
+        "identity_link_method": "session_form_submit",
+        "status": "converted"
+      }
+    ]
+  },
+  "GET /api/v1/touchpoints": {
+    "total": 4002,
+    "limit": 2,
+    "offset": 0,
+    "items": [
+      {
+        "touchpoint_id": "TOUCH-CON-2026-000001-000001",
+        "contact_id": "CON-2026-000001",
+        "campaign_id": "CMP-2026-000010",
+        "channel_id": "CH-002",
+        "creative_id": "CRV-2026-000019",
+        "occurred_at": "2025-01-21T00:03:15",
+        "touch_type": "ad_click",
+        "is_offline": 0,
+        "source_system": "ad_platform",
+        "reported_conversion_id": null
+      },
+      {
+        "touchpoint_id": "TOUCH-CON-2026-000001-000002",
+        "contact_id": "CON-2026-000001",
+        "campaign_id": "CMP-2026-000020",
+        "channel_id": "CH-004",
+        "creative_id": "CRV-2026-000035",
+        "occurred_at": "2025-01-21T14:07:26",
+        "touch_type": "organic_visit",
+        "is_offline": 0,
+        "source_system": "web_analytics",
+        "reported_conversion_id": null
+      }
+    ]
+  },
+  "GET /api/v1/touchpoints/{touchpoint_id}": {
+    "touchpoint_id": "TOUCH-CON-2026-000001-000001",
+    "contact_id": "CON-2026-000001",
+    "campaign_id": "CMP-2026-000010",
+    "channel_id": "CH-002",
+    "creative_id": "CRV-2026-000019",
+    "occurred_at": "2025-01-21T00:03:15",
+    "touch_type": "ad_click",
+    "is_offline": 0,
+    "source_system": "ad_platform",
+    "reported_conversion_id": null
+  },
+  "GET /health": {
+    "status": "ok",
+    "version": "2.0.0",
+    "data_directory": "C:\\Users\\PRADIP\\AppData\\Local\\Temp\\openapi_examples_ivp2e6fp\\generated",
+    "dataset_available": true,
+    "database_updated_at": "2026-11-12T16:41:55.125429+00:00"
+  },
+  "POST /api/v1/attribution/runs": {
+    "run": {
+      "run_id": "RUN-2026-000001",
+      "created_at": "2026-11-12T16:42:02",
+      "triggered_by": "analyst",
+      "models": "first_touch,last_touch,linear_multi_touch,position_based,time_decay",
+      "lookback_days": 90,
+      "time_decay_half_life_days": 7.0,
+      "position_first_weight": 0.4,
+      "position_last_weight": 0.4,
+      "include_offline": false,
+      "result_rows": 1269,
+      "attributed_opportunities": 96,
+      "unattributed_opportunities": 3,
+      "attributed_revenue_usd": 1606300.15
+    },
+    "reconciliation_passed": true,
+    "attributed_revenue_usd_by_model": {
+      "first_touch": 1606300.15,
+      "last_touch": 1606300.15,
+      "linear_multi_touch": 1606300.07,
+      "position_based": 1606300.08,
+      "time_decay": 1606300.19
+    },
+    "touch_eligibility": {
+      "after_conversion": 236,
+      "before_previous_conversion": 92,
+      "eligible": 533,
+      "offline_excluded": 125,
+      "outside_lookback": 131,
+      "flagged_exception": 0
+    }
+  },
+  "POST /api/v1/exceptions/detect": {
+    "detected": 13,
+    "by_issue_type": {
+      "currency_mismatch": 5,
+      "duplicate_revenue": 2,
+      "post_conversion_touch": 2,
+      "campaign_cost_omitted": 2,
+      "anonymous_session_without_evidence": 2
+    },
+    "matches_stored_log": true,
+    "items": [
+      {
+        "exception_id": "EXC-2026-000001",
+        "issue_type": "duplicate_revenue",
+        "rule_id": "R-REV-01",
+        "record_type": "Order",
+        "record_id": "ORD-2026-000100",
+        "related_id": "ORD-2026-000050",
+        "detail": "invoice INV-2026-000050 already recognised on ORD-2026-000050",
+        "decision": "exclude_from_recognized_revenue"
+      },
+      {
+        "exception_id": "EXC-2026-000002",
+        "issue_type": "duplicate_revenue",
+        "rule_id": "R-REV-01",
+        "record_type": "Order",
+        "record_id": "ORD-2026-000101",
+        "related_id": "ORD-2026-000086",
+        "detail": "cumulative revenue 17232.14 exceeds opportunity amount 8616.07",
+        "decision": "exclude_from_recognized_revenue"
+      }
+    ]
+  },
+  "POST /api/v1/opportunities/{opportunity_id}/events": {
+    "appended": {
+      "event_id": "OPPEVT-OPP-2026-000176-03",
+      "opportunity_id": "OPP-2026-000176",
+      "sequence": 3,
+      "event_type": "stage_changed",
+      "from_stage": "qualified",
+      "to_stage": "proposal",
+      "occurred_at": "2026-11-12T16:42:02",
+      "actor": "sales_ops"
+    },
+    "current": {
+      "opportunity_id": "OPP-2026-000176",
+      "current_stage": "proposal",
+      "stage_since": "2026-11-12T16:42:02",
+      "event_count": 3
+    },
+    "note": "Revenue is only recognised from Order records (billing); a closed_won event alone credits nothing."
+  },
+  "POST /api/v1/pipeline/generate": {
+    "job_id": "JOB-649aef0fde78",
+    "kind": "generate",
+    "params": {
+      "scale": "starter",
+      "seed": 20261022
+    },
+    "status": "running",
+    "created_at": "2026-11-12T16:42:02.644583+00:00",
+    "started_at": "2026-11-12T16:42:02.644862+00:00"
+  },
+  "POST /api/v1/pipeline/reproducibility": {
+    "job_id": "JOB-5e0d5fccfde0",
+    "kind": "reproducibility",
+    "params": {
+      "scale": "starter",
+      "seed": 20261022
+    },
+    "status": "running",
+    "created_at": "2026-11-12T16:41:56.911136+00:00",
+    "started_at": "2026-11-12T16:41:56.911665+00:00"
+  },
+  "POST /api/v1/pipeline/validate": {
+    "passed": true,
+    "total_checks": 111,
+    "by_category": {
+      "primary_key": {
+        "passed": 17,
+        "failed": 0
+      },
+      "foreign_key": {
+        "passed": 21,
+        "failed": 0
+      },
+      "id_format": {
+        "passed": 9,
+        "failed": 0
+      },
+      "enum": {
+        "passed": 19,
+        "failed": 0
+      },
+      "temporal": {
+        "passed": 14,
+        "failed": 0
+      },
+      "lifecycle": {
+        "passed": 5,
+        "failed": 0
+      },
+      "derived": {
+        "passed": 3,
+        "failed": 0
+      },
+      "arithmetic": {
+        "passed": 15,
+        "failed": 0
+      },
+      "duplicate": {
+        "passed": 2,
+        "failed": 0
+      },
+      "identity": {
+        "passed": 2,
+        "failed": 0
+      },
+      "ground_truth": {
+        "passed": 4,
+        "failed": 0
+      }
+    },
+    "failed_checks": [],
+    "row_counts": {
+      "Channel": 8,
+      "FxRate": 108,
+      "Campaign": 40,
+      "Creative": 63,
+      "Audience": 25,
+      "CampaignAudience": 81,
+      "Contact": 1000,
+      "WebSession": 2000,
+      "Lead": 302,
+      "Opportunity": 200,
+      "OpportunityEvent": 701,
+      "Touchpoint": 4002,
+      "Order": 101,
+      "CostRecord": 519,
+      "ExceptionLog": 13,
+      "AttributionRun": 1,
+      "AttributionResult": 1752,
+      "UnattributedRevenue": 3,
+      "TouchEligibilityAudit": 99,
+      "CampaignROI": 200,
+      "ChannelROI": 40
+    },
+    "live_lifecycle": {
+      "api_appended_events": 1,
+      "invalid_transitions": [],
+      "chronological": true,
+      "passed": true
+    }
+  }
+}

@@ -60,3 +60,30 @@ def test_postman_collection_covers_every_route():
 def test_postman_collection_runs_green(exported):
     from scripts.run_postman_collection import main
     assert main([]) == 0
+
+
+def test_swagger_documents_every_operation(client):
+    """Every operation in /docs has a description, documented parameters, error responses and a real example."""
+    spec = client.get("/openapi.json").json()
+    assert client.get("/docs").status_code == 200 and client.get("/redoc").status_code == 200
+    ops = [(m.upper(), p, o) for p, item in spec["paths"].items() for m, o in item.items()]
+    assert len(ops) == 58
+    for method, path, op in ops:
+        key = f"{method} {path}"
+        assert op.get("summary") and op.get("description"), f"{key}: no description"
+        for p in op.get("parameters", []):
+            assert p.get("description"), f"{key}: parameter {p['name']} undocumented"
+        ok = next(c for c in op["responses"] if c.startswith("2"))
+        assert "example" in op["responses"][ok].get("content", {}).get("application/json", {}), f"{key}: no example response"
+        if "{" in path:
+            assert "404" in op["responses"], f"{key}: 404 not documented"
+        if "requestBody" in op:
+            assert op["requestBody"]["content"]["application/json"].get("examples"), f"{key}: no request example"
+
+
+def test_exported_openapi_matches_code(client):
+    """docs/openapi.json must be regenerated (python -m scripts.export_openapi) whenever the API changes."""
+    exported = json.loads((Path(__file__).parents[1] / "docs" / "openapi.json").read_text(encoding="utf-8"))
+    live = client.get("/openapi.json").json()
+    assert {(m, p) for p, i in exported["paths"].items() for m in i} == {(m, p) for p, i in live["paths"].items() for m in i}
+    assert exported["info"]["version"] == live["info"]["version"]
