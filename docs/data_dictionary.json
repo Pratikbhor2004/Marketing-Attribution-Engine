@@ -1,0 +1,1465 @@
+{
+  "Channel": {
+    "description": "Marketing channel (master data).",
+    "pk": "channel_id",
+    "cardinality": "Channel 1:N Campaign; Channel 1:N Touchpoint",
+    "fields": {
+      "channel_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "CH-001 \u2026 CH-008",
+        "unique": true,
+        "validation": "PK"
+      },
+      "channel_name": {
+        "type": "string",
+        "required": true,
+        "allowed": "Paid Search, Paid Social, Email, Organic Search, Affiliate, Display, Events, Partner",
+        "unique": true,
+        "validation": "enum"
+      },
+      "channel_group": {
+        "type": "string",
+        "required": true,
+        "allowed": "digital | offline | partner",
+        "unique": false,
+        "validation": "enum"
+      },
+      "is_paid": {
+        "type": "boolean",
+        "required": true,
+        "allowed": "true/false",
+        "unique": false,
+        "validation": "boolean"
+      },
+      "default_source_system": {
+        "type": "string",
+        "required": true,
+        "allowed": "ad_platform, esp, web_analytics, affiliate_network, event_app, crm",
+        "unique": false,
+        "validation": "enum"
+      }
+    }
+  },
+  "FxRate": {
+    "description": "Monthly synthetic reference rate to USD (reporting currency).",
+    "pk": "fx_rate_id",
+    "cardinality": "reference; joined by (currency, month)",
+    "fields": {
+      "fx_rate_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FX-<CUR>-<YYYY-MM>",
+        "unique": true,
+        "validation": "PK"
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": "enum"
+      },
+      "rate_month": {
+        "type": "string",
+        "required": true,
+        "allowed": "YYYY-MM",
+        "unique": false,
+        "validation": "(currency, rate_month) unique"
+      },
+      "rate_to_usd": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "USD per 1 unit, 6 dp",
+        "unique": false,
+        "validation": "> 0; USD = 1"
+      },
+      "source": {
+        "type": "string",
+        "required": true,
+        "allowed": "synthetic_reference_rate",
+        "unique": false,
+        "validation": "provenance"
+      }
+    }
+  },
+  "Campaign": {
+    "description": "Campaign with budget, channel, market and flight dates.",
+    "pk": "campaign_id",
+    "cardinality": "Campaign N:1 Channel; 1:N Creative; N:M Audience (CampaignAudience); 1:N Touchpoint; 1:N CostRecord",
+    "fields": {
+      "campaign_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "CMP-2026-000001",
+        "unique": true,
+        "validation": "PK; ^CMP-2026-\\d{6}$"
+      },
+      "campaign_name": {
+        "type": "string",
+        "required": true,
+        "allowed": "<market> <channel> - <objective> <nnnn>",
+        "unique": false,
+        "validation": "non-empty"
+      },
+      "channel_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Channel",
+        "unique": false,
+        "validation": "FK"
+      },
+      "market": {
+        "type": "string",
+        "required": true,
+        "allowed": "IN | US | EU",
+        "unique": false,
+        "validation": "enum"
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": "derived from market; contracted billing currency"
+      },
+      "objective": {
+        "type": "string",
+        "required": true,
+        "allowed": "awareness | lead_generation | conversion",
+        "unique": false,
+        "validation": "enum"
+      },
+      "budget_amount": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "decimal, 2 dp, in `currency` units",
+        "unique": false,
+        "validation": ">= 0"
+      },
+      "start_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "<= end_at"
+      },
+      "end_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= start_at (always-on campaigns end 31 Dec)"
+      },
+      "is_evergreen": {
+        "type": "boolean",
+        "required": true,
+        "allowed": "true = always-on",
+        "unique": false,
+        "validation": "boolean"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "allowed": "active | completed",
+        "unique": false,
+        "validation": "derived: completed if end_at < data as-of date"
+      }
+    }
+  },
+  "Creative": {
+    "description": "Ad creative / event kit belonging to one campaign.",
+    "pk": "creative_id",
+    "cardinality": "Creative N:1 Campaign; 1:N Touchpoint (optional)",
+    "fields": {
+      "creative_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "CRV-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "campaign_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Campaign",
+        "unique": false,
+        "validation": "FK"
+      },
+      "creative_name": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "non-empty"
+      },
+      "format": {
+        "type": "string",
+        "required": true,
+        "allowed": "image | video | text | landing_page | event_kit",
+        "unique": false,
+        "validation": "enum"
+      },
+      "version": {
+        "type": "string",
+        "required": true,
+        "allowed": "A | B | C",
+        "unique": false,
+        "validation": "enum"
+      },
+      "launched_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "= campaign start_at"
+      }
+    }
+  },
+  "Audience": {
+    "description": "Targeting segment.",
+    "pk": "audience_id",
+    "cardinality": "Audience N:M Campaign via CampaignAudience",
+    "fields": {
+      "audience_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "AUD-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "audience_name": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "non-empty"
+      },
+      "segment_type": {
+        "type": "string",
+        "required": true,
+        "allowed": "prospect | retargeting | lookalike | customer",
+        "unique": false,
+        "validation": "enum"
+      },
+      "effective_from": {
+        "type": "date",
+        "required": true,
+        "allowed": "YYYY-MM-DD",
+        "unique": false,
+        "validation": "<= effective_to"
+      },
+      "effective_to": {
+        "type": "date",
+        "required": false,
+        "allowed": "null = open-ended",
+        "unique": false,
+        "validation": ">= effective_from when set"
+      }
+    }
+  },
+  "CampaignAudience": {
+    "description": "Bridge table for the Campaign N:M Audience relationship, with effective dates.",
+    "pk": "campaign_audience_id",
+    "cardinality": "bridge; (campaign_id, audience_id) unique",
+    "fields": {
+      "campaign_audience_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "CAUD-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "campaign_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Campaign",
+        "unique": false,
+        "validation": "FK"
+      },
+      "audience_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Audience",
+        "unique": false,
+        "validation": "FK; (campaign_id, audience_id) unique"
+      },
+      "effective_from": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "within campaign flight"
+      },
+      "effective_to": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= effective_from"
+      }
+    }
+  },
+  "Contact": {
+    "description": "Prospect / customer person (synthetic, no PII).",
+    "pk": "contact_id",
+    "cardinality": "Contact 1:N Touchpoint, WebSession, Lead, Opportunity",
+    "fields": {
+      "contact_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "CON-2026-000001",
+        "unique": true,
+        "validation": "PK; ^CON-2026-\\d{6}$"
+      },
+      "created_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "derived: <= first observed touch"
+      },
+      "country": {
+        "type": "string",
+        "required": true,
+        "allowed": "IN, US, DE, FR, NL",
+        "unique": false,
+        "validation": "ISO-3166 alpha-2"
+      },
+      "market": {
+        "type": "string",
+        "required": true,
+        "allowed": "IN | US | EU",
+        "unique": false,
+        "validation": "derived from country"
+      },
+      "company_size": {
+        "type": "string",
+        "required": true,
+        "allowed": "smb | mid_market | enterprise",
+        "unique": false,
+        "validation": "enum"
+      },
+      "consent_status": {
+        "type": "string",
+        "required": true,
+        "allowed": "granted | denied | unknown",
+        "unique": false,
+        "validation": "enum"
+      },
+      "lifecycle_state": {
+        "type": "string",
+        "required": true,
+        "allowed": "prospect | lead | opportunity | customer | inactive",
+        "unique": false,
+        "validation": "derived: customer iff won opp; opportunity iff open opp; inactive iff no activity 180d"
+      }
+    }
+  },
+  "WebSession": {
+    "description": "Website visit; may be anonymous.",
+    "pk": "session_id",
+    "cardinality": "WebSession N:0..1 Contact; 1:N Lead (optional)",
+    "fields": {
+      "session_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "SES-2026-000001 (chronological)",
+        "unique": true,
+        "validation": "PK; ^SES-2026-\\d{6}$"
+      },
+      "contact_id": {
+        "type": "string",
+        "required": false,
+        "allowed": "FK Contact; null = anonymous",
+        "unique": false,
+        "validation": "null iff identity_evidence = none"
+      },
+      "anonymous_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "ANON-<10 digits> cookie id",
+        "unique": false,
+        "validation": "not a key"
+      },
+      "started_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= contact.created_at when identified"
+      },
+      "ended_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= started_at"
+      },
+      "page_views": {
+        "type": "integer",
+        "required": true,
+        "allowed": ">= 1",
+        "unique": false,
+        "validation": ""
+      },
+      "traffic_channel_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Channel (digital)",
+        "unique": false,
+        "validation": "FK"
+      },
+      "device": {
+        "type": "string",
+        "required": true,
+        "allowed": "mobile | desktop | tablet",
+        "unique": false,
+        "validation": "enum"
+      },
+      "identity_evidence": {
+        "type": "string",
+        "required": true,
+        "allowed": "form_submit | login | email_click_id | cookie_match | none",
+        "unique": false,
+        "validation": "enum"
+      }
+    }
+  },
+  "Lead": {
+    "description": "Marketing lead; web leads link to a session, offline leads do not.",
+    "pk": "lead_id",
+    "cardinality": "Lead N:1 Contact; N:0..1 WebSession; 1:0..1 Opportunity",
+    "fields": {
+      "lead_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "LEAD-2026-000001 (chronological; injected anomalies appended)",
+        "unique": true,
+        "validation": "PK; ^LEAD-2026-\\d{6}$"
+      },
+      "contact_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Contact",
+        "unique": false,
+        "validation": "FK; must equal session contact"
+      },
+      "session_id": {
+        "type": "string",
+        "required": false,
+        "allowed": "FK WebSession; null for event_scan / crm_import",
+        "unique": false,
+        "validation": "session must carry identity evidence"
+      },
+      "created_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= session.started_at and contact.created_at"
+      },
+      "source_system": {
+        "type": "string",
+        "required": true,
+        "allowed": "web_form | event_scan | crm_import",
+        "unique": false,
+        "validation": "enum"
+      },
+      "identity_link_method": {
+        "type": "string",
+        "required": true,
+        "allowed": "session_form_submit | event_badge_scan | crm_import | probabilistic_device_match",
+        "unique": false,
+        "validation": "audit"
+      },
+      "status": {
+        "type": "string",
+        "required": true,
+        "allowed": "new | qualified | converted | disqualified",
+        "unique": false,
+        "validation": "derived: converted iff opportunity; disqualified if >120d old; qualified if touched since"
+      }
+    }
+  },
+  "Opportunity": {
+    "description": "Sales opportunity (current-state snapshot; history in OpportunityEvent).",
+    "pk": "opportunity_id",
+    "cardinality": "Opportunity N:1 Lead, N:1 Contact; 1:N OpportunityEvent; 1:0..N Order",
+    "fields": {
+      "opportunity_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "OPP-2026-000001 (chronological)",
+        "unique": true,
+        "validation": "PK; ^OPP-2026-\\d{6}$"
+      },
+      "contact_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Contact",
+        "unique": false,
+        "validation": "= lead.contact_id"
+      },
+      "lead_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Lead",
+        "unique": false,
+        "validation": "FK; unique"
+      },
+      "created_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= lead.created_at"
+      },
+      "closed_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": false,
+        "allowed": "null while open",
+        "unique": false,
+        "validation": "null iff open stage; >= created_at"
+      },
+      "stage": {
+        "type": "string",
+        "required": true,
+        "allowed": "prospecting | qualified | proposal | closed_won | closed_lost",
+        "unique": false,
+        "validation": "derived: open if planned close > as-of; won/lost from documented exposure rule"
+      },
+      "amount": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "decimal, 2 dp, in `currency` units",
+        "unique": false,
+        "validation": ">= 0"
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": "contact market currency"
+      },
+      "company_size": {
+        "type": "string",
+        "required": true,
+        "allowed": "smb | mid_market | enterprise",
+        "unique": false,
+        "validation": "= contact.company_size"
+      }
+    }
+  },
+  "OpportunityEvent": {
+    "description": "Append-only lifecycle history. Current stage = latest event (view opportunity_current_stage).",
+    "pk": "event_id",
+    "cardinality": "OpportunityEvent N:1 Opportunity",
+    "fields": {
+      "event_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "OPPEVT-<opportunity_id>-NN",
+        "unique": true,
+        "validation": "PK"
+      },
+      "opportunity_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Opportunity",
+        "unique": false,
+        "validation": "FK"
+      },
+      "sequence": {
+        "type": "integer",
+        "required": true,
+        "allowed": "1..n",
+        "unique": false,
+        "validation": "(opportunity_id, sequence) unique, chronological"
+      },
+      "event_type": {
+        "type": "string",
+        "required": true,
+        "allowed": "created | stage_changed | closed",
+        "unique": false,
+        "validation": "first event = created"
+      },
+      "from_stage": {
+        "type": "string",
+        "required": false,
+        "allowed": "null for created",
+        "unique": false,
+        "validation": "allowed transition"
+      },
+      "to_stage": {
+        "type": "string",
+        "required": true,
+        "allowed": "opportunity stage enum",
+        "unique": false,
+        "validation": "allowed transition from from_stage"
+      },
+      "occurred_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= previous event"
+      },
+      "actor": {
+        "type": "string",
+        "required": true,
+        "allowed": "crm_sync (generated) | API caller",
+        "unique": false,
+        "validation": "audit"
+      }
+    }
+  },
+  "Touchpoint": {
+    "description": "Contact-level marketing interaction (online or offline).",
+    "pk": "touchpoint_id",
+    "cardinality": "Touchpoint N:1 Contact, Campaign, Channel; N:0..1 Creative; N:0..1 Opportunity (platform claim)",
+    "fields": {
+      "touchpoint_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "TOUCH-<contact_id>-000001 (per-contact chronological counter)",
+        "unique": true,
+        "validation": "PK; embeds contact_id"
+      },
+      "contact_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Contact",
+        "unique": false,
+        "validation": "FK"
+      },
+      "campaign_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Campaign",
+        "unique": false,
+        "validation": "occurred_at inside campaign flight"
+      },
+      "channel_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Channel",
+        "unique": false,
+        "validation": "= campaign.channel_id"
+      },
+      "creative_id": {
+        "type": "string",
+        "required": false,
+        "allowed": "FK Creative; null for offline touches",
+        "unique": false,
+        "validation": "FK"
+      },
+      "occurred_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= contact.created_at"
+      },
+      "touch_type": {
+        "type": "string",
+        "required": true,
+        "allowed": "ad_click, ad_view, video_view, email_open, email_click, organic_visit, affiliate_click, event_attendance, booth_scan, partner_referral, sales_call",
+        "unique": false,
+        "validation": "enum; consistent with channel"
+      },
+      "is_offline": {
+        "type": "boolean",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "derived from touch_type"
+      },
+      "source_system": {
+        "type": "string",
+        "required": true,
+        "allowed": "channel source system",
+        "unique": false,
+        "validation": ""
+      },
+      "reported_conversion_id": {
+        "type": "string",
+        "required": false,
+        "allowed": "FK Opportunity claimed by ad platform",
+        "unique": false,
+        "validation": "claim must precede close (R-TCH-01)"
+      }
+    }
+  },
+  "Order": {
+    "description": "Closed revenue (billing) \u2014 the revenue source of truth.",
+    "pk": "order_id",
+    "cardinality": "Order N:1 Opportunity",
+    "fields": {
+      "order_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "ORD-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "opportunity_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Opportunity (closed_won)",
+        "unique": false,
+        "validation": "FK"
+      },
+      "external_invoice_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "INV-2026-000001",
+        "unique": false,
+        "validation": "unique among recognised orders (R-REV-01)"
+      },
+      "revenue_amount": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "decimal, 2 dp, in `currency` units",
+        "unique": false,
+        "validation": "= opportunity.amount for the recognised order"
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": "= opportunity.currency"
+      },
+      "recognized_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ">= opportunity.closed_at"
+      },
+      "source_system": {
+        "type": "string",
+        "required": true,
+        "allowed": "billing | billing_reimport | manual_invoice",
+        "unique": false,
+        "validation": ""
+      }
+    }
+  },
+  "CostRecord": {
+    "description": "Monthly campaign spend from the finance ledger.",
+    "pk": "cost_record_id",
+    "cardinality": "CostRecord N:1 Campaign",
+    "fields": {
+      "cost_record_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "COST-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "campaign_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Campaign",
+        "unique": false,
+        "validation": "FK"
+      },
+      "period_month": {
+        "type": "string",
+        "required": true,
+        "allowed": "YYYY-MM",
+        "unique": false,
+        "validation": ""
+      },
+      "incurred_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "inside campaign flight"
+      },
+      "amount": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "decimal, 2 dp, in `currency` units",
+        "unique": false,
+        "validation": ">= 0; derived from budget x days x utilisation"
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": "must equal campaign.currency (R-CST-01)"
+      },
+      "cost_type": {
+        "type": "string",
+        "required": true,
+        "allowed": "media_spend, platform_fee, content_production, commission, event_fee, partner_fee, agency_fee, manual_adjustment",
+        "unique": false,
+        "validation": "enum"
+      },
+      "source_system": {
+        "type": "string",
+        "required": true,
+        "allowed": "finance_ledger | spreadsheet_upload",
+        "unique": false,
+        "validation": ""
+      }
+    }
+  },
+  "AttributionRun": {
+    "description": "One execution of the attribution engine with its parameters (derived).",
+    "pk": "run_id",
+    "cardinality": "AttributionRun 1:N AttributionResult",
+    "fields": {
+      "run_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "RUN-BASELINE | RUN-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "created_at": {
+        "type": "string",
+        "required": true,
+        "allowed": "timestamp or 'baseline'",
+        "unique": false,
+        "validation": ""
+      },
+      "triggered_by": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "audit"
+      },
+      "models": {
+        "type": "string",
+        "required": true,
+        "allowed": "comma list of models",
+        "unique": false,
+        "validation": ""
+      },
+      "lookback_days": {
+        "type": "integer",
+        "required": true,
+        "allowed": ">= 1",
+        "unique": false,
+        "validation": ""
+      },
+      "time_decay_half_life_days": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "> 0",
+        "unique": false,
+        "validation": ""
+      },
+      "position_first_weight": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "0..1",
+        "unique": false,
+        "validation": "first + last <= 1"
+      },
+      "position_last_weight": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "0..1",
+        "unique": false,
+        "validation": ""
+      },
+      "include_offline": {
+        "type": "boolean",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "result_rows": {
+        "type": "integer",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "attributed_opportunities": {
+        "type": "integer",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "unattributed_opportunities": {
+        "type": "integer",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "attributed_revenue_usd": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "USD",
+        "unique": false,
+        "validation": "first model in run"
+      }
+    }
+  },
+  "AttributionResult": {
+    "description": "Credit given to a campaign for one conversion under one model (derived).",
+    "pk": "attribution_id",
+    "cardinality": "AttributionResult N:1 AttributionRun, Opportunity, Campaign",
+    "fields": {
+      "attribution_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "ATR-<opp>-<FT|LT|LIN|POS|TD>-<campaign>[-<run>]",
+        "unique": true,
+        "validation": "PK"
+      },
+      "run_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK AttributionRun",
+        "unique": false,
+        "validation": ""
+      },
+      "model": {
+        "type": "string",
+        "required": true,
+        "allowed": "first_touch | last_touch | linear_multi_touch | position_based | time_decay",
+        "unique": false,
+        "validation": "enum"
+      },
+      "opportunity_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Opportunity",
+        "unique": false,
+        "validation": "FK"
+      },
+      "contact_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Contact",
+        "unique": false,
+        "validation": "FK"
+      },
+      "campaign_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Campaign",
+        "unique": false,
+        "validation": "FK"
+      },
+      "channel_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Channel",
+        "unique": false,
+        "validation": "= campaign.channel_id"
+      },
+      "conversion_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "= opportunity.closed_at"
+      },
+      "credit_share": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "0..1, 6 dp",
+        "unique": false,
+        "validation": "sums to 1 per (run, model, opportunity)"
+      },
+      "credited_revenue": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "decimal, 2 dp, in `currency` units",
+        "unique": false,
+        "validation": "sums to recognised revenue per opportunity (integer cents)"
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": "= order currency"
+      },
+      "credited_revenue_usd": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "USD at conversion-month FX",
+        "unique": false,
+        "validation": ""
+      },
+      "eligible_touch_count": {
+        "type": "integer",
+        "required": true,
+        "allowed": ">= 1",
+        "unique": false,
+        "validation": ""
+      },
+      "campaign_touch_count": {
+        "type": "integer",
+        "required": true,
+        "allowed": ">= 1",
+        "unique": false,
+        "validation": ""
+      }
+    }
+  },
+  "ExceptionLog": {
+    "description": "Rule-detected data-quality exceptions and the decision applied (derived).",
+    "pk": "exception_id",
+    "cardinality": "references any source record",
+    "fields": {
+      "exception_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "EXC-2026-000001",
+        "unique": true,
+        "validation": "PK"
+      },
+      "issue_type": {
+        "type": "string",
+        "required": true,
+        "allowed": "duplicate_revenue | post_conversion_touch | currency_mismatch | campaign_cost_omitted | anonymous_session_without_evidence",
+        "unique": false,
+        "validation": "enum"
+      },
+      "rule_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "R-REV-01, R-TCH-01, R-CST-01, R-CST-02, R-IDN-01",
+        "unique": false,
+        "validation": ""
+      },
+      "record_type": {
+        "type": "string",
+        "required": true,
+        "allowed": "Order | Touchpoint | CostRecord | Campaign | Lead",
+        "unique": false,
+        "validation": ""
+      },
+      "record_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "id of offending record",
+        "unique": false,
+        "validation": ""
+      },
+      "related_id": {
+        "type": "string",
+        "required": false,
+        "allowed": "original order / claimed opportunity / campaign / session",
+        "unique": false,
+        "validation": ""
+      },
+      "detail": {
+        "type": "string",
+        "required": true,
+        "allowed": "human-readable evidence",
+        "unique": false,
+        "validation": ""
+      },
+      "decision": {
+        "type": "string",
+        "required": true,
+        "allowed": "exclude_from_recognized_revenue | exclude_from_attribution | quarantine_cost_from_roi | roi_unavailable_missing_cost | reject_identity_link",
+        "unique": false,
+        "validation": ""
+      }
+    }
+  },
+  "UnattributedRevenue": {
+    "description": "Recognised revenue with no eligible touch (kept visible, never dropped).",
+    "pk": "(run_id, opportunity_id)",
+    "cardinality": "",
+    "fields": {
+      "run_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "opportunity_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "FK Opportunity",
+        "unique": false,
+        "validation": ""
+      },
+      "contact_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "conversion_at": {
+        "type": "timestamp (ISO-8601, YYYY-MM-DDTHH:MM:SS, UTC-naive)",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "revenue": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "decimal, 2 dp, in `currency` units",
+        "unique": false,
+        "validation": ""
+      },
+      "currency": {
+        "type": "string",
+        "required": true,
+        "allowed": "INR | USD | EUR",
+        "unique": false,
+        "validation": ""
+      },
+      "revenue_usd": {
+        "type": "decimal",
+        "required": true,
+        "allowed": "USD",
+        "unique": false,
+        "validation": ""
+      },
+      "reason": {
+        "type": "string",
+        "required": true,
+        "allowed": "no_touchpoints_for_contact | all_touches_outside_lookback_or_ineligible | only_post_conversion_or_ineligible_touches",
+        "unique": false,
+        "validation": ""
+      }
+    }
+  },
+  "TouchEligibilityAudit": {
+    "description": "Per-conversion count of touches by eligibility outcome (derived).",
+    "pk": "(run_id, opportunity_id)",
+    "cardinality": "",
+    "fields": {
+      "run_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "opportunity_id": {
+        "type": "string",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "after_conversion": {
+        "type": "integer",
+        "required": true,
+        "allowed": "E2 excluded",
+        "unique": false,
+        "validation": ""
+      },
+      "before_previous_conversion": {
+        "type": "integer",
+        "required": true,
+        "allowed": "E4 excluded",
+        "unique": false,
+        "validation": ""
+      },
+      "eligible": {
+        "type": "integer",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": ""
+      },
+      "outside_lookback": {
+        "type": "integer",
+        "required": true,
+        "allowed": "E3 excluded",
+        "unique": false,
+        "validation": ""
+      },
+      "flagged_exception": {
+        "type": "integer",
+        "required": true,
+        "allowed": "E5 excluded",
+        "unique": false,
+        "validation": ""
+      },
+      "offline_excluded": {
+        "type": "integer",
+        "required": true,
+        "allowed": "E6 excluded",
+        "unique": false,
+        "validation": ""
+      }
+    }
+  },
+  "CampaignROI": {
+    "description": "Campaign ROI per model, USD (derived).",
+    "pk": "(campaign_id, model)",
+    "cardinality": "",
+    "fields": {
+      "campaign_id": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "campaign_name": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "channel_id": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "market": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "currency": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "budget_amount": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "status": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "spend": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "spend_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "cost_records": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "quarantined_cost_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "quarantined_cost_records": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "attributed_revenue_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "attributed_conversions": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "credited_opportunities": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "attributed_revenue_native_same_currency": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "roas": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "roi_pct": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "cost_per_conversion_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "roi_status": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "model": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      }
+    }
+  },
+  "ChannelROI": {
+    "description": "Channel roll-up of campaign ROI per model (derived).",
+    "pk": "(channel_id, model)",
+    "cardinality": "",
+    "fields": {
+      "channel_id": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "channel_name": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "channel_group": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "is_paid": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "spend_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "attributed_revenue_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "attributed_conversions": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "campaigns": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "campaigns_missing_cost": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "revenue_on_missing_cost_campaigns_usd": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "roas": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "roi_pct": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "revenue_share": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      },
+      "model": {
+        "type": "mixed",
+        "required": true,
+        "allowed": "",
+        "unique": false,
+        "validation": "see docs/attribution_rules.md"
+      }
+    }
+  }
+}

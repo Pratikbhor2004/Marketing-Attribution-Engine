@@ -66,3 +66,12 @@ def test_outcomes_follow_rule_not_coin_flip(tables):
     closed = closed[closed["occurred_at"] <= closed["closed_at"]]
     exposure = closed.groupby(["opportunity_id", "stage"]).size().reset_index(name="n").groupby("stage")["n"].mean()
     assert exposure["closed_won"] > exposure["closed_lost"]
+
+
+def test_every_exported_column_is_in_the_data_dictionary(result):
+    from attribution_engine.schema import ENTITIES, GROUND_TRUTH
+    for name, df in result.tables.items():
+        assert name in ENTITIES, f"{name} missing from data dictionary"
+        assert set(df.columns) == set(ENTITIES[name]["fields"]), name
+    for name, df in result.dataset.ground_truth.items():
+        assert list(df.columns) == GROUND_TRUTH[name]
