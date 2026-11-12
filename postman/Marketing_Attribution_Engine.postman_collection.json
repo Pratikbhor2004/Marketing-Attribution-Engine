@@ -1,0 +1,3475 @@
+{
+  "info": {
+    "name": "Marketing Attribution Engine API",
+    "_postman_id": "8f6d3c1e-5a2b-4c7d-9e0f-2026102200a1",
+    "description": "All endpoints of the Marketing Attribution Engine, generated from the OpenAPI schema (scripts/build_postman_collection.py). Run folders top to bottom: list requests capture IDs used by detail requests. Start the API with `uvicorn attribution_engine.api:app` or `docker compose up`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "System",
+      "description": "Health, manifest, configuration and schema.",
+      "item": [
+        {
+          "name": "Liveness and dataset availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "query": []
+            },
+            "description": "Liveness and dataset availability"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Default generator and attribution configuration",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/meta/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "meta",
+                "config"
+              ],
+              "query": []
+            },
+            "description": "Default generator and attribution configuration"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Source manifest: seed, config, provenance, checksums",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/meta/manifest",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "meta",
+                "manifest"
+              ],
+              "query": []
+            },
+            "description": "Source manifest: seed, config, provenance, checksums"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Live schema: tables, columns, types, PK/FK, row counts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/meta/schema",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "meta",
+                "schema"
+              ],
+              "query": []
+            },
+            "description": "Live schema: tables, columns, types, PK/FK, row counts"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Master data",
+      "description": "Channels, campaigns, creatives, audiences, FX rates, contacts.",
+      "item": [
+        {
+          "name": "List channels",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/channels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "channels"
+              ],
+              "query": []
+            },
+            "description": "List channels"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List campaigns with filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/campaigns?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "campaigns"
+              ],
+              "query": [
+                {
+                  "key": "channel_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Channel Id"
+                },
+                {
+                  "key": "market",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Market"
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Status"
+                },
+                {
+                  "key": "currency",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Currency"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List campaigns with filters"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('campaignId', j.items[0].campaign_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Campaign with creatives, audiences, spend and delivery",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/campaigns/{{campaignId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "campaigns",
+                "{{campaignId}}"
+              ],
+              "query": []
+            },
+            "description": "Campaign with creatives, audiences, spend and delivery"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cost records of a campaign (with quarantine flag)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/campaigns/{{campaignId}}/costs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "campaigns",
+                "{{campaignId}}",
+                "costs"
+              ],
+              "query": []
+            },
+            "description": "Cost records of a campaign (with quarantine flag)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Touchpoints delivered by a campaign",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/campaigns/{{campaignId}}/touchpoints",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "campaigns",
+                "{{campaignId}}",
+                "touchpoints"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": true,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "Touchpoints delivered by a campaign"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List creatives",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/creatives?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "creatives"
+              ],
+              "query": [
+                {
+                  "key": "campaign_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Campaign Id"
+                },
+                {
+                  "key": "format",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Format"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List creatives"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List audiences",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/audiences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "audiences"
+              ],
+              "query": []
+            },
+            "description": "List audiences"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.length) pm.collectionVariables.set('audienceId', j[0].audience_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Campaigns targeting an audience (N:M bridge)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/audiences/{{audienceId}}/campaigns",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "audiences",
+                "{{audienceId}}",
+                "campaigns"
+              ],
+              "query": []
+            },
+            "description": "Campaigns targeting an audience (N:M bridge)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Monthly FX reference rates to USD",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/fx-rates?currency=INR",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "fx-rates"
+              ],
+              "query": [
+                {
+                  "key": "currency",
+                  "value": "INR",
+                  "disabled": false,
+                  "description": "Currency"
+                },
+                {
+                  "key": "month",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Month"
+                }
+              ]
+            },
+            "description": "Monthly FX reference rates to USD"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List contacts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/contacts?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contacts"
+              ],
+              "query": [
+                {
+                  "key": "market",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Market"
+                },
+                {
+                  "key": "lifecycle_state",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Lifecycle State"
+                },
+                {
+                  "key": "company_size",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Company Size"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List contacts"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('contactId', j.items[0].contact_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contact with funnel counts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/contacts/{{contactId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contacts",
+                "{{contactId}}"
+              ],
+              "query": []
+            },
+            "description": "Contact with funnel counts"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Chronological journey: touches, sessions, leads, opportunity events, orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/contacts/{{contactId}}/journey",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contacts",
+                "{{contactId}}",
+                "journey"
+              ],
+              "query": []
+            },
+            "description": "Chronological journey: touches, sessions, leads, opportunity events, orders"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Funnel",
+      "description": "Sessions, leads, opportunities (append-only lifecycle), touchpoints, orders, costs.",
+      "item": [
+        {
+          "name": "List web sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions?anonymous=true&limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions"
+              ],
+              "query": [
+                {
+                  "key": "contact_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Contact Id"
+                },
+                {
+                  "key": "identity_evidence",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Identity Evidence"
+                },
+                {
+                  "key": "anonymous",
+                  "value": "true",
+                  "disabled": false,
+                  "description": "Anonymous"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List web sessions"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('sessionId', j.items[0].session_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Session with linked leads",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{sessionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{sessionId}}"
+              ],
+              "query": []
+            },
+            "description": "Session with linked leads"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List leads",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/leads?has_session=false&limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "leads"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Status"
+                },
+                {
+                  "key": "source_system",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Source System"
+                },
+                {
+                  "key": "contact_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Contact Id"
+                },
+                {
+                  "key": "has_session",
+                  "value": "false",
+                  "disabled": false,
+                  "description": "Has Session"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List leads"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('leadId', j.items[0].lead_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Lead with session, opportunity and identity verdict",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/leads/{{leadId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "leads",
+                "{{leadId}}"
+              ],
+              "query": []
+            },
+            "description": "Lead with session, opportunity and identity verdict"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List opportunities",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities?stage=closed_won&limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities"
+              ],
+              "query": [
+                {
+                  "key": "stage",
+                  "value": "closed_won",
+                  "disabled": false,
+                  "description": "Stage"
+                },
+                {
+                  "key": "currency",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Currency"
+                },
+                {
+                  "key": "contact_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Contact Id"
+                },
+                {
+                  "key": "created_from",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Created From"
+                },
+                {
+                  "key": "created_to",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Created To"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List opportunities"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('opportunityId', j.items[0].opportunity_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Find an open (qualified) opportunity",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Captures {{openOpportunityId}} for the stage-change request.",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities?stage=qualified&limit=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities"
+              ],
+              "query": [
+                {
+                  "key": "stage",
+                  "value": "qualified"
+                },
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('openOpportunityId', j.items[0].opportunity_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Opportunity with current stage (from history), orders, attribution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities/{{opportunityId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities",
+                "{{opportunityId}}"
+              ],
+              "query": []
+            },
+            "description": "Opportunity with current stage (from history), orders, attribution"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Append-only lifecycle history",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities/{{opportunityId}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities",
+                "{{opportunityId}}",
+                "events"
+              ],
+              "query": []
+            },
+            "description": "Append-only lifecycle history"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Append a stage change (validated transition; history is never overwritten)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities/{{openOpportunityId}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities",
+                "{{openOpportunityId}}",
+                "events"
+              ],
+              "query": []
+            },
+            "description": "Append a stage change (validated transition; history is never overwritten)\n\nUses {{openOpportunityId}} captured by 'Find an open (qualified) opportunity'. Allowed transitions: prospecting->qualified|closed_lost, qualified->proposal|closed_lost, proposal->closed_won|closed_lost.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to_stage\": \"proposal\",\n  \"actor\": \"sales_ops\",\n  \"note\": \"Proposal sent\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List touchpoints",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/touchpoints?has_conversion_claim=true&limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "touchpoints"
+              ],
+              "query": [
+                {
+                  "key": "contact_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Contact Id"
+                },
+                {
+                  "key": "campaign_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Campaign Id"
+                },
+                {
+                  "key": "channel_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Channel Id"
+                },
+                {
+                  "key": "is_offline",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Is Offline"
+                },
+                {
+                  "key": "has_conversion_claim",
+                  "value": "true",
+                  "disabled": false,
+                  "description": "Has Conversion Claim"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List touchpoints"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('touchpointId', j.items[0].touchpoint_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Single touchpoint",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/touchpoints/{{touchpointId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "touchpoints",
+                "{{touchpointId}}"
+              ],
+              "query": []
+            },
+            "description": "Single touchpoint"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List orders (closed revenue) with recognition status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/orders?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "opportunity_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Opportunity Id"
+                },
+                {
+                  "key": "currency",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Currency"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List orders (closed revenue) with recognition status"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List cost records",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cost-records?limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cost-records"
+              ],
+              "query": [
+                {
+                  "key": "campaign_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Campaign Id"
+                },
+                {
+                  "key": "currency",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Currency"
+                },
+                {
+                  "key": "period_month",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Period Month"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "List cost records"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Attribution",
+      "description": "Models, runs, results, per-opportunity explanations.",
+      "item": [
+        {
+          "name": "Compare models: channel shares, rank correlation, credit shift",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/compare?run_id={{runId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "compare"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "{{runId}}",
+                  "disabled": false,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Compare models: channel shares, rank correlation, credit shift"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Attribution models and eligibility rules",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/models",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "models"
+              ],
+              "query": []
+            },
+            "description": "Attribution models and eligibility rules"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Explain one conversion: every touch with its eligibility reason, and credit per model side by side",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/opportunities/{{opportunityId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "opportunities",
+                "{{opportunityId}}"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Explain one conversion: every touch with its eligibility reason, and credit per model side by side"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Attribution result rows",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/results?run_id={{runId}}&model=linear_multi_touch&limit=50",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "results"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "{{runId}}",
+                  "disabled": false,
+                  "description": "Run Id"
+                },
+                {
+                  "key": "model",
+                  "value": "linear_multi_touch",
+                  "disabled": false,
+                  "description": "Model"
+                },
+                {
+                  "key": "campaign_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Campaign Id"
+                },
+                {
+                  "key": "opportunity_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Opportunity Id"
+                },
+                {
+                  "key": "channel_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Channel Id"
+                },
+                {
+                  "key": "limit",
+                  "value": "50",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "Attribution result rows"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List attribution runs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "runs"
+              ],
+              "query": []
+            },
+            "description": "List attribution runs"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Run attribution with custom parameters and persist results as a new run",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "runs"
+              ],
+              "query": []
+            },
+            "description": "Run attribution with custom parameters and persist results as a new run",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"models\": [\n    \"first_touch\",\n    \"last_touch\",\n    \"linear_multi_touch\",\n    \"position_based\",\n    \"time_decay\"\n  ],\n  \"lookback_days\": 90,\n  \"time_decay_half_life_days\": 7,\n  \"position_first_weight\": 0.4,\n  \"position_last_weight\": 0.4,\n  \"include_offline\": false,\n  \"triggered_by\": \"postman_analyst\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "pm.collectionVariables.set('customRunId', j.run.run_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Custom run: results, compare, reconciliation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Reads the run created above ({{customRunId}}).",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/roi/reconciliation?run_id={{customRunId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "roi",
+                "reconciliation"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "{{customRunId}}"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "pm.test('custom run reconciles', () => pm.expect(j.passed).to.eql(true));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Run parameters and per-model totals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/runs/{{runId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "runs",
+                "{{runId}}"
+              ],
+              "query": []
+            },
+            "description": "Run parameters and per-model totals"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Recognised revenue with no eligible touch (visible, never dropped)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/unattributed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "unattributed"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": true,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "Recognised revenue with no eligible touch (visible, never dropped)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ROI",
+      "description": "Campaign / channel ROI and money reconciliation.",
+      "item": [
+        {
+          "name": "Campaign ROI for a model (USD reporting currency)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/roi/campaigns?model=linear_multi_touch&sort_by=roi_pct&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "roi",
+                "campaigns"
+              ],
+              "query": [
+                {
+                  "key": "model",
+                  "value": "linear_multi_touch",
+                  "disabled": false,
+                  "description": "Model"
+                },
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                },
+                {
+                  "key": "roi_status",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Roi Status"
+                },
+                {
+                  "key": "channel_id",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Channel Id"
+                },
+                {
+                  "key": "market",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Market"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "roi_pct",
+                  "disabled": false,
+                  "description": "Sort By"
+                },
+                {
+                  "key": "descending",
+                  "value": "true",
+                  "disabled": true,
+                  "description": "Descending"
+                },
+                {
+                  "key": "limit",
+                  "value": "25",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "Campaign ROI for a model (USD reporting currency)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "One campaign's ROI under every model",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/roi/campaigns/{{campaignId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "roi",
+                "campaigns",
+                "{{campaignId}}"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "One campaign's ROI under every model"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Channel ROI roll-up for a model",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/roi/channels?model=linear_multi_touch",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "roi",
+                "channels"
+              ],
+              "query": [
+                {
+                  "key": "model",
+                  "value": "linear_multi_touch",
+                  "disabled": false,
+                  "description": "Model"
+                },
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Channel ROI roll-up for a model"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Money conservation: orders -> recognised -> attributed + unattributed; spend",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/roi/reconciliation",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "roi",
+                "reconciliation"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Money conservation: orders -> recognised -> attributed + unattributed; spend"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Exceptions",
+      "description": "Rule-detected data-quality exceptions and decisions.",
+      "item": [
+        {
+          "name": "Detected exceptions with rule and decision",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/exceptions?limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "exceptions"
+              ],
+              "query": [
+                {
+                  "key": "issue_type",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Issue Type"
+                },
+                {
+                  "key": "record_type",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Record Type"
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": false,
+                  "description": "Limit"
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "disabled": true,
+                  "description": "Offset"
+                }
+              ]
+            },
+            "description": "Detected exceptions with rule and decision"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.items && j.items.length) pm.collectionVariables.set('exceptionId', j.items[0].exception_id);\nconst rl = (j.items||[]).find(e => e.issue_type === 'anonymous_session_without_evidence');\nif (rl) pm.collectionVariables.set('rejectedLeadId', rl.record_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Re-run the rule detectors on live data (dry run, not persisted)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/exceptions/detect",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "exceptions",
+                "detect"
+              ],
+              "query": []
+            },
+            "description": "Re-run the rule detectors on live data (dry run, not persisted)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Counts per issue type with rule definitions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/exceptions/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "exceptions",
+                "summary"
+              ],
+              "query": []
+            },
+            "description": "Counts per issue type with rule definitions"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "One exception with the offending record",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/exceptions/{{exceptionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "exceptions",
+                "{{exceptionId}}"
+              ],
+              "query": []
+            },
+            "description": "One exception with the offending record"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Identity",
+      "description": "Missing / rejected identity links.",
+      "item": [
+        {
+          "name": "Missing / rejected identity links and unattributable revenue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/identity/gaps",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "identity",
+                "gaps"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Missing / rejected identity links and unattributable revenue"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Leads whose session link was rejected (no identity evidence)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/identity/rejected-links",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "identity",
+                "rejected-links"
+              ],
+              "query": []
+            },
+            "description": "Leads whose session link was rejected (no identity evidence)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Evaluation",
+      "description": "Scores against the separate ground truth and the chronological split.",
+      "item": [
+        {
+          "name": "Train / evaluation split: ROAS rank stability per model",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/evaluation/chronological?cutoff=2026-07-01",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "evaluation",
+                "chronological"
+              ],
+              "query": [
+                {
+                  "key": "cutoff",
+                  "value": "2026-07-01",
+                  "disabled": false,
+                  "description": "Cutoff"
+                },
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Train / evaluation split: ROAS rank stability per model"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Detector precision / recall / F1 against ground truth",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/evaluation/detection",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "evaluation",
+                "detection"
+              ],
+              "query": []
+            },
+            "description": "Detector precision / recall / F1 against ground truth"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Distance of each model's channel credit from ground-truth contribution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/evaluation/model-accuracy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "evaluation",
+                "model-accuracy"
+              ],
+              "query": [
+                {
+                  "key": "run_id",
+                  "value": "RUN-BASELINE",
+                  "disabled": true,
+                  "description": "Run Id"
+                }
+              ]
+            },
+            "description": "Distance of each model's channel credit from ground-truth contribution"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Full evaluation summary written at generation time",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/evaluation/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "evaluation",
+                "summary"
+              ],
+              "query": []
+            },
+            "description": "Full evaluation summary written at generation time"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Labelled anomalies (separate file; never an engine input)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ground-truth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ground-truth"
+              ],
+              "query": [
+                {
+                  "key": "issue_type",
+                  "value": "",
+                  "disabled": true,
+                  "description": "Issue Type"
+                }
+              ]
+            },
+            "description": "Labelled anomalies (separate file; never an engine input)"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "True channel contribution from the generating rule",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ground-truth/channel-contribution",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ground-truth",
+                "channel-contribution"
+              ],
+              "query": []
+            },
+            "description": "True channel contribution from the generating rule"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Exception paths (expected errors)",
+      "description": "Negative scenarios: each request must fail with the documented status.",
+      "item": [
+        {
+          "name": "404 unknown campaign",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/campaigns/CMP-2026-999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "campaigns",
+                "CMP-2026-999999"
+              ],
+              "query": []
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 404', () => pm.response.to.have.status(404));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "404 unknown attribution run",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/runs/RUN-2026-999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "runs",
+                "RUN-2026-999999"
+              ],
+              "query": []
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 404', () => pm.response.to.have.status(404));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "422 unknown attribution model",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/roi/campaigns?model=made_up_model",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "roi",
+                "campaigns"
+              ],
+              "query": [
+                {
+                  "key": "model",
+                  "value": "made_up_model"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 422', () => pm.response.to.have.status(422));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "422 position weights exceed 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "runs"
+              ],
+              "query": []
+            },
+            "description": "first + last weight must be <= 1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"position_first_weight\": 0.7,\n  \"position_last_weight\": 0.6\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 422', () => pm.response.to.have.status(422));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "422 lookback must be >= 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/attribution/runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "attribution",
+                "runs"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lookback_days\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 422', () => pm.response.to.have.status(422));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "409 invalid lifecycle transition (back to prospecting)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities/{{openOpportunityId}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities",
+                "{{openOpportunityId}}",
+                "events"
+              ],
+              "query": []
+            },
+            "description": "Run 'Find an open (qualified) opportunity' first; stages never move backwards.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to_stage\": \"prospecting\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 409', () => pm.response.to.have.status(409));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "409 closed opportunity accepts no further transitions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities/{{opportunityId}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities",
+                "{{opportunityId}}",
+                "events"
+              ],
+              "query": []
+            },
+            "description": "{{opportunityId}} is captured from closed_won opportunities; terminal stages are final.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to_stage\": \"qualified\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 409', () => pm.response.to.have.status(409));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "422 out-of-order lifecycle event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/opportunities/{{openOpportunityId}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "opportunities",
+                "{{openOpportunityId}}",
+                "events"
+              ],
+              "query": []
+            },
+            "description": "An event older than the opportunity's latest event is rejected; history stays chronological.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to_stage\": \"closed_lost\",\n  \"occurred_at\": \"2020-01-01T00:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 422', () => pm.response.to.have.status(422));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "422 invalid chronological cutoff",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/evaluation/chronological?cutoff=not-a-date",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "evaluation",
+                "chronological"
+              ],
+              "query": [
+                {
+                  "key": "cutoff",
+                  "value": "not-a-date"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 422', () => pm.response.to.have.status(422));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Rejected identity link is visible",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/leads/{{rejectedLeadId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "leads",
+                "{{rejectedLeadId}}"
+              ],
+              "query": []
+            },
+            "description": "Lead stitched to an anonymous session: identity_link must be 'rejected'."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test('identity link rejected', () => pm.expect(pm.response.json().identity_link).to.eql('rejected'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pipeline",
+      "description": "Administrator: generate data, validate, prove reproducibility.",
+      "item": [
+        {
+          "name": "Validation summary written at generation time",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pipeline/validation?only_failed=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pipeline",
+                "validation"
+              ],
+              "query": [
+                {
+                  "key": "only_failed",
+                  "value": "true",
+                  "disabled": false,
+                  "description": "Only Failed"
+                }
+              ]
+            },
+            "description": "Validation summary written at generation time"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Re-run every validation check against the live database",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pipeline/validate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pipeline",
+                "validate"
+              ],
+              "query": []
+            },
+            "description": "Re-run every validation check against the live database"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Generate twice with the same seed and compare row counts + checksums (background job)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pipeline/reproducibility",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pipeline",
+                "reproducibility"
+              ],
+              "query": []
+            },
+            "description": "Generate twice with the same seed and compare row counts + checksums (background job)",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scale\": \"starter\",\n  \"seed\": 20261022\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 202', () => pm.response.to.have.status(202));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "pm.collectionVariables.set('jobId', j.job_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Regenerate the dataset (background job): generate -> detect -> attribute -> validate -> export",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pipeline/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pipeline",
+                "generate"
+              ],
+              "query": []
+            },
+            "description": "Regenerate the dataset (background job): generate -> detect -> attribute -> validate -> export\n\nRegenerates the whole dataset. Poll 'Job status' until status=succeeded. Use scale=full for 500 campaigns / 50k contacts / 200k touchpoints / 10k opportunities (minutes).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scale\": \"starter\",\n  \"seed\": 20261022\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 202', () => pm.response.to.have.status(202));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "pm.collectionVariables.set('jobId', j.job_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List background jobs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pipeline/jobs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pipeline",
+                "jobs"
+              ],
+              "query": []
+            },
+            "description": "List background jobs"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Job status and result",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pipeline/jobs/{{jobId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pipeline",
+                "jobs",
+                "{{jobId}}"
+              ],
+              "query": []
+            },
+            "description": "Job status and result"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('responds in < 15s', () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "campaignId",
+      "value": "CMP-2026-000002"
+    },
+    {
+      "key": "audienceId",
+      "value": "AUD-2026-000001"
+    },
+    {
+      "key": "contactId",
+      "value": "CON-2026-000002"
+    },
+    {
+      "key": "sessionId",
+      "value": "SES-2026-000001"
+    },
+    {
+      "key": "leadId",
+      "value": "LEAD-2026-000001"
+    },
+    {
+      "key": "opportunityId",
+      "value": "OPP-2026-000001"
+    },
+    {
+      "key": "openOpportunityId",
+      "value": ""
+    },
+    {
+      "key": "touchpointId",
+      "value": "TOUCH-CON-2026-000001-000001"
+    },
+    {
+      "key": "runId",
+      "value": "RUN-BASELINE"
+    },
+    {
+      "key": "customRunId",
+      "value": ""
+    },
+    {
+      "key": "exceptionId",
+      "value": "EXC-2026-000001"
+    },
+    {
+      "key": "jobId",
+      "value": ""
+    },
+    {
+      "key": "rejectedLeadId",
+      "value": ""
+    }
+  ]
+}
