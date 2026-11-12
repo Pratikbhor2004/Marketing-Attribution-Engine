@@ -94,7 +94,7 @@ def reconciliation(tables, exceptions, results, unattributed) -> dict:
         dup = round(float(g.loc[g["dup"], "revenue_amount"].sum()), 2)
         un = round(float(unattributed.loc[unattributed["currency"] == cur, "revenue"].sum()), 2)
         per_model = {}
-        for m in MODELS:
+        for m in [m for m in MODELS if m in set(results["model"])]:
             att = round(float(results.loc[(results["model"] == m) & (results["currency"] == cur), "credited_revenue"].sum()), 2)
             diff = round(recognised - att - un, 2)
             per_model[m] = {"attributed": att, "difference": diff}
@@ -105,7 +105,7 @@ def reconciliation(tables, exceptions, results, unattributed) -> dict:
     spend = {"ledger_total_usd": _r(cost["amount_usd"].sum()), "valid_spend_usd": _r(cost.loc[~cost["quarantined"], "amount_usd"].sum()),
              "quarantined_spend_usd": _r(cost.loc[cost["quarantined"], "amount_usd"].sum()),
              "campaigns_missing_cost": len(excluded_ids(exceptions, "campaign_cost_omitted"))}
-    usd = {m: _r(results.loc[results["model"] == m, "credited_revenue_usd"].sum()) for m in MODELS}
+    usd = {m: _r(results.loc[results["model"] == m, "credited_revenue_usd"].sum()) for m in MODELS if m in set(results["model"])}
     return {"passed": bool(all(checks)), "by_currency": by_cur, "spend": spend,
             "recognised_opportunities": int(len(rev)), "unattributed_opportunities": int(len(unattributed)),
             "attributed_revenue_usd_by_model": usd, "unattributed_revenue_usd": _r(unattributed["revenue_usd"].sum())}
